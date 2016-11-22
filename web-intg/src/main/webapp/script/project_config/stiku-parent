@@ -1,0 +1,4 @@
+repo=stiku-parent
+pom=stiku-parent/pom.xml
+#parent_pom=stiku-parent/pom.xml
+cmd=deploy

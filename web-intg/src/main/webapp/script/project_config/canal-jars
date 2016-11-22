@@ -1,0 +1,3 @@
+repo=stiku-platform
+pom=canal/pom.xml
+cmd=deploy

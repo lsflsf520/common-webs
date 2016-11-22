@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:cache="http://www.springframework.org/schema/cache" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:repository="http://www.springframework.org/schema/data/repository"
+    xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+    default-lazy-init="false">
+
+    <description>Condition相关的配置</description>
+
+    <bean id="keyword" class="com.yisi.stiku.stat.entity.Condition">
+      <property name="label" value="关键字" />
+      <property name="name" value="keyword" />
+      <property name="defaultVal" value="请输入关键字" />
+    </bean>
+    
+    <bean id="startDate" class="com.yisi.stiku.stat.entity.DateCondition">
+      <property name="label" value="开始时间" />
+      <property name="name" value="startDate" />
+      <property name="time" value="-7" />
+    </bean>
+    
+    <bean id="endDate" class="com.yisi.stiku.stat.entity.DateCondition">
+      <property name="label" value="结束时间" />
+      <property name="name" value="endDate" />
+      <property name="time" value="0" />
+    </bean>
+    
+    <bean id="today" class="com.yisi.stiku.stat.entity.DateCondition">
+      <property name="label" value="开始时间" />
+      <property name="name" value="startDate" />
+      <property name="time" value="0" />
+    </bean>
+    
+    <bean id="tomorrow" class="com.yisi.stiku.stat.entity.DateCondition">
+      <property name="label" value="结束时间" />
+      <property name="name" value="endDate" />
+      <property name="time" value="1" />
+    </bean>
+    
+    <bean id="yesterday" class="com.yisi.stiku.stat.entity.DateCondition">
+      <property name="label" value="日 期" />
+      <property name="name" value="yesterday" />
+      <property name="time" value="-1" />
+    </bean>
+    
+    <bean id="school" class="com.yisi.stiku.stat.entity.ListCondition">
+      <property name="label" value="学校" />
+      <property name="name" value="schoolId" />
+      <property name="condType" value="SELECT" />
+      <property name="defaultVal" value="1234" />
+      <property name="kvMap">
+        <map>
+          <entry key="单县一中" value="1234"/>
+          <entry key="创数示范中学" value="1235"/>
+          <entry key="景阳一中" value="1236"/>
+        </map>
+      </property>
+    </bean>
+    
+    <bean id="projectName" class="com.yisi.stiku.stat.entity.ZkStrListCondition">
+      <property name="label" value="web工程" />
+      <property name="name" value="projectName" />
+      <property name="condType" value="SELECT" />
+      <property name="defaultVal" value="web-student" />
+      <property name="nodePath" value="web-ms/application.properties" />
+      <property name="key" value="sys.project.names" />
+    </bean>
+    
+    <bean id="methodType" class="com.yisi.stiku.stat.entity.ListCondition">
+      <property name="label" value="方法类型" />
+      <property name="name" value="methodType" />
+      <property name="condType" value="SELECT" />
+      <property name="defaultVal" value="http" />
+      <property name="kvMap">
+        <map>
+          <entry key="http" value="http"/>
+          <entry key="rpc-client" value="rpc-client"/>
+          <entry key="rpc-service" value="rpc-service"/>
+          <entry key="dao" value="dao"/>
+          <entry key="normal" value="normal"/>
+        </map>
+      </property>
+    </bean>
+    
+    <bean id="sqlSchool" class="com.yisi.stiku.stat.entity.SqlListCondition">
+      <property name="label" value="学校" />
+      <property name="name" value="schoolId" />
+      <property name="condType" value="SELECT" />
+      <property name="defaultVal" value="1234" />
+      <property name="dsKey" value="stiku" />
+      <property name="sql" value="findSchoolList" />
+      <property name="keyName" value="name" />
+      <property name="valName" value="id" />
+    </bean>
+
+    <bean id="dayDateGroup" class="com.yisi.stiku.stat.entity.CondGroup">
+      <constructor-arg>
+        <list>
+          <ref bean="today"/>
+          <ref bean="tomorrow"/>
+        </list>
+      </constructor-arg>
+    </bean>
+
+    <bean id="dateGroup" class="com.yisi.stiku.stat.entity.CondGroup">
+      <constructor-arg>
+        <list>
+          <ref bean="startDate"/>
+          <ref bean="endDate"/>
+        </list>
+      </constructor-arg>
+    </bean>
+   
+</beans>

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbProblemModelDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbProblemModel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="score_segment" property="scoreSegment" jdbcType="INTEGER" />
+    <result column="detail_point_id" property="detailPointId" jdbcType="VARCHAR" />
+    <result column="problem_count" property="problemCount" jdbcType="INTEGER" />
+    <result column="problem_type" property="problemType" jdbcType="INTEGER" />
+    <result column="stype" property="stype" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="group_property_id" property="groupPropertyId" jdbcType="BIGINT" />
+    <result column="point_count" property="pointCount" jdbcType="INTEGER" />
+    <result column="point_p_count" property="pointPCount" jdbcType="INTEGER" />
+    <result column="domain_point_count" property="domainPointCount" jdbcType="INTEGER" />
+    <result column="total_score_segments" property="totalScoreSegments" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="main_point_id" property="mainPointId" jdbcType="VARCHAR" />
+    <result column="slaver_points" property="slaverPoints" jdbcType="VARCHAR" />
+    <result column="enable" property="enable" jdbcType="INTEGER" />
+    <result column="is_new" property="isNew" jdbcType="INTEGER" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="division_type" property="divisionType" jdbcType="INTEGER" />
+    <result column="model_type" property="modelType" jdbcType="INTEGER" />
+    <result column="pointpcount" property="pointpcount" jdbcType="INTEGER" />
+    <result column="main_domain_id" property="mainDomainId" jdbcType="VARCHAR" />
+    <result column="slaver_domain_id" property="slaverDomainId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yisi.stiku.basedata.entity.TbProblemModel" extends="BaseResultMap" >
+    <result column="source_exam_prom" property="sourceExamProm" jdbcType="BINARY" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, score_segment, detail_point_id, problem_count, problem_type, stype, name, code, 
+    group_property_id, point_count, point_p_count, domain_point_count, total_score_segments, 
+    type, main_point_id, slaver_points, enable, is_new, acl_code, acl_type, created_by, 
+    created_dt, updated_by, updated_dt, version, division_type, model_type, pointpcount, 
+    main_domain_id, slaver_domain_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    source_exam_prom
+  </sql>
+  <select id="findByPK" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_problem_model
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_problem_model
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbProblemModel" >
+    insert into tb_problem_model (id, score_segment, detail_point_id, 
+      problem_count, problem_type, stype, 
+      name, code, group_property_id, 
+      point_count, point_p_count, domain_point_count, 
+      total_score_segments, type, main_point_id, 
+      slaver_points, enable, is_new, 
+      acl_code, acl_type, created_by, 
+      created_dt, updated_by, updated_dt, 
+      version, division_type, model_type, 
+      pointpcount, main_domain_id, slaver_domain_id, 
+      source_exam_prom)
+    values (#{id,jdbcType=BIGINT}, #{scoreSegment,jdbcType=INTEGER}, #{detailPointId,jdbcType=VARCHAR}, 
+      #{problemCount,jdbcType=INTEGER}, #{problemType,jdbcType=INTEGER}, #{stype,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{groupPropertyId,jdbcType=BIGINT}, 
+      #{pointCount,jdbcType=INTEGER}, #{pointPCount,jdbcType=INTEGER}, #{domainPointCount,jdbcType=INTEGER}, 
+      #{totalScoreSegments,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{mainPointId,jdbcType=VARCHAR}, 
+      #{slaverPoints,jdbcType=VARCHAR}, #{enable,jdbcType=INTEGER}, #{isNew,jdbcType=INTEGER}, 
+      #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{divisionType,jdbcType=INTEGER}, #{modelType,jdbcType=INTEGER}, 
+      #{pointpcount,jdbcType=INTEGER}, #{mainDomainId,jdbcType=VARCHAR}, #{slaverDomainId,jdbcType=VARCHAR}, 
+      #{sourceExamProm,jdbcType=BINARY})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbProblemModel" >
+    update tb_problem_model
+    <set >
+      <if test="scoreSegment != null" >
+        score_segment = #{scoreSegment,jdbcType=INTEGER},
+      </if>
+      <if test="detailPointId != null" >
+        detail_point_id = #{detailPointId,jdbcType=VARCHAR},
+      </if>
+      <if test="problemCount != null" >
+        problem_count = #{problemCount,jdbcType=INTEGER},
+      </if>
+      <if test="problemType != null" >
+        problem_type = #{problemType,jdbcType=INTEGER},
+      </if>
+      <if test="stype != null" >
+        stype = #{stype,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="groupPropertyId != null" >
+        group_property_id = #{groupPropertyId,jdbcType=BIGINT},
+      </if>
+      <if test="pointCount != null" >
+        point_count = #{pointCount,jdbcType=INTEGER},
+      </if>
+      <if test="pointPCount != null" >
+        point_p_count = #{pointPCount,jdbcType=INTEGER},
+      </if>
+      <if test="domainPointCount != null" >
+        domain_point_count = #{domainPointCount,jdbcType=INTEGER},
+      </if>
+      <if test="totalScoreSegments != null" >
+        total_score_segments = #{totalScoreSegments,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="mainPointId != null" >
+        main_point_id = #{mainPointId,jdbcType=VARCHAR},
+      </if>
+      <if test="slaverPoints != null" >
+        slaver_points = #{slaverPoints,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="isNew != null" >
+        is_new = #{isNew,jdbcType=INTEGER},
+      </if>
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="divisionType != null" >
+        division_type = #{divisionType,jdbcType=INTEGER},
+      </if>
+      <if test="modelType != null" >
+        model_type = #{modelType,jdbcType=INTEGER},
+      </if>
+      <if test="pointpcount != null" >
+        pointpcount = #{pointpcount,jdbcType=INTEGER},
+      </if>
+      <if test="mainDomainId != null" >
+        main_domain_id = #{mainDomainId,jdbcType=VARCHAR},
+      </if>
+      <if test="slaverDomainId != null" >
+        slaver_domain_id = #{slaverDomainId,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceExamProm != null" >
+        source_exam_prom = #{sourceExamProm,jdbcType=BINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yisi.stiku.basedata.entity.TbProblemModel" >
+    update tb_problem_model
+    set score_segment = #{scoreSegment,jdbcType=INTEGER},
+      detail_point_id = #{detailPointId,jdbcType=VARCHAR},
+      problem_count = #{problemCount,jdbcType=INTEGER},
+      problem_type = #{problemType,jdbcType=INTEGER},
+      stype = #{stype,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      group_property_id = #{groupPropertyId,jdbcType=BIGINT},
+      point_count = #{pointCount,jdbcType=INTEGER},
+      point_p_count = #{pointPCount,jdbcType=INTEGER},
+      domain_point_count = #{domainPointCount,jdbcType=INTEGER},
+      total_score_segments = #{totalScoreSegments,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      main_point_id = #{mainPointId,jdbcType=VARCHAR},
+      slaver_points = #{slaverPoints,jdbcType=VARCHAR},
+      enable = #{enable,jdbcType=INTEGER},
+      is_new = #{isNew,jdbcType=INTEGER},
+      acl_code = #{aclCode,jdbcType=VARCHAR},
+      acl_type = #{aclType,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      division_type = #{divisionType,jdbcType=INTEGER},
+      model_type = #{modelType,jdbcType=INTEGER},
+      pointpcount = #{pointpcount,jdbcType=INTEGER},
+      main_domain_id = #{mainDomainId,jdbcType=VARCHAR},
+      slaver_domain_id = #{slaverDomainId,jdbcType=VARCHAR},
+      source_exam_prom = #{sourceExamProm,jdbcType=BINARY}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbProblemModel" >
+    insert into tb_problem_model (id, score_segment, detail_point_id, 
+      problem_count, problem_type, stype, 
+      name, code, group_property_id, 
+      point_count, point_p_count, domain_point_count, 
+      total_score_segments, type, main_point_id, 
+      slaver_points, enable, is_new, 
+      acl_code, acl_type, created_by, 
+      created_dt, updated_by, updated_dt, 
+      version, division_type, model_type, 
+      pointpcount, main_domain_id, slaver_domain_id, 
+      source_exam_prom)
+    values (#{id,jdbcType=BIGINT}, #{scoreSegment,jdbcType=INTEGER}, #{detailPointId,jdbcType=VARCHAR}, 
+      #{problemCount,jdbcType=INTEGER}, #{problemType,jdbcType=INTEGER}, #{stype,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{groupPropertyId,jdbcType=BIGINT}, 
+      #{pointCount,jdbcType=INTEGER}, #{pointPCount,jdbcType=INTEGER}, #{domainPointCount,jdbcType=INTEGER}, 
+      #{totalScoreSegments,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{mainPointId,jdbcType=VARCHAR}, 
+      #{slaverPoints,jdbcType=VARCHAR}, #{enable,jdbcType=INTEGER}, #{isNew,jdbcType=INTEGER}, 
+      #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{divisionType,jdbcType=INTEGER}, #{modelType,jdbcType=INTEGER}, 
+      #{pointpcount,jdbcType=INTEGER}, #{mainDomainId,jdbcType=VARCHAR}, #{slaverDomainId,jdbcType=VARCHAR}, 
+      #{sourceExamProm,jdbcType=BINARY})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		TB_PROBLEM_MODEL
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultType="com.yisi.stiku.basedata.entity.TbProblemModel" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_PROBLEM_MODEL
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultType="com.yisi.stiku.basedata.entity.TbProblemModel" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_PROBLEM_MODEL
+  </select>
+  <select id="findByEntity" resultType="com.yisi.stiku.basedata.entity.TbProblemModel" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_PROBLEM_MODEL
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.scoreSegment != null" >
+				and score_segment = #{entity.scoreSegment,jdbcType=INTEGER}
+			</if>
+			<if test="entity.detailPointId != null" >
+				and detail_point_id = #{entity.detailPointId,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.problemCount != null" >
+				and problem_count = #{entity.problemCount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.problemType != null" >
+				and problem_type = #{entity.problemType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.stype != null" >
+				and stype = #{entity.stype,jdbcType=INTEGER}
+			</if>
+			<if test="entity.name != null" >
+				and name = #{entity.name,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.code != null" >
+				and code = #{entity.code,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.groupPropertyId != null" >
+				and group_property_id = #{entity.groupPropertyId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.pointCount != null" >
+				and point_count = #{entity.pointCount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.pointPCount != null" >
+				and point_p_count = #{entity.pointPCount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.domainPointCount != null" >
+				and domain_point_count = #{entity.domainPointCount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.totalScoreSegments != null" >
+				and total_score_segments = #{entity.totalScoreSegments,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.type != null" >
+				and type = #{entity.type,jdbcType=INTEGER}
+			</if>
+			<if test="entity.mainPointId != null" >
+				and main_point_id = #{entity.mainPointId,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.slaverPoints != null" >
+				and slaver_points = #{entity.slaverPoints,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.enable != null" >
+				and enable = #{entity.enable,jdbcType=INTEGER}
+			</if>
+			<if test="entity.isNew != null" >
+				and is_new = #{entity.isNew,jdbcType=INTEGER}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.divisionType != null" >
+				and division_type = #{entity.divisionType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.modelType != null" >
+				and model_type = #{entity.modelType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.pointpcount != null" >
+				and pointpcount = #{entity.pointpcount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.mainDomainId != null" >
+				and main_domain_id = #{entity.mainDomainId,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.slaverDomainId != null" >
+				and slaver_domain_id = #{entity.slaverDomainId,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.sourceExamProm != null" >
+				and source_exam_prom = #{entity.sourceExamProm,jdbcType=BINARY}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

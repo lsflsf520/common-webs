@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.intg.dao.DevDemandDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.intg.entity.DevDemand" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="repo_name" property="repoName" jdbcType="VARCHAR" />
+    <result column="branch" property="branch" jdbcType="VARCHAR" />
+    <result column="plan_test_time" property="planTestTime" jdbcType="TIMESTAMP" />
+    <result column="plan_online_time" property="planOnlineTime" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="product_demand_id" property="productDemandId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="envs" property="envs" jdbcType="INTEGER" />
+    <result column="real_test_time" property="realTestTime" jdbcType="TIMESTAMP" />
+    <result column="real_online_time" property="realOnlineTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, name, repo_name, branch, plan_test_time, plan_online_time, creator_id, creator, 
+    parent_id, product_demand_id, status, create_time, envs, real_test_time, real_online_time
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="BaseColumnList" />
+    from dev_demand
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Integer" >
+    delete from dev_demand
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.intg.entity.DevDemand" >
+    insert into dev_demand (id, name, repo_name, 
+      branch, plan_test_time, plan_online_time, 
+      creator_id, creator, parent_id, 
+      product_demand_id, status, create_time, 
+      envs, real_test_time, real_online_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{repoName,jdbcType=VARCHAR}, 
+      #{branch,jdbcType=VARCHAR}, #{planTestTime,jdbcType=TIMESTAMP}, #{planOnlineTime,jdbcType=TIMESTAMP}, 
+      #{creatorId,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{productDemandId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{envs,jdbcType=INTEGER}, #{realTestTime,jdbcType=TIMESTAMP}, #{realOnlineTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.intg.entity.DevDemand" >
+    update dev_demand
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="repoName != null" >
+        repo_name = #{repoName,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        branch = #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="planTestTime != null" >
+        plan_test_time = #{planTestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planOnlineTime != null" >
+        plan_online_time = #{planOnlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="productDemandId != null" >
+        product_demand_id = #{productDemandId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="envs != null" >
+        envs = #{envs,jdbcType=INTEGER},
+      </if>
+      <if test="realTestTime != null" >
+        real_test_time = #{realTestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realOnlineTime != null" >
+        real_online_time = #{realOnlineTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.intg.entity.DevDemand" >
+    insert into dev_demand (id, name, repo_name, 
+      branch, plan_test_time, plan_online_time, 
+      creator_id, creator, parent_id, 
+      product_demand_id, status, create_time, 
+      envs, real_test_time, real_online_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{repoName,jdbcType=VARCHAR}, 
+      #{branch,jdbcType=VARCHAR}, #{planTestTime,jdbcType=TIMESTAMP}, #{planOnlineTime,jdbcType=TIMESTAMP}, 
+      #{creatorId,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{productDemandId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{envs,jdbcType=INTEGER}, #{realTestTime,jdbcType=TIMESTAMP}, #{realOnlineTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into dev_demand
+		(id,name,repo_name,branch,plan_test_time,plan_online_time,creator_id,creator,parent_id,product_demand_id,status,create_time,envs,real_test_time,real_online_time)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=INTEGER},#{item.name,jdbcType=VARCHAR},#{item.repoName,jdbcType=VARCHAR},#{item.branch,jdbcType=VARCHAR},#{item.planTestTime,jdbcType=TIMESTAMP},#{item.planOnlineTime,jdbcType=TIMESTAMP},#{item.creatorId,jdbcType=INTEGER},#{item.creator,jdbcType=VARCHAR},#{item.parentId,jdbcType=INTEGER},#{item.productDemandId,jdbcType=INTEGER},#{item.status,jdbcType=TINYINT},#{item.createTime,jdbcType=TIMESTAMP},#{item.envs,jdbcType=INTEGER},#{item.realTestTime,jdbcType=TIMESTAMP},#{item.realOnlineTime,jdbcType=TIMESTAMP})
+	</foreach>
+  </insert>
+  <select id="findByPK_inMaster" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from dev_demand	where id = #{pk, jdbcType=INTEGER}
+  </select>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		count(1)
+	from
+		dev_demand
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from dev_demand
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from dev_demand
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=INTEGER}
+			</if>
+			<if test="entity.name != null" >
+				and name = #{entity.name,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.repoName != null" >
+				and repo_name = #{entity.repoName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.branch != null" >
+				and branch = #{entity.branch,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.planTestTime != null" >
+				and plan_test_time = #{entity.planTestTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.planOnlineTime != null" >
+				and plan_online_time = #{entity.planOnlineTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.creatorId != null" >
+				and creator_id = #{entity.creatorId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.creator != null" >
+				and creator = #{entity.creator,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.parentId != null" >
+				and parent_id = #{entity.parentId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.productDemandId != null" >
+				and product_demand_id = #{entity.productDemandId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.status != null" >
+				and status = #{entity.status,jdbcType=TINYINT}
+			</if>
+			<if test="entity.createTime != null" >
+				and create_time = #{entity.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.envs != null" >
+				and envs = #{entity.envs,jdbcType=INTEGER}
+			</if>
+			<if test="entity.realTestTime != null" >
+				and real_test_time = #{entity.realTestTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.realOnlineTime != null" >
+				and real_online_time = #{entity.realOnlineTime,jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from dev_demand
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  
+  <update id="upDemandStatus" >
+    update dev_demand set status = #{status,jdbcType=TINYINT} 
+    where id in (
+      <foreach collection="demandIds" item="item" separator="," index="index">
+        #{item,jdbcType=INTEGER}
+      </foreach>
+    )
+  </update>
+  
+  <select id="listParentDemand" resultMap="BaseResultMap" resultType="java.lang.Integer">
+    select 
+      <!-- <if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if> -->
+		<include refid="BaseColumnList"/>
+	from dev_demand
+	<![CDATA[
+	  where creator_id = #{creatorId, jdbcType=INTEGER} and parent_id is null and status > 0 and status != 15
+	]]>
+	order by create_time desc
+  </select>
+  
+  <select id="listChildDemand" resultMap="BaseResultMap" resultType="java.lang.Integer">
+    select 
+      <!-- <if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if> -->
+		<include refid="BaseColumnList"/>
+	from dev_demand
+	<![CDATA[
+	  where parent_id = #{parentId, jdbcType=INTEGER} and status > 0 
+	]]>
+	order by create_time desc
+  </select>
+  
+  <select id="listDemandByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+    select 
+      <include refid="BaseColumnList"/>
+    from dev_demand
+    where id in (
+      <foreach collection="demandIds" item="item" separator="," index="index">
+        #{item,jdbcType=INTEGER}
+      </foreach>
+    )
+  </select>
+  
+  <select id="getAvailDemandByRepoAndBranch" resultMap="BaseResultMap">
+    select 
+      <include refid="BaseColumnList"/>
+    from dev_demand
+    where repo_name = #{repoName, jdbcType=VARCHAR} 
+       and branch = #{branchName,jdbcType=VARCHAR}
+      <![CDATA[ and status >= 0 and status != 15]]>
+    order by create_time desc limit 1
+  </select>
+  
+  <select id="listRepoDemand" resultMap="BaseResultMap">
+    select 
+      <include refid="BaseColumnList"/>
+	from dev_demand
+	where 
+	   repo_name = #{repoName,jdbcType=VARCHAR}
+	 <![CDATA[ and status >= 0 and status != 15]]>
+	 <if test="demandIdList != null" >
+	  and not id in (
+	   <foreach collection="demandIdList" item="item" separator="," index="index">
+	     #{item,jdbcType=INTEGER}
+	   </foreach>
+	   )
+	  and not parent_id in (
+	    <foreach collection="demandIdList" item="item" separator="," index="index">
+	     #{item,jdbcType=INTEGER}
+	   </foreach>
+	  )
+	 </if>
+	order by create_time desc
+  </select>
+</mapper>

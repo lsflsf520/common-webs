@@ -1,0 +1,3 @@
+repo=stiku-old-common
+pom=oldcommon-parent/pom.xml
+cmd=deploy

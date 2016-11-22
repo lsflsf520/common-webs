@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="default" >
+ 
+  <select id="findStdData" parameterType="java.util.Map" resultType="java.util.TreeMap">
+    select
+		grade_year, problem_num, student_num, avg_problem_num, student_section, avg_login_num
+	from tb_student_offline_operation
+	where stat_date = #{startDate, jdbcType=VARCHAR}
+   </select>
+   
+   <select id="findStdTotalData" parameterType="java.util.Map" resultType="java.util.TreeMap">
+    select
+		avg(problem_num) problem_num, avg(student_num) student_num, avg(avg_problem_num) avg_problem_num
+	from tb_student_offline_operation
+	where stat_date = #{startDate, jdbcType=VARCHAR}
+   </select>
+   
+   <select id="stdLogonData" parameterType="java.util.Map" resultType="java.util.TreeMap">
+    <![CDATA[
+    select
+		stat_date, logon_cnt, logon_user_cnt, land_length, if(isnull(logon_user_cnt) or logon_user_cnt = 0, 0, land_length/logon_user_cnt) avg_land_length
+	from std_day_logon_data
+	where stat_date >= #{startDate, jdbcType=VARCHAR} and stat_date < #{endDate, jdbcType=VARCHAR}
+	order by stat_date
+	]]>
+   </select>
+   
+   <select id="stdLogonHourData" parameterType="java.util.Map" resultType="java.util.TreeMap">
+    <![CDATA[
+    select
+		stat_time, logon_cnt, logon_user_cnt, land_length, if(isnull(logon_user_cnt) or logon_user_cnt = 0, 0, land_length/logon_user_cnt) avg_land_length
+	from std_hour_logon_data
+	where stat_time >= #{startDate, jdbcType=VARCHAR} and stat_time < #{endDate, jdbcType=VARCHAR}
+	order by stat_time
+	]]>
+   </select>
+   
+   <select id="xnLogData" parameterType="java.util.Map" resultType="java.util.TreeMap">
+    <![CDATA[
+    select
+		method, total_cnt, avg_time, max_time, min_time
+	from xn_log_stat
+	where stat_date = #{yesterday, jdbcType=VARCHAR} and project_name = #{projectName, jdbcType=VARCHAR}
+	    and m_type = #{methodType, jdbcType=VARCHAR}
+	order by total_cnt desc
+	]]>
+   </select>
+   
+   <select id="pageTimeLogData" parameterType="java.util.Map" resultType="java.util.TreeMap">
+    <![CDATA[
+    select
+		stat_date, location, title, avg_stay_time, max_stay_time, min_stay_time
+	from pagetime_log_stat
+	where stat_date = #{yesterday, jdbcType=VARCHAR} and project_name = #{projectName, jdbcType=VARCHAR}
+	order by avg_stay_time desc
+	]]>
+   </select>
+</mapper>

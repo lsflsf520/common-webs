@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbExtendFinalRecordDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbExtendFinalRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="property_id" property="propertyId" jdbcType="BIGINT" />
+    <result column="old_value" property="oldValue" jdbcType="VARCHAR" />
+    <result column="new_value" property="newValue" jdbcType="VARCHAR" />
+    <result column="source_id" property="sourceId" jdbcType="BIGINT" />
+    <result column="manager_id" property="managerId" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, property_id, old_value, new_value, source_id, manager_id, modify_time
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_extend_final_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_extend_final_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbExtendFinalRecord" >
+    insert into tb_extend_final_record (id, property_id, old_value, 
+      new_value, source_id, manager_id, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{propertyId,jdbcType=BIGINT}, #{oldValue,jdbcType=VARCHAR}, 
+      #{newValue,jdbcType=VARCHAR}, #{sourceId,jdbcType=BIGINT}, #{managerId,jdbcType=BIGINT}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbExtendFinalRecord" >
+    update tb_extend_final_record
+    <set >
+      <if test="propertyId != null" >
+        property_id = #{propertyId,jdbcType=BIGINT},
+      </if>
+      <if test="oldValue != null" >
+        old_value = #{oldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="newValue != null" >
+        new_value = #{newValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceId != null" >
+        source_id = #{sourceId,jdbcType=BIGINT},
+      </if>
+      <if test="managerId != null" >
+        manager_id = #{managerId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbExtendFinalRecord" >
+    insert into tb_extend_final_record (id, property_id, old_value, 
+      new_value, source_id, manager_id, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{propertyId,jdbcType=BIGINT}, #{oldValue,jdbcType=VARCHAR}, 
+      #{newValue,jdbcType=VARCHAR}, #{sourceId,jdbcType=BIGINT}, #{managerId,jdbcType=BIGINT}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tb_extend_final_record
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultType="com.yisi.stiku.basedata.entity.TbExtendFinalRecord" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_extend_final_record
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultType="com.yisi.stiku.basedata.entity.TbExtendFinalRecord" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_extend_final_record
+  </select>
+  <select id="findByEntity" resultType="com.yisi.stiku.basedata.entity.TbExtendFinalRecord" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_extend_final_record
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.propertyId != null" >
+				and property_id = #{entity.propertyId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.oldValue != null" >
+				and old_value = #{entity.oldValue,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.newValue != null" >
+				and new_value = #{entity.newValue,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.sourceId != null" >
+				and source_id = #{entity.sourceId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.managerId != null" >
+				and manager_id = #{entity.managerId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.modifyTime != null" >
+				and modify_time = #{entity.modifyTime,jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

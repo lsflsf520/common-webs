@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbProblemDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbProblem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="point_id" property="pointId" jdbcType="BIGINT" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="answer_path" property="answerPath" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="answer" property="answer" jdbcType="INTEGER" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="is_yuanti" property="isYuanti" jdbcType="INTEGER" />
+    <result column="tb_yuanti_id" property="tbYuantiId" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="difficult" property="difficult" jdbcType="DOUBLE" />
+    <result column="is_school_type" property="isSchoolType" jdbcType="INTEGER" />
+    <result column="server_id" property="serverId" jdbcType="VARCHAR" />
+    <result column="is_task" property="isTask" jdbcType="INTEGER" />
+    <result column="sequence" property="sequence" jdbcType="BIGINT" />
+    <result column="video_id" property="videoId" jdbcType="BIGINT" />
+    <result column="is_approved" property="isApproved" jdbcType="INTEGER" />
+    <result column="is_enable" property="isEnable" jdbcType="INTEGER" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="done_count" property="doneCount" jdbcType="INTEGER" />
+    <result column="index_no" property="indexNo" jdbcType="INTEGER" />
+    <result column="is_collection" property="isCollection" jdbcType="INTEGER" />
+    <result column="problem_score" property="problemScore" jdbcType="DOUBLE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yisi.stiku.basedata.entity.TbProblem" extends="BaseResultMap" >
+    <result column="answer_content" property="answerContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, point_id, path, answer_path, content, type, answer, origin, is_yuanti, tb_yuanti_id, 
+    update_time, year, difficult, is_school_type, server_id, is_task, sequence, video_id, 
+    is_approved, is_enable, note, acl_code, acl_type, created_by, created_dt, updated_by, 
+    updated_dt, version, done_count, index_no, is_collection, problem_score
+  </sql>
+  <sql id="Blob_Column_List" >
+    answer_content
+  </sql>
+  <select id="findByPK" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_problem
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_problem
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbProblem" >
+    insert into tb_problem (id, point_id, path, 
+      answer_path, content, type, 
+      answer, origin, is_yuanti, 
+      tb_yuanti_id, update_time, year, 
+      difficult, is_school_type, server_id, 
+      is_task, sequence, video_id, 
+      is_approved, is_enable, note, 
+      acl_code, acl_type, created_by, 
+      created_dt, updated_by, updated_dt, 
+      version, done_count, index_no, 
+      is_collection, problem_score, answer_content
+      )
+    values (#{id,jdbcType=BIGINT}, #{pointId,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, 
+      #{answerPath,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{answer,jdbcType=INTEGER}, #{origin,jdbcType=VARCHAR}, #{isYuanti,jdbcType=INTEGER}, 
+      #{tbYuantiId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{year,jdbcType=INTEGER}, 
+      #{difficult,jdbcType=DOUBLE}, #{isSchoolType,jdbcType=INTEGER}, #{serverId,jdbcType=VARCHAR}, 
+      #{isTask,jdbcType=INTEGER}, #{sequence,jdbcType=BIGINT}, #{videoId,jdbcType=BIGINT}, 
+      #{isApproved,jdbcType=INTEGER}, #{isEnable,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, 
+      #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{doneCount,jdbcType=INTEGER}, #{indexNo,jdbcType=INTEGER}, 
+      #{isCollection,jdbcType=INTEGER}, #{problemScore,jdbcType=DOUBLE}, #{answerContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbProblem" >
+    update tb_problem
+    <set >
+      <if test="pointId != null" >
+        point_id = #{pointId,jdbcType=BIGINT},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="answerPath != null" >
+        answer_path = #{answerPath,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=INTEGER},
+      </if>
+      <if test="origin != null" >
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="isYuanti != null" >
+        is_yuanti = #{isYuanti,jdbcType=INTEGER},
+      </if>
+      <if test="tbYuantiId != null" >
+        tb_yuanti_id = #{tbYuantiId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="difficult != null" >
+        difficult = #{difficult,jdbcType=DOUBLE},
+      </if>
+      <if test="isSchoolType != null" >
+        is_school_type = #{isSchoolType,jdbcType=INTEGER},
+      </if>
+      <if test="serverId != null" >
+        server_id = #{serverId,jdbcType=VARCHAR},
+      </if>
+      <if test="isTask != null" >
+        is_task = #{isTask,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=BIGINT},
+      </if>
+      <if test="videoId != null" >
+        video_id = #{videoId,jdbcType=BIGINT},
+      </if>
+      <if test="isApproved != null" >
+        is_approved = #{isApproved,jdbcType=INTEGER},
+      </if>
+      <if test="isEnable != null" >
+        is_enable = #{isEnable,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="doneCount != null" >
+        done_count = #{doneCount,jdbcType=INTEGER},
+      </if>
+      <if test="indexNo != null" >
+        index_no = #{indexNo,jdbcType=INTEGER},
+      </if>
+      <if test="isCollection != null" >
+        is_collection = #{isCollection,jdbcType=INTEGER},
+      </if>
+      <if test="problemScore != null" >
+        problem_score = #{problemScore,jdbcType=DOUBLE},
+      </if>
+      <if test="answerContent != null" >
+        answer_content = #{answerContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yisi.stiku.basedata.entity.TbProblem" >
+    update tb_problem
+    set point_id = #{pointId,jdbcType=BIGINT},
+      path = #{path,jdbcType=VARCHAR},
+      answer_path = #{answerPath,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      answer = #{answer,jdbcType=INTEGER},
+      origin = #{origin,jdbcType=VARCHAR},
+      is_yuanti = #{isYuanti,jdbcType=INTEGER},
+      tb_yuanti_id = #{tbYuantiId,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      year = #{year,jdbcType=INTEGER},
+      difficult = #{difficult,jdbcType=DOUBLE},
+      is_school_type = #{isSchoolType,jdbcType=INTEGER},
+      server_id = #{serverId,jdbcType=VARCHAR},
+      is_task = #{isTask,jdbcType=INTEGER},
+      sequence = #{sequence,jdbcType=BIGINT},
+      video_id = #{videoId,jdbcType=BIGINT},
+      is_approved = #{isApproved,jdbcType=INTEGER},
+      is_enable = #{isEnable,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      acl_code = #{aclCode,jdbcType=VARCHAR},
+      acl_type = #{aclType,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      done_count = #{doneCount,jdbcType=INTEGER},
+      index_no = #{indexNo,jdbcType=INTEGER},
+      is_collection = #{isCollection,jdbcType=INTEGER},
+      problem_score = #{problemScore,jdbcType=DOUBLE},
+      answer_content = #{answerContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbProblem" >
+    insert into tb_problem (id, point_id, path, 
+      answer_path, content, type, 
+      answer, origin, is_yuanti, 
+      tb_yuanti_id, update_time, year, 
+      difficult, is_school_type, server_id, 
+      is_task, sequence, video_id, 
+      is_approved, is_enable, note, 
+      acl_code, acl_type, created_by, 
+      created_dt, updated_by, updated_dt, 
+      version, done_count, index_no, 
+      is_collection, problem_score, answer_content
+      )
+    values (#{id,jdbcType=BIGINT}, #{pointId,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, 
+      #{answerPath,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{answer,jdbcType=INTEGER}, #{origin,jdbcType=VARCHAR}, #{isYuanti,jdbcType=INTEGER}, 
+      #{tbYuantiId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{year,jdbcType=INTEGER}, 
+      #{difficult,jdbcType=DOUBLE}, #{isSchoolType,jdbcType=INTEGER}, #{serverId,jdbcType=VARCHAR}, 
+      #{isTask,jdbcType=INTEGER}, #{sequence,jdbcType=BIGINT}, #{videoId,jdbcType=BIGINT}, 
+      #{isApproved,jdbcType=INTEGER}, #{isEnable,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, 
+      #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{doneCount,jdbcType=INTEGER}, #{indexNo,jdbcType=INTEGER}, 
+      #{isCollection,jdbcType=INTEGER}, #{problemScore,jdbcType=DOUBLE}, #{answerContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tb_problem
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap">
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.pointId != null" >
+				and point_id = #{entity.pointId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.path != null" >
+				and path = #{entity.path,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.answerPath != null" >
+				and answer_path = #{entity.answerPath,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.content != null" >
+				and content = #{entity.content,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.type != null" >
+				and type = #{entity.type,jdbcType=INTEGER}
+			</if>
+			<if test="entity.answer != null" >
+				and answer = #{entity.answer,jdbcType=INTEGER}
+			</if>
+			<if test="entity.origin != null" >
+				and origin = #{entity.origin,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.isYuanti != null" >
+				and is_yuanti = #{entity.isYuanti,jdbcType=INTEGER}
+			</if>
+			<if test="entity.tbYuantiId != null" >
+				and tb_yuanti_id = #{entity.tbYuantiId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.updateTime != null" >
+				and update_time = #{entity.updateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.year != null" >
+				and year = #{entity.year,jdbcType=INTEGER}
+			</if>
+			<if test="entity.difficult != null" >
+				and difficult = #{entity.difficult,jdbcType=DOUBLE}
+			</if>
+			<if test="entity.isSchoolType != null" >
+				and is_school_type = #{entity.isSchoolType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.serverId != null" >
+				and server_id = #{entity.serverId,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.isTask != null" >
+				and is_task = #{entity.isTask,jdbcType=INTEGER}
+			</if>
+			<if test="entity.sequence != null" >
+				and sequence = #{entity.sequence,jdbcType=BIGINT}
+			</if>
+			<if test="entity.videoId != null" >
+				and video_id = #{entity.videoId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.isApproved != null" >
+				and is_approved = #{entity.isApproved,jdbcType=INTEGER}
+			</if>
+			<if test="entity.isEnable != null" >
+				and is_enable = #{entity.isEnable,jdbcType=INTEGER}
+			</if>
+			<if test="entity.note != null" >
+				and note = #{entity.note,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.doneCount != null" >
+				and done_count = #{entity.doneCount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.indexNo != null" >
+				and index_no = #{entity.indexNo,jdbcType=INTEGER}
+			</if>
+			<if test="entity.isCollection != null" >
+				and is_collection = #{entity.isCollection,jdbcType=INTEGER}
+			</if>
+			<if test="entity.problemScore != null" >
+				and problem_score = #{entity.problemScore,jdbcType=DOUBLE}
+			</if>
+			<if test="entity.answerContent != null" >
+				and answer_content = #{entity.answerContent,jdbcType=LONGVARCHAR}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

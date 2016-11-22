@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbProblemModelPromDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbProblemModelProm" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="problem_prep_id" property="problemPrepId" jdbcType="BIGINT" />
+    <result column="problem_id" property="problemId" jdbcType="BIGINT" />
+    <result column="problem_sequence" property="problemSequence" jdbcType="BIGINT" />
+    <result column="problem_model_id" property="problemModelId" jdbcType="BIGINT" />
+    <result column="problem_index" property="problemIndex" jdbcType="INTEGER" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, problem_prep_id, problem_id, problem_sequence, problem_model_id, problem_index, 
+    acl_code, acl_type, created_by, created_dt, updated_by, updated_dt, version
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_problem_model_prom
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_problem_model_prom
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbProblemModelProm" >
+    insert into tb_problem_model_prom (id, problem_prep_id, problem_id, 
+      problem_sequence, problem_model_id, problem_index, 
+      acl_code, acl_type, created_by, 
+      created_dt, updated_by, updated_dt, 
+      version)
+    values (#{id,jdbcType=BIGINT}, #{problemPrepId,jdbcType=BIGINT}, #{problemId,jdbcType=BIGINT}, 
+      #{problemSequence,jdbcType=BIGINT}, #{problemModelId,jdbcType=BIGINT}, #{problemIndex,jdbcType=INTEGER}, 
+      #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbProblemModelProm" >
+    update tb_problem_model_prom
+    <set >
+      <if test="problemPrepId != null" >
+        problem_prep_id = #{problemPrepId,jdbcType=BIGINT},
+      </if>
+      <if test="problemId != null" >
+        problem_id = #{problemId,jdbcType=BIGINT},
+      </if>
+      <if test="problemSequence != null" >
+        problem_sequence = #{problemSequence,jdbcType=BIGINT},
+      </if>
+      <if test="problemModelId != null" >
+        problem_model_id = #{problemModelId,jdbcType=BIGINT},
+      </if>
+      <if test="problemIndex != null" >
+        problem_index = #{problemIndex,jdbcType=INTEGER},
+      </if>
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbProblemModelProm" >
+    insert into tb_problem_model_prom (id, problem_prep_id, problem_id, 
+      problem_sequence, problem_model_id, problem_index, 
+      acl_code, acl_type, created_by, 
+      created_dt, updated_by, updated_dt, 
+      version)
+    values (#{id,jdbcType=BIGINT}, #{problemPrepId,jdbcType=BIGINT}, #{problemId,jdbcType=BIGINT}, 
+      #{problemSequence,jdbcType=BIGINT}, #{problemModelId,jdbcType=BIGINT}, #{problemIndex,jdbcType=INTEGER}, 
+      #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tb_problem_model_prom
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultType="com.yisi.stiku.basedata.entity.TbProblemModelProm" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem_model_prom
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultType="com.yisi.stiku.basedata.entity.TbProblemModelProm" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem_model_prom
+  </select>
+  <select id="findByEntity" resultType="com.yisi.stiku.basedata.entity.TbProblemModelProm" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem_model_prom
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.problemPrepId != null" >
+				and problem_prep_id = #{entity.problemPrepId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.problemId != null" >
+				and problem_id = #{entity.problemId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.problemSequence != null" >
+				and problem_sequence = #{entity.problemSequence,jdbcType=BIGINT}
+			</if>
+			<if test="entity.problemModelId != null" >
+				and problem_model_id = #{entity.problemModelId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.problemIndex != null" >
+				and problem_index = #{entity.problemIndex,jdbcType=INTEGER}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

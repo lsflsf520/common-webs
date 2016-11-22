@@ -1,0 +1,3 @@
+repo=stiku-student
+pom=student/pom.xml
+cmd=deploy

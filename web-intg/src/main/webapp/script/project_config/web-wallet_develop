@@ -1,0 +1,5 @@
+servers=192.168.30.91
+repo=stiku-platform
+pom=wallet/web-wallet/pom.xml
+cmd=package
+sleep=15

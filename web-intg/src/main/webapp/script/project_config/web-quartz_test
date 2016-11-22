@@ -1,0 +1,5 @@
+servers=192.168.30.93,192.168.30.94
+repo=stiku-platform
+pom=web-quartz/pom.xml
+cmd=package
+sleep=15

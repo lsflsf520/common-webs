@@ -1,0 +1,6 @@
+servers=192.168.30.93,192.168.30.94
+repo=stiku-recommender
+pom=recommender/web-jy/pom.xml
+parent_pom=recommender/pom.xml
+cmd=package
+sleep=45

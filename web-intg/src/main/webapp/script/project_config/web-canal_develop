@@ -1,0 +1,5 @@
+servers=192.168.30.91
+repo=stiku-platform
+pom=cannal/web-canal/pom.xml
+cmd=package
+sleep=15

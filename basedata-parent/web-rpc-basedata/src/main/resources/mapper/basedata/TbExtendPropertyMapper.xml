@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbExtendPropertyDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbExtendProperty" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="tb_name" property="tbName" jdbcType="VARCHAR" />
+    <result column="tb_refer" property="tbRefer" jdbcType="VARCHAR" />
+    <result column="show_name" property="showName" jdbcType="VARCHAR" />
+    <result column="convert_class" property="convertClass" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, name, type, tb_name, tb_refer, show_name, convert_class
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_extend_property
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_extend_property
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbExtendProperty" >
+    insert into tb_extend_property (id, name, type, 
+      tb_name, tb_refer, show_name, 
+      convert_class)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{tbName,jdbcType=VARCHAR}, #{tbRefer,jdbcType=VARCHAR}, #{showName,jdbcType=VARCHAR}, 
+      #{convertClass,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbExtendProperty" >
+    update tb_extend_property
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="tbName != null" >
+        tb_name = #{tbName,jdbcType=VARCHAR},
+      </if>
+      <if test="tbRefer != null" >
+        tb_refer = #{tbRefer,jdbcType=VARCHAR},
+      </if>
+      <if test="showName != null" >
+        show_name = #{showName,jdbcType=VARCHAR},
+      </if>
+      <if test="convertClass != null" >
+        convert_class = #{convertClass,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbExtendProperty" >
+    insert into tb_extend_property (id, name, type, 
+      tb_name, tb_refer, show_name, 
+      convert_class)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{tbName,jdbcType=VARCHAR}, #{tbRefer,jdbcType=VARCHAR}, #{showName,jdbcType=VARCHAR}, 
+      #{convertClass,jdbcType=VARCHAR})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tb_extend_property
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultType="com.yisi.stiku.basedata.entity.TbExtendProperty" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_extend_property
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultType="com.yisi.stiku.basedata.entity.TbExtendProperty" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_extend_property
+  </select>
+  <select id="findByEntity" resultType="com.yisi.stiku.basedata.entity.TbExtendProperty" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_extend_property
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.name != null" >
+				and name = #{entity.name,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.type != null" >
+				and type = #{entity.type,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.tbName != null" >
+				and tb_name = #{entity.tbName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.tbRefer != null" >
+				and tb_refer = #{entity.tbRefer,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.showName != null" >
+				and show_name = #{entity.showName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.convertClass != null" >
+				and convert_class = #{entity.convertClass,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

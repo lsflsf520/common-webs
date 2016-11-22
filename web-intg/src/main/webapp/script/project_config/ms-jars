@@ -1,0 +1,3 @@
+repo=stiku-ms
+pom=ms/pom.xml
+cmd=deploy

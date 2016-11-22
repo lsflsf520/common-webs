@@ -1,0 +1,3 @@
+repo=stiku-platform
+pom=wallet/pom.xml
+cmd=deploy

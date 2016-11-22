@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:cache="http://www.springframework.org/schema/cache" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:repository="http://www.springframework.org/schema/data/repository"
+    xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+    default-lazy-init="false">
+
+    <description>Spring公共配置 </description>
+    
+    <!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+    <context:component-scan base-package="com.yisi.stiku" use-default-filters="false" scoped-proxy="targetClass">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+    </context:component-scan>
+    
+    <bean id="basedataSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource">
+          <ref bean="dataSourceBaseDataMaster"/>
+        </property>  
+        <property name="mapperLocations"  
+            value="classpath:mapper/basedata/*Mapper.xml" />  
+   </bean> 
+    
+   <bean id="privSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource">
+          <ref bean="dataSourcePrivMaster"/>
+        </property>  
+        <property name="mapperLocations"  
+            value="classpath:mapper/priv/*Mapper.xml" />  
+   </bean>
+   
+    <bean id="msgSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource">
+          <ref bean="dataSourceMsgMaster"/>
+        </property>  
+        <property name="mapperLocations"  
+            value="classpath:mapper/msg/*Mapper.xml" />  
+   </bean>
+   
+   <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">    
+        <constructor-arg index="0" ref="basedataSqlSessionFactory" />    
+   </bean>  
+   
+   <bean id="privSqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">    
+        <constructor-arg index="0" ref="privSqlSessionFactory" />    
+   </bean>  
+   
+    <bean id="msgSqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">    
+        <constructor-arg index="0" ref="msgSqlSessionFactory" />    
+   </bean>    
+      
+   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="basePackage" value="com.yisi.stiku.basedata" /> 
+        <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate"/> 
+        <property name="markerInterface" value="com.yisi.stiku.db.dao.BaseDao"/>
+   </bean> 
+   
+   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="basePackage" value="com.yisi.stiku.priv" /> 
+        <property name="sqlSessionTemplateBeanName" value="privSqlSessionTemplate"/> 
+        <property name="markerInterface" value="com.yisi.stiku.db.dao.BaseDao"/>
+   </bean>
+   
+   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="basePackage" value="com.yisi.stiku.msg" /> 
+        <property name="sqlSessionTemplateBeanName" value="msgSqlSessionTemplate"/> 
+        <property name="markerInterface" value="com.yisi.stiku.db.dao.BaseDao"/>
+   </bean>
+    
+    <!-- 
+   <bean id="sqlSessionTemplate" class="com.yisi.stiku.db.multi.MultiSqlSessionTemplete">    
+        <constructor-arg index="0" ref="basedataSqlSessionFactory" />    
+        <property name="targetSqlSessionFactorys">
+            <map>     
+                <entry value-ref="basedataSqlSessionFactory" key="basedata"/>
+                <entry value-ref="privSqlSessionFactory" key="priv"/>
+            </map> 
+        </property>
+   </bean>    
+      
+   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="basePackage" value="com.yisi.stiku" />  
+        <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate"/>
+        <property name="markerInterface" value="com.yisi.stiku.db.dao.BaseDao"/>
+   </bean>  
+ -->
+   <!-- 开启事务注解驱动，凡是标记有 @Transactional标记的方法，都将启用事务 -->
+   <tx:annotation-driven transaction-manager="privTransactionManager" proxy-target-class="true" />  
+   <tx:annotation-driven transaction-manager="basedataTransactionManager" proxy-target-class="true" />  
+    <!-- 事务管理器 -->  
+    <bean id="privTransactionManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSourcePrivMaster" />  
+    </bean> 
+    
+    <bean id="basedataTransactionManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSourceBaseDataMaster" />  
+    </bean>
+
+</beans>

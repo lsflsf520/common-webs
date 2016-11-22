@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbBookDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbBook" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="s_type" property="sType" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="press" property="press" jdbcType="VARCHAR" />
+    <result column="ts" property="ts" jdbcType="TIMESTAMP" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="stype" property="stype" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, code, name, type, s_type, year, press, ts, acl_code, acl_type, created_by, created_dt, 
+    updated_by, updated_dt, version, stype
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_book
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_book
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbBook" >
+    insert into tb_book (id, code, name, 
+      type, s_type, year, 
+      press, ts, acl_code, 
+      acl_type, created_by, created_dt, 
+      updated_by, updated_dt, version, 
+      stype)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{sType,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, 
+      #{press,jdbcType=VARCHAR}, #{ts,jdbcType=TIMESTAMP}, #{aclCode,jdbcType=VARCHAR}, 
+      #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, 
+      #{stype,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbBook" >
+    update tb_book
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="sType != null" >
+        s_type = #{sType,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="press != null" >
+        press = #{press,jdbcType=VARCHAR},
+      </if>
+      <if test="ts != null" >
+        ts = #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="stype != null" >
+        stype = #{stype,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbBook" >
+    insert into tb_book (id, code, name, 
+      type, s_type, year, 
+      press, ts, acl_code, 
+      acl_type, created_by, created_dt, 
+      updated_by, updated_dt, version, 
+      stype)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{sType,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, 
+      #{press,jdbcType=VARCHAR}, #{ts,jdbcType=TIMESTAMP}, #{aclCode,jdbcType=VARCHAR}, 
+      #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, 
+      #{stype,jdbcType=INTEGER})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		TB_BOOK
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_BOOK
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_BOOK
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_BOOK
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.code != null" >
+				and code = #{entity.code,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.name != null" >
+				and name = #{entity.name,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.type != null" >
+				and type = #{entity.type,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.sType != null" >
+				and s_type = #{entity.sType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.year != null" >
+				and year = #{entity.year,jdbcType=INTEGER}
+			</if>
+			<if test="entity.press != null" >
+				and press = #{entity.press,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.ts != null" >
+				and ts = #{entity.ts,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.stype != null" >
+				and stype = #{entity.stype,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

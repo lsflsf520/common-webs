@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbVideoZhenduanDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbVideoZhenduan" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="problem_id" property="problemId" jdbcType="BIGINT" />
+    <result column="point_id" property="pointId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, url, flag, problem_id, point_id
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_video_zhenduan
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_video_zhenduan
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbVideoZhenduan" >
+    insert into tb_video_zhenduan (id, url, flag, 
+      problem_id, point_id)
+    values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, 
+      #{problemId,jdbcType=BIGINT}, #{pointId,jdbcType=BIGINT})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbVideoZhenduan" >
+    update tb_video_zhenduan
+    <set >
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="problemId != null" >
+        problem_id = #{problemId,jdbcType=BIGINT},
+      </if>
+      <if test="pointId != null" >
+        point_id = #{pointId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbVideoZhenduan" >
+    insert into tb_video_zhenduan (id, url, flag, 
+      problem_id, point_id)
+    values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, 
+      #{problemId,jdbcType=BIGINT}, #{pointId,jdbcType=BIGINT})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		TB_VIDEO_ZHENDUAN
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_VIDEO_ZHENDUAN
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_VIDEO_ZHENDUAN
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_VIDEO_ZHENDUAN
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.url != null" >
+				and url = #{entity.url,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.flag != null" >
+				and flag = #{entity.flag,jdbcType=INTEGER}
+			</if>
+			<if test="entity.problemId != null" >
+				and problem_id = #{entity.problemId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.pointId != null" >
+				and point_id = #{entity.pointId,jdbcType=BIGINT}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

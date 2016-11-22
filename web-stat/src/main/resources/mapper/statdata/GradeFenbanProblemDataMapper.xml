@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.statdata.dao.GradeFenbanProblemDataDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.statdata.entity.GradeFenbanProblemData" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="weektest_id" property="weektestId" jdbcType="BIGINT" />
+    <result column="weektest_name" property="weektestName" jdbcType="VARCHAR" />
+    <result column="school_id" property="schoolId" jdbcType="BIGINT" />
+    <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+    <result column="grade_year" property="gradeYear" jdbcType="INTEGER" />
+    <result column="index_no" property="indexNo" jdbcType="INTEGER" />
+    <result column="problem_id" property="problemId" jdbcType="BIGINT" />
+    <result column="points" property="points" jdbcType="VARCHAR" />
+    <result column="right_cnt" property="rightCnt" jdbcType="INTEGER" />
+    <result column="wrong_cnt" property="wrongCnt" jdbcType="INTEGER" />
+    <result column="avg_score_percent" property="avgScorePercent" jdbcType="INTEGER" />
+    <result column="excellent_score_percent" property="excellentScorePercent" jdbcType="INTEGER" />
+    <result column="pass_score_percent" property="passScorePercent" jdbcType="INTEGER" />
+    <result column="unpass_score_percent" property="unpassScorePercent" jdbcType="INTEGER" />
+    <result column="unpass_diff_score_percent" property="unpassDiffScorePercent" jdbcType="INTEGER" />
+    <result column="pass_diff_score_percent" property="passDiffScorePercent" jdbcType="INTEGER" />
+    <result column="excellent_diff_score_percent" property="excellentDiffScorePercent" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="task_pub_time" property="taskPubTime" jdbcType="TIMESTAMP" />
+    <result column="is_high_freq" property="isHighFreq" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, weektest_id, weektest_name, school_id, school_name, grade_year, index_no, problem_id, 
+    points, right_cnt, wrong_cnt, avg_score_percent, excellent_score_percent, pass_score_percent, 
+    unpass_score_percent, unpass_diff_score_percent, pass_diff_score_percent, excellent_diff_score_percent, 
+    create_time, task_pub_time, is_high_freq
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="BaseColumnList" />
+    from grade_fenban_problem_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Integer" >
+    delete from grade_fenban_problem_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.statdata.entity.GradeFenbanProblemData" >
+    insert into grade_fenban_problem_data (id, weektest_id, weektest_name, 
+      school_id, school_name, grade_year, 
+      index_no, problem_id, points, 
+      right_cnt, wrong_cnt, avg_score_percent, 
+      excellent_score_percent, pass_score_percent, 
+      unpass_score_percent, unpass_diff_score_percent, 
+      pass_diff_score_percent, excellent_diff_score_percent, 
+      create_time, task_pub_time, is_high_freq
+      )
+    values (#{id,jdbcType=INTEGER}, #{weektestId,jdbcType=BIGINT}, #{weektestName,jdbcType=VARCHAR}, 
+      #{schoolId,jdbcType=BIGINT}, #{schoolName,jdbcType=VARCHAR}, #{gradeYear,jdbcType=INTEGER}, 
+      #{indexNo,jdbcType=INTEGER}, #{problemId,jdbcType=BIGINT}, #{points,jdbcType=VARCHAR}, 
+      #{rightCnt,jdbcType=INTEGER}, #{wrongCnt,jdbcType=INTEGER}, #{avgScorePercent,jdbcType=INTEGER}, 
+      #{excellentScorePercent,jdbcType=INTEGER}, #{passScorePercent,jdbcType=INTEGER}, 
+      #{unpassScorePercent,jdbcType=INTEGER}, #{unpassDiffScorePercent,jdbcType=INTEGER}, 
+      #{passDiffScorePercent,jdbcType=INTEGER}, #{excellentDiffScorePercent,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{taskPubTime,jdbcType=TIMESTAMP}, #{isHighFreq,jdbcType=TINYINT}
+      )
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.statdata.entity.GradeFenbanProblemData" >
+    update grade_fenban_problem_data
+    <set >
+      <if test="weektestId != null" >
+        weektest_id = #{weektestId,jdbcType=BIGINT},
+      </if>
+      <if test="weektestName != null" >
+        weektest_name = #{weektestName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="schoolName != null" >
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeYear != null" >
+        grade_year = #{gradeYear,jdbcType=INTEGER},
+      </if>
+      <if test="indexNo != null" >
+        index_no = #{indexNo,jdbcType=INTEGER},
+      </if>
+      <if test="problemId != null" >
+        problem_id = #{problemId,jdbcType=BIGINT},
+      </if>
+      <if test="points != null" >
+        points = #{points,jdbcType=VARCHAR},
+      </if>
+      <if test="rightCnt != null" >
+        right_cnt = #{rightCnt,jdbcType=INTEGER},
+      </if>
+      <if test="wrongCnt != null" >
+        wrong_cnt = #{wrongCnt,jdbcType=INTEGER},
+      </if>
+      <if test="avgScorePercent != null" >
+        avg_score_percent = #{avgScorePercent,jdbcType=INTEGER},
+      </if>
+      <if test="excellentScorePercent != null" >
+        excellent_score_percent = #{excellentScorePercent,jdbcType=INTEGER},
+      </if>
+      <if test="passScorePercent != null" >
+        pass_score_percent = #{passScorePercent,jdbcType=INTEGER},
+      </if>
+      <if test="unpassScorePercent != null" >
+        unpass_score_percent = #{unpassScorePercent,jdbcType=INTEGER},
+      </if>
+      <if test="unpassDiffScorePercent != null" >
+        unpass_diff_score_percent = #{unpassDiffScorePercent,jdbcType=INTEGER},
+      </if>
+      <if test="passDiffScorePercent != null" >
+        pass_diff_score_percent = #{passDiffScorePercent,jdbcType=INTEGER},
+      </if>
+      <if test="excellentDiffScorePercent != null" >
+        excellent_diff_score_percent = #{excellentDiffScorePercent,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskPubTime != null" >
+        task_pub_time = #{taskPubTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isHighFreq != null" >
+        is_high_freq = #{isHighFreq,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.statdata.entity.GradeFenbanProblemData" >
+    insert into grade_fenban_problem_data (id, weektest_id, weektest_name, 
+      school_id, school_name, grade_year, 
+      index_no, problem_id, points, 
+      right_cnt, wrong_cnt, avg_score_percent, 
+      excellent_score_percent, pass_score_percent, 
+      unpass_score_percent, unpass_diff_score_percent, 
+      pass_diff_score_percent, excellent_diff_score_percent, 
+      create_time, task_pub_time, is_high_freq
+      )
+    values (#{id,jdbcType=INTEGER}, #{weektestId,jdbcType=BIGINT}, #{weektestName,jdbcType=VARCHAR}, 
+      #{schoolId,jdbcType=BIGINT}, #{schoolName,jdbcType=VARCHAR}, #{gradeYear,jdbcType=INTEGER}, 
+      #{indexNo,jdbcType=INTEGER}, #{problemId,jdbcType=BIGINT}, #{points,jdbcType=VARCHAR}, 
+      #{rightCnt,jdbcType=INTEGER}, #{wrongCnt,jdbcType=INTEGER}, #{avgScorePercent,jdbcType=INTEGER}, 
+      #{excellentScorePercent,jdbcType=INTEGER}, #{passScorePercent,jdbcType=INTEGER}, 
+      #{unpassScorePercent,jdbcType=INTEGER}, #{unpassDiffScorePercent,jdbcType=INTEGER}, 
+      #{passDiffScorePercent,jdbcType=INTEGER}, #{excellentDiffScorePercent,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{taskPubTime,jdbcType=TIMESTAMP}, #{isHighFreq,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into grade_fenban_problem_data
+		(id,weektest_id,weektest_name,school_id,school_name,grade_year,index_no,problem_id,points,right_cnt,wrong_cnt,avg_score_percent,excellent_score_percent,pass_score_percent,unpass_score_percent,unpass_diff_score_percent,pass_diff_score_percent,excellent_diff_score_percent,create_time,task_pub_time,is_high_freq)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=INTEGER},#{item.weektestId,jdbcType=BIGINT},#{item.weektestName,jdbcType=VARCHAR},#{item.schoolId,jdbcType=BIGINT},#{item.schoolName,jdbcType=VARCHAR},#{item.gradeYear,jdbcType=INTEGER},#{item.indexNo,jdbcType=INTEGER},#{item.problemId,jdbcType=BIGINT},#{item.points,jdbcType=VARCHAR},#{item.rightCnt,jdbcType=INTEGER},#{item.wrongCnt,jdbcType=INTEGER},#{item.avgScorePercent,jdbcType=INTEGER},#{item.excellentScorePercent,jdbcType=INTEGER},#{item.passScorePercent,jdbcType=INTEGER},#{item.unpassScorePercent,jdbcType=INTEGER},#{item.unpassDiffScorePercent,jdbcType=INTEGER},#{item.passDiffScorePercent,jdbcType=INTEGER},#{item.excellentDiffScorePercent,jdbcType=INTEGER},#{item.createTime,jdbcType=TIMESTAMP},#{item.taskPubTime,jdbcType=TIMESTAMP},#{item.isHighFreq,jdbcType=TINYINT})
+	</foreach>
+  </insert>
+  <select id="findByPK_inMaster" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from grade_fenban_problem_data	where id = #{pk, jdbcType=INTEGER}
+  </select>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		count(1)
+	from
+		grade_fenban_problem_data
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from grade_fenban_problem_data
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from grade_fenban_problem_data
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=INTEGER}
+			</if>
+			<if test="entity.weektestId != null" >
+				and weektest_id = #{entity.weektestId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.weektestName != null" >
+				and weektest_name = #{entity.weektestName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.schoolId != null" >
+				and school_id = #{entity.schoolId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.schoolName != null" >
+				and school_name = #{entity.schoolName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.gradeYear != null" >
+				and grade_year = #{entity.gradeYear,jdbcType=INTEGER}
+			</if>
+			<if test="entity.indexNo != null" >
+				and index_no = #{entity.indexNo,jdbcType=INTEGER}
+			</if>
+			<if test="entity.problemId != null" >
+				and problem_id = #{entity.problemId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.points != null" >
+				and points = #{entity.points,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.rightCnt != null" >
+				and right_cnt = #{entity.rightCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.wrongCnt != null" >
+				and wrong_cnt = #{entity.wrongCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.avgScorePercent != null" >
+				and avg_score_percent = #{entity.avgScorePercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.excellentScorePercent != null" >
+				and excellent_score_percent = #{entity.excellentScorePercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.passScorePercent != null" >
+				and pass_score_percent = #{entity.passScorePercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.unpassScorePercent != null" >
+				and unpass_score_percent = #{entity.unpassScorePercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.unpassDiffScorePercent != null" >
+				and unpass_diff_score_percent = #{entity.unpassDiffScorePercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.passDiffScorePercent != null" >
+				and pass_diff_score_percent = #{entity.passDiffScorePercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.excellentDiffScorePercent != null" >
+				and excellent_diff_score_percent = #{entity.excellentDiffScorePercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.createTime != null" >
+				and create_time = #{entity.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.taskPubTime != null" >
+				and task_pub_time = #{entity.taskPubTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.isHighFreq != null" >
+				and is_high_freq = #{entity.isHighFreq,jdbcType=TINYINT}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from grade_fenban_problem_data
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+</mapper>

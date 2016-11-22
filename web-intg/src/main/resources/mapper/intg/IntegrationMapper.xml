@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.intg.dao.IntegrationDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.intg.entity.Integration" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="repo_name" property="repoName" jdbcType="VARCHAR" />
+    <result column="env_name" property="envName" jdbcType="VARCHAR" />
+    <result column="dev_demand_ids" property="devDemandIds" jdbcType="VARCHAR" />
+    <result column="conflict_branch" property="conflictBranch" jdbcType="VARCHAR" />
+    <result column="wait_resolve_branch" property="waitResolveBranch" jdbcType="VARCHAR" />
+    <result column="in_release" property="inRelease" jdbcType="TINYINT" />
+    <result column="last_release_time" property="lastReleaseTime" jdbcType="TIMESTAMP" />
+    <result column="output_file" property="outputFile" jdbcType="VARCHAR" />
+    <result column="releaser" property="releaser" jdbcType="VARCHAR" />
+    <result column="release_project" property="releaseProject" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, repo_name, env_name, dev_demand_ids, conflict_branch, wait_resolve_branch, in_release, 
+    last_release_time, output_file, releaser, release_project
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="BaseColumnList" />
+    from integration
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Integer" >
+    delete from integration
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.intg.entity.Integration" >
+    insert into integration (id, repo_name, env_name, 
+      dev_demand_ids, conflict_branch, wait_resolve_branch, 
+      in_release, last_release_time, output_file, 
+      releaser, release_project)
+    values (#{id,jdbcType=INTEGER}, #{repoName,jdbcType=VARCHAR}, #{envName,jdbcType=VARCHAR}, 
+      #{devDemandIds,jdbcType=VARCHAR}, #{conflictBranch,jdbcType=VARCHAR}, #{waitResolveBranch,jdbcType=VARCHAR}, 
+      #{inRelease,jdbcType=TINYINT}, #{lastReleaseTime,jdbcType=TIMESTAMP}, #{outputFile,jdbcType=VARCHAR}, 
+      #{releaser,jdbcType=VARCHAR}, #{releaseProject,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.intg.entity.Integration" >
+    update integration
+    <set >
+      <if test="repoName != null" >
+        repo_name = #{repoName,jdbcType=VARCHAR},
+      </if>
+      <if test="envName != null" >
+        env_name = #{envName,jdbcType=VARCHAR},
+      </if>
+      <if test="devDemandIds != null" >
+        dev_demand_ids = #{devDemandIds,jdbcType=VARCHAR},
+      </if>
+      <if test="conflictBranch != null" >
+        conflict_branch = #{conflictBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="waitResolveBranch != null" >
+        wait_resolve_branch = #{waitResolveBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="inRelease != null" >
+        in_release = #{inRelease,jdbcType=TINYINT},
+      </if>
+      <if test="lastReleaseTime != null" >
+        last_release_time = #{lastReleaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outputFile != null" >
+        output_file = #{outputFile,jdbcType=VARCHAR},
+      </if>
+      <if test="releaser != null" >
+        releaser = #{releaser,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseProject != null" >
+        release_project = #{releaseProject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.intg.entity.Integration" >
+    insert into integration (id, repo_name, env_name, 
+      dev_demand_ids, conflict_branch, wait_resolve_branch, 
+      in_release, last_release_time, output_file, 
+      releaser, release_project)
+    values (#{id,jdbcType=INTEGER}, #{repoName,jdbcType=VARCHAR}, #{envName,jdbcType=VARCHAR}, 
+      #{devDemandIds,jdbcType=VARCHAR}, #{conflictBranch,jdbcType=VARCHAR}, #{waitResolveBranch,jdbcType=VARCHAR}, 
+      #{inRelease,jdbcType=TINYINT}, #{lastReleaseTime,jdbcType=TIMESTAMP}, #{outputFile,jdbcType=VARCHAR}, 
+      #{releaser,jdbcType=VARCHAR}, #{releaseProject,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into integration
+		(id,repo_name,env_name,dev_demand_ids,conflict_branch,wait_resolve_branch,in_release,last_release_time,output_file,releaser,release_project)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=INTEGER},#{item.repoName,jdbcType=VARCHAR},#{item.envName,jdbcType=VARCHAR},#{item.devDemandIds,jdbcType=VARCHAR},#{item.conflictBranch,jdbcType=VARCHAR},#{item.waitResolveBranch,jdbcType=VARCHAR},#{item.inRelease,jdbcType=TINYINT},#{item.lastReleaseTime,jdbcType=TIMESTAMP},#{item.outputFile,jdbcType=VARCHAR},#{item.releaser,jdbcType=VARCHAR},#{item.releaseProject,jdbcType=VARCHAR})
+	</foreach>
+  </insert>
+  <select id="findByPK_inMaster" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from integration	where id = #{pk, jdbcType=INTEGER}
+  </select>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		count(1)
+	from
+		integration
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from integration
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from integration
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=INTEGER}
+			</if>
+			<if test="entity.repoName != null" >
+				and repo_name = #{entity.repoName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.envName != null" >
+				and env_name = #{entity.envName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.devDemandIds != null" >
+				and dev_demand_ids = #{entity.devDemandIds,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.conflictBranch != null" >
+				and conflict_branch = #{entity.conflictBranch,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.waitResolveBranch != null" >
+				and wait_resolve_branch = #{entity.waitResolveBranch,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.inRelease != null" >
+				and in_release = #{entity.inRelease,jdbcType=TINYINT}
+			</if>
+			<if test="entity.lastReleaseTime != null" >
+				and last_release_time = #{entity.lastReleaseTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.outputFile != null" >
+				and output_file = #{entity.outputFile,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.releaser != null" >
+				and releaser = #{entity.releaser,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.releaseProject != null" >
+				and release_project = #{entity.releaseProject,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from integration
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  
+  <update id="resolveConflict" >
+    update integration set conflict_branch = null, wait_resolve_branch = null where id = #{intgId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbStudentDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbStudent" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="class_id" property="classId" jdbcType="BIGINT" />
+    <result column="school_id" property="schoolId" jdbcType="BIGINT" />
+    <result column="card_num" property="cardNum" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="qq_number" property="qqNumber" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="free_type" property="freeType" jdbcType="INTEGER" />
+    <result column="test_count" property="testCount" jdbcType="INTEGER" />
+    <result column="grade_year" property="gradeYear" jdbcType="INTEGER" />
+    <result column="active_time" property="activeTime" jdbcType="TIMESTAMP" />
+    <result column="p_password" property="pPassword" jdbcType="VARCHAR" />
+    <result column="last_login" property="lastLogin" jdbcType="TIMESTAMP" />
+    <result column="login_count" property="loginCount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="index_active" property="indexActive" jdbcType="INTEGER" />
+    <result column="index_rate" property="indexRate" jdbcType="INTEGER" />
+    <result column="index_master" property="indexMaster" jdbcType="INTEGER" />
+    <result column="user_icon" property="userIcon" jdbcType="VARCHAR" />
+    <result column="s_type" property="sType" jdbcType="INTEGER" />
+    <result column="parent_telephone" property="parentTelephone" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="motto" property="motto" jdbcType="VARCHAR" />
+    <result column="class_no_15" property="classNo15" jdbcType="INTEGER" />
+    <result column="student_status" property="studentStatus" jdbcType="INTEGER" />
+    <result column="study_num" property="studyNum" jdbcType="VARCHAR" />
+    <result column="student_section" property="studentSection" jdbcType="INTEGER" />
+    <result column="score_sagment_status" property="scoreSagmentStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, class_id, school_id, card_num, password, real_name, qq_number, sex, email, phone_num, 
+    free_type, test_count, grade_year, active_time, p_password, last_login, login_count, 
+    status, birthday, index_active, index_rate, index_master, user_icon, s_type, parent_telephone, 
+    username, parent_name, target, motto, class_no_15, student_status, study_num, student_section, 
+    score_sagment_status
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_student
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_student
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbStudent" >
+    insert into tb_student (id, class_id, school_id, 
+      card_num, password, real_name, 
+      qq_number, sex, email, 
+      phone_num, free_type, test_count, 
+      grade_year, active_time, p_password, 
+      last_login, login_count, status, 
+      birthday, index_active, index_rate, 
+      index_master, user_icon, s_type, 
+      parent_telephone, username, parent_name, 
+      target, motto, class_no_15, 
+      student_status, study_num, student_section, 
+      score_sagment_status)
+    values (#{id,jdbcType=BIGINT}, #{classId,jdbcType=BIGINT}, #{schoolId,jdbcType=BIGINT}, 
+      #{cardNum,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{qqNumber,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
+      #{phoneNum,jdbcType=VARCHAR}, #{freeType,jdbcType=INTEGER}, #{testCount,jdbcType=INTEGER}, 
+      #{gradeYear,jdbcType=INTEGER}, #{activeTime,jdbcType=TIMESTAMP}, #{pPassword,jdbcType=VARCHAR}, 
+      #{lastLogin,jdbcType=TIMESTAMP}, #{loginCount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{birthday,jdbcType=DATE}, #{indexActive,jdbcType=INTEGER}, #{indexRate,jdbcType=INTEGER}, 
+      #{indexMaster,jdbcType=INTEGER}, #{userIcon,jdbcType=VARCHAR}, #{sType,jdbcType=INTEGER}, 
+      #{parentTelephone,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{parentName,jdbcType=VARCHAR}, 
+      #{target,jdbcType=VARCHAR}, #{motto,jdbcType=VARCHAR}, #{classNo15,jdbcType=INTEGER}, 
+      #{studentStatus,jdbcType=INTEGER}, #{studyNum,jdbcType=VARCHAR}, #{studentSection,jdbcType=INTEGER}, 
+      #{scoreSagmentStatus,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbStudent" >
+    update tb_student
+    <set >
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=BIGINT},
+      </if>
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="cardNum != null" >
+        card_num = #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="qqNumber != null" >
+        qq_number = #{qqNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        phone_num = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="freeType != null" >
+        free_type = #{freeType,jdbcType=INTEGER},
+      </if>
+      <if test="testCount != null" >
+        test_count = #{testCount,jdbcType=INTEGER},
+      </if>
+      <if test="gradeYear != null" >
+        grade_year = #{gradeYear,jdbcType=INTEGER},
+      </if>
+      <if test="activeTime != null" >
+        active_time = #{activeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pPassword != null" >
+        p_password = #{pPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLogin != null" >
+        last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginCount != null" >
+        login_count = #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="indexActive != null" >
+        index_active = #{indexActive,jdbcType=INTEGER},
+      </if>
+      <if test="indexRate != null" >
+        index_rate = #{indexRate,jdbcType=INTEGER},
+      </if>
+      <if test="indexMaster != null" >
+        index_master = #{indexMaster,jdbcType=INTEGER},
+      </if>
+      <if test="userIcon != null" >
+        user_icon = #{userIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="sType != null" >
+        s_type = #{sType,jdbcType=INTEGER},
+      </if>
+      <if test="parentTelephone != null" >
+        parent_telephone = #{parentTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null" >
+        parent_name = #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="motto != null" >
+        motto = #{motto,jdbcType=VARCHAR},
+      </if>
+      <if test="classNo15 != null" >
+        class_no_15 = #{classNo15,jdbcType=INTEGER},
+      </if>
+      <if test="studentStatus != null" >
+        student_status = #{studentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="studyNum != null" >
+        study_num = #{studyNum,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSection != null" >
+        student_section = #{studentSection,jdbcType=INTEGER},
+      </if>
+      <if test="scoreSagmentStatus != null" >
+        score_sagment_status = #{scoreSagmentStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbStudent" >
+    insert into tb_student (id, class_id, school_id, 
+      card_num, password, real_name, 
+      qq_number, sex, email, 
+      phone_num, free_type, test_count, 
+      grade_year, active_time, p_password, 
+      last_login, login_count, status, 
+      birthday, index_active, index_rate, 
+      index_master, user_icon, s_type, 
+      parent_telephone, username, parent_name, 
+      target, motto, class_no_15, 
+      student_status, study_num, student_section, 
+      score_sagment_status)
+    values (#{id,jdbcType=BIGINT}, #{classId,jdbcType=BIGINT}, #{schoolId,jdbcType=BIGINT}, 
+      #{cardNum,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{qqNumber,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
+      #{phoneNum,jdbcType=VARCHAR}, #{freeType,jdbcType=INTEGER}, #{testCount,jdbcType=INTEGER}, 
+      #{gradeYear,jdbcType=INTEGER}, #{activeTime,jdbcType=TIMESTAMP}, #{pPassword,jdbcType=VARCHAR}, 
+      #{lastLogin,jdbcType=TIMESTAMP}, #{loginCount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{birthday,jdbcType=DATE}, #{indexActive,jdbcType=INTEGER}, #{indexRate,jdbcType=INTEGER}, 
+      #{indexMaster,jdbcType=INTEGER}, #{userIcon,jdbcType=VARCHAR}, #{sType,jdbcType=INTEGER}, 
+      #{parentTelephone,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{parentName,jdbcType=VARCHAR}, 
+      #{target,jdbcType=VARCHAR}, #{motto,jdbcType=VARCHAR}, #{classNo15,jdbcType=INTEGER}, 
+      #{studentStatus,jdbcType=INTEGER}, #{studyNum,jdbcType=VARCHAR}, #{studentSection,jdbcType=INTEGER}, 
+      #{scoreSagmentStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tb_student
+		(id,class_id,school_id,card_num,password,real_name,qq_number,sex,email,phone_num,free_type,test_count,grade_year,active_time,p_password,last_login,login_count,status,birthday,index_active,index_rate,index_master,user_icon,s_type,parent_telephone,username,parent_name,target,motto,class_no_15,student_status,study_num,student_section,score_sagment_status)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=BIGINT},#{item.classId,jdbcType=BIGINT},#{item.schoolId,jdbcType=BIGINT},#{item.cardNum,jdbcType=VARCHAR},#{item.password,jdbcType=VARCHAR},#{item.realName,jdbcType=VARCHAR},#{item.qqNumber,jdbcType=VARCHAR},#{item.sex,jdbcType=INTEGER},#{item.email,jdbcType=VARCHAR},#{item.phoneNum,jdbcType=VARCHAR},#{item.freeType,jdbcType=INTEGER},#{item.testCount,jdbcType=INTEGER},#{item.gradeYear,jdbcType=INTEGER},#{item.activeTime,jdbcType=TIMESTAMP},#{item.pPassword,jdbcType=VARCHAR},#{item.lastLogin,jdbcType=TIMESTAMP},#{item.loginCount,jdbcType=INTEGER},#{item.status,jdbcType=INTEGER},#{item.birthday,jdbcType=DATE},#{item.indexActive,jdbcType=INTEGER},#{item.indexRate,jdbcType=INTEGER},#{item.indexMaster,jdbcType=INTEGER},#{item.userIcon,jdbcType=VARCHAR},#{item.sType,jdbcType=INTEGER},#{item.parentTelephone,jdbcType=VARCHAR},#{item.username,jdbcType=VARCHAR},#{item.parentName,jdbcType=VARCHAR},#{item.target,jdbcType=VARCHAR},#{item.motto,jdbcType=VARCHAR},#{item.classNo15,jdbcType=INTEGER},#{item.studentStatus,jdbcType=INTEGER},#{item.studyNum,jdbcType=VARCHAR},#{item.studentSection,jdbcType=INTEGER},#{item.scoreSagmentStatus,jdbcType=INTEGER})
+	</foreach>
+  </insert>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select  count(1)
+	<include refid="pageCondition" />
+	
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_student
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_student
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.classId != null" >
+				and class_id = #{entity.classId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.schoolId != null" >
+				and school_id = #{entity.schoolId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.cardNum != null" >
+				and card_num = #{entity.cardNum,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.password != null" >
+				and password = #{entity.password,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.realName != null" >
+				and real_name = #{entity.realName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.qqNumber != null" >
+				and qq_number = #{entity.qqNumber,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.sex != null" >
+				and sex = #{entity.sex,jdbcType=INTEGER}
+			</if>
+			<if test="entity.email != null" >
+				and email = #{entity.email,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.phoneNum != null" >
+				and phone_num = #{entity.phoneNum,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.freeType != null" >
+				and free_type = #{entity.freeType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.testCount != null" >
+				and test_count = #{entity.testCount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.gradeYear != null" >
+				and grade_year = #{entity.gradeYear,jdbcType=INTEGER}
+			</if>
+			<if test="entity.activeTime != null" >
+				and active_time = #{entity.activeTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.pPassword != null" >
+				and p_password = #{entity.pPassword,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.lastLogin != null" >
+				and last_login = #{entity.lastLogin,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.loginCount != null" >
+				and login_count = #{entity.loginCount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.status != null" >
+				and status = #{entity.status,jdbcType=INTEGER}
+			</if>
+			<if test="entity.birthday != null" >
+				and birthday = #{entity.birthday,jdbcType=DATE}
+			</if>
+			<if test="entity.indexActive != null" >
+				and index_active = #{entity.indexActive,jdbcType=INTEGER}
+			</if>
+			<if test="entity.indexRate != null" >
+				and index_rate = #{entity.indexRate,jdbcType=INTEGER}
+			</if>
+			<if test="entity.indexMaster != null" >
+				and index_master = #{entity.indexMaster,jdbcType=INTEGER}
+			</if>
+			<if test="entity.userIcon != null" >
+				and user_icon = #{entity.userIcon,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.sType != null" >
+				and s_type = #{entity.sType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.parentTelephone != null" >
+				and parent_telephone = #{entity.parentTelephone,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.username != null" >
+				and username = #{entity.username,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.parentName != null" >
+				and parent_name = #{entity.parentName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.target != null" >
+				and target = #{entity.target,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.motto != null" >
+				and motto = #{entity.motto,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.classNo15 != null" >
+				and class_no_15 = #{entity.classNo15,jdbcType=INTEGER}
+			</if>
+			<if test="entity.studentStatus != null" >
+				and student_status = #{entity.studentStatus,jdbcType=INTEGER}
+			</if>
+			<if test="entity.studyNum != null" >
+				and study_num = #{entity.studyNum,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.studentSection != null" >
+				and student_section = #{entity.studentSection,jdbcType=INTEGER}
+			</if>
+			<if test="entity.scoreSagmentStatus != null" >
+				and score_sagment_status = #{entity.scoreSagmentStatus,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		s.id, s.class_id, s.school_id, s.card_num, s.password, s.real_name, s.qq_number, s.sex, s.email, s.phone_num, 
+    s.free_type, s.test_count, s.grade_year, s.active_time, s.p_password, s.last_login, s.login_count, 
+    s.status, s.birthday, s.index_active, s.index_rate, s.index_master, s.user_icon, s.s_type, s.parent_telephone, 
+    s.username, s.parent_name, s.target, s.motto, s.class_no_15, s.student_status, s.study_num, s.student_section, 
+    s.score_sagment_status
+	<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    from tb_student s, tbl_auth_user u
+    <where >
+      s.id = u.id and u.state = 0
+	  <trim suffixOverrides="and" >
+        <if test="entity != null" >
+			<if test="entity.schoolId != null">
+				and s.school_id = #{entity.schoolId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.classId != null">
+				and class_id = #{entity.classId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.gradeYear != null" >
+				and grade_year = #{entity.gradeYear,jdbcType=INTEGER}
+			</if>
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  
+  <select id="findListByStudentIds" parameterType="java.util.List" resultMap="BaseResultMap">
+    select 
+      <include refid="BaseColumnList" />
+    from tb_student 
+    where id in (
+      <foreach collection="array" item="item" separator="," index="index">
+        #{item, jdbcType=BIGINT}
+      </foreach>
+    )
+    
+  </select>
+<select id="findByClassId"  resultMap="BaseResultMap">
+   select 
+   <include refid="BaseColumnList" />
+   form tb_student where class_id = #{entity.classId,jdbcType=BIGINT}
+
+</select>
+  
+</mapper>

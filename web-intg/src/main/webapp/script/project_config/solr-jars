@@ -1,0 +1,3 @@
+repo=stiku-platform
+pom=solr/pom.xml
+cmd=deploy

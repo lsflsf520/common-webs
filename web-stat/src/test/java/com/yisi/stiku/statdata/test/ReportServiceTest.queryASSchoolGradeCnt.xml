@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+	<class_fenban_data id="1" weektest_id="1" school_id="595"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2095" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="2" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+	<class_fenban_data id="2" weektest_id="1" school_id="597"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2043" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="2" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+	<class_fenban_data id="3" weektest_id="1" school_id="595"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2080" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="2" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+	<class_fenban_data id="4" weektest_id="1" school_id="595"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2096" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="2" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+	<class_fenban_data id="5" weektest_id="1" school_id="595"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2097" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="1" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+	<class_fenban_data id="6" weektest_id="1" school_id="595"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2051" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="1" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+	<class_fenban_data id="7" weektest_id="1" school_id="595"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2052" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="1" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+	<class_fenban_data id="8" weektest_id="1" school_id="595"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2053" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="1" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+	<class_fenban_data id="9" weektest_id="1" school_id="595"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2054" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="1" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+	<class_fenban_data id="10" weektest_id="1" school_id="595"
+		school_name="&#23433;&#38451;&#21439;&#20108;&#20013;" grade_year="2013"
+		class_id="2055" class_name="201301" real_test_cnt="1" student_cnt="22"
+		excellent_cnt="0" pass_cnt="0" unpass_cnt="1" avg_score="100"
+		max_score="100" min_score="100" s_type="1" excellent_percent="0"
+		pass_percent="0" unpass_percent="1000" absence_percent="955"
+		inc_score="0" excellent_inc_point="0" pass_inc_point="0"
+		unpass_inc_point="0" absence_inc_point="0" create_time="2016-04-22 14:28:18.0" />
+
+</dataset> 

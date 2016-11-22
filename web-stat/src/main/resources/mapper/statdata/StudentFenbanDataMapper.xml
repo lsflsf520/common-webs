@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.statdata.dao.StudentFenbanDataDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.statdata.entity.StudentFenbanData" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="student_id" property="studentId" jdbcType="BIGINT" />
+    <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="class_id" property="classId" jdbcType="BIGINT" />
+    <result column="weektest_id" property="weektestId" jdbcType="BIGINT" />
+    <result column="grasp_score" property="graspScore" jdbcType="INTEGER" />
+    <result column="class_rank" property="classRank" jdbcType="INTEGER" />
+    <result column="last_class_rank" property="lastClassRank" jdbcType="INTEGER" />
+    <result column="class_student_cnt" property="classStudentCnt" jdbcType="INTEGER" />
+    <result column="class_real_test_cnt" property="classRealTestCnt" jdbcType="INTEGER" />
+    <result column="follow_cnt" property="followCnt" jdbcType="INTEGER" />
+    <result column="over_cnt" property="overCnt" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="task_pub_time" property="taskPubTime" jdbcType="TIMESTAMP" />
+    <result column="book_point_sort_id" property="bookPointSortId" jdbcType="BIGINT" />
+    <result column="exampaper_index" property="exampaperIndex" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, student_id, student_name, class_id, weektest_id, grasp_score, class_rank, last_class_rank, 
+    class_student_cnt, class_real_test_cnt, follow_cnt, over_cnt, create_time, task_pub_time, 
+    book_point_sort_id, exampaper_index
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="BaseColumnList" />
+    from student_fenban_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Integer" >
+    delete from student_fenban_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.statdata.entity.StudentFenbanData" >
+    insert into student_fenban_data (id, student_id, student_name, 
+      class_id, weektest_id, grasp_score, 
+      class_rank, last_class_rank, class_student_cnt, 
+      class_real_test_cnt, follow_cnt, over_cnt, 
+      create_time, task_pub_time, book_point_sort_id, 
+      exampaper_index)
+    values (#{id,jdbcType=INTEGER}, #{studentId,jdbcType=BIGINT}, #{studentName,jdbcType=VARCHAR}, 
+      #{classId,jdbcType=BIGINT}, #{weektestId,jdbcType=BIGINT}, #{graspScore,jdbcType=INTEGER}, 
+      #{classRank,jdbcType=INTEGER}, #{lastClassRank,jdbcType=INTEGER}, #{classStudentCnt,jdbcType=INTEGER}, 
+      #{classRealTestCnt,jdbcType=INTEGER}, #{followCnt,jdbcType=INTEGER}, #{overCnt,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{taskPubTime,jdbcType=TIMESTAMP}, #{bookPointSortId,jdbcType=BIGINT}, 
+      #{exampaperIndex,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.statdata.entity.StudentFenbanData" >
+    update student_fenban_data
+    <set >
+      <if test="studentId != null" >
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="studentName != null" >
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=BIGINT},
+      </if>
+      <if test="weektestId != null" >
+        weektest_id = #{weektestId,jdbcType=BIGINT},
+      </if>
+      <if test="graspScore != null" >
+        grasp_score = #{graspScore,jdbcType=INTEGER},
+      </if>
+      <if test="classRank != null" >
+        class_rank = #{classRank,jdbcType=INTEGER},
+      </if>
+      <if test="lastClassRank != null" >
+        last_class_rank = #{lastClassRank,jdbcType=INTEGER},
+      </if>
+      <if test="classStudentCnt != null" >
+        class_student_cnt = #{classStudentCnt,jdbcType=INTEGER},
+      </if>
+      <if test="classRealTestCnt != null" >
+        class_real_test_cnt = #{classRealTestCnt,jdbcType=INTEGER},
+      </if>
+      <if test="followCnt != null" >
+        follow_cnt = #{followCnt,jdbcType=INTEGER},
+      </if>
+      <if test="overCnt != null" >
+        over_cnt = #{overCnt,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskPubTime != null" >
+        task_pub_time = #{taskPubTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookPointSortId != null" >
+        book_point_sort_id = #{bookPointSortId,jdbcType=BIGINT},
+      </if>
+      <if test="exampaperIndex != null" >
+        exampaper_index = #{exampaperIndex,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.statdata.entity.StudentFenbanData" >
+    insert into student_fenban_data (id, student_id, student_name, 
+      class_id, weektest_id, grasp_score, 
+      class_rank, last_class_rank, class_student_cnt, 
+      class_real_test_cnt, follow_cnt, over_cnt, 
+      create_time, task_pub_time, book_point_sort_id, 
+      exampaper_index)
+    values (#{id,jdbcType=INTEGER}, #{studentId,jdbcType=BIGINT}, #{studentName,jdbcType=VARCHAR}, 
+      #{classId,jdbcType=BIGINT}, #{weektestId,jdbcType=BIGINT}, #{graspScore,jdbcType=INTEGER}, 
+      #{classRank,jdbcType=INTEGER}, #{lastClassRank,jdbcType=INTEGER}, #{classStudentCnt,jdbcType=INTEGER}, 
+      #{classRealTestCnt,jdbcType=INTEGER}, #{followCnt,jdbcType=INTEGER}, #{overCnt,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{taskPubTime,jdbcType=TIMESTAMP}, #{bookPointSortId,jdbcType=BIGINT}, 
+      #{exampaperIndex,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into student_fenban_data
+		(id,student_id,student_name,class_id,weektest_id,grasp_score,class_rank,last_class_rank,class_student_cnt,class_real_test_cnt,follow_cnt,over_cnt,create_time,task_pub_time,book_point_sort_id,exampaper_index)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=INTEGER},#{item.studentId,jdbcType=BIGINT},#{item.studentName,jdbcType=VARCHAR},#{item.classId,jdbcType=BIGINT},#{item.weektestId,jdbcType=BIGINT},#{item.graspScore,jdbcType=INTEGER},#{item.classRank,jdbcType=INTEGER},#{item.lastClassRank,jdbcType=INTEGER},#{item.classStudentCnt,jdbcType=INTEGER},#{item.classRealTestCnt,jdbcType=INTEGER},#{item.followCnt,jdbcType=INTEGER},#{item.overCnt,jdbcType=INTEGER},#{item.createTime,jdbcType=TIMESTAMP},#{item.taskPubTime,jdbcType=TIMESTAMP},#{item.bookPointSortId,jdbcType=BIGINT},#{item.exampaperIndex,jdbcType=INTEGER})
+	</foreach>
+  </insert>
+  <select id="findByPK_inMaster" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from student_fenban_data	where id = #{pk, jdbcType=INTEGER}
+  </select>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		count(1)
+	from
+		student_fenban_data
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from student_fenban_data
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from student_fenban_data
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=INTEGER}
+			</if>
+			<if test="entity.studentId != null" >
+				and student_id = #{entity.studentId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.studentName != null" >
+				and student_name = #{entity.studentName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.classId != null" >
+				and class_id = #{entity.classId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.weektestId != null" >
+				and weektest_id = #{entity.weektestId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.graspScore != null" >
+				and grasp_score = #{entity.graspScore,jdbcType=INTEGER}
+			</if>
+			<if test="entity.classRank != null" >
+				and class_rank = #{entity.classRank,jdbcType=INTEGER}
+			</if>
+			<if test="entity.lastClassRank != null" >
+				and last_class_rank = #{entity.lastClassRank,jdbcType=INTEGER}
+			</if>
+			<if test="entity.classStudentCnt != null" >
+				and class_student_cnt = #{entity.classStudentCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.classRealTestCnt != null" >
+				and class_real_test_cnt = #{entity.classRealTestCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.followCnt != null" >
+				and follow_cnt = #{entity.followCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.overCnt != null" >
+				and over_cnt = #{entity.overCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.createTime != null" >
+				and create_time = #{entity.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.taskPubTime != null" >
+				and task_pub_time = #{entity.taskPubTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.bookPointSortId != null" >
+				and book_point_sort_id = #{entity.bookPointSortId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.exampaperIndex != null" >
+				and exampaper_index = #{entity.exampaperIndex,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from student_fenban_data
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+</mapper>

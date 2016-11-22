@@ -1,0 +1,5 @@
+servers=192.168.30.93,192.168.30.94
+repo=stiku-stat
+pom=web-statbg/pom.xml
+cmd=package
+sleep=45

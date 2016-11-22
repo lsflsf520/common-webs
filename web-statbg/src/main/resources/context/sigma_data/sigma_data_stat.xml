@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+   	http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+   	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+   	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+   	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+   	<import resource="../spring-dataSource.xml"/>
+   	
+   	<bean id="todayDate" class="com.yisi.stiku.statbg.param.DateParam">
+      <property name="pattern" value="yyyy-MM-dd HH:mm:ss"/>
+    </bean>
+    
+    <bean id="schoolIds" class="com.yisi.stiku.statbg.param.ZKIntArrParam">
+   	  <property name="path" value="web-statbg/application.properties"/>
+	  <property name="key" value="test.schoolId"/>
+   	</bean>
+    
+    <bean id="firstDelete" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+      <property name="dataSource" ref="sigmaDataSource"/>
+      <property name="orderNO" value="1"></property>
+      <property name="sql">
+     	 <value>
+     		<![CDATA[
+     			DELETE  FROM tbs_data_new_user_count where date_format(created_dt,'%y-%m-%d') = date_format(${todayDate},'%y-%m-%d');
+     		]]>
+     	 </value>
+      </property>
+    </bean>
+    
+    <bean id="secondSelect" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="walletDataSource"/>
+	 <property name="outputKey" value="userCountRs"/>
+	 <property name="orderNO" value="2"/>
+   	 <property name="sql">
+		<value>
+			<![CDATA[
+				select  count(*)  newUserCount,	
+						YEAR(${todayDate}) year,
+						MONTH(${todayDate}) month,
+						DAY(${todayDate}) day 
+				from 
+					cigma_student 
+				where 
+					date_format(sign_time,'%y-%m-%d') = date_format(${todayDate},'%y-%m-%d') and school_id not in (${schoolIds});
+			]]>
+		</value>   	 
+   	 </property>
+   </bean>
+   
+   <bean id="thirdInsert" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="sigmaDataSource"/>
+     <property name="orderNO" value="3"></property>
+     <property name="sql">
+     	<value>
+     		<![CDATA[
+     			insert into tbs_data_new_user_count (new_user_count,day,month,year,created_dt) values
+     			(${userCountRs.newUserCount},${userCountRs.day},${userCountRs.month},${userCountRs.year},${todayDate});
+     		]]>
+     	</value>
+     </property>
+   </bean>
+   
+   <bean id="fourthSelect" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat"> 
+   	  <property name="dataSource" ref="walletDataSource"/>
+	  <property name="outputKey" value="allUserCountRs"/>
+	  <property name="orderNO" value="4"/>
+	  <property name="sql">
+	  	 <value>
+	  	 	<![CDATA[
+	  	 		select count(*) allCount from cigma_student where school_id not in (${schoolIds});
+	  	 	]]>
+	  	 </value>
+	  </property>
+   </bean>
+   	
+   <bean id="fifthSelect" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="sigmaDataSource"/>
+     <property name="outputKey" value="totalPassRs"/>
+     <property name="orderNO" value="5"/>
+     <property name="sql">
+     	<value>
+	     	 <![CDATA[
+	     	    select count(*) totalPassCount from tbs_student_pass_operate where school_id not in (${schoolIds});
+	     	 ]]>
+     	 </value>
+   	 </property>
+   </bean>
+   
+   <bean id="sixthInsert" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+      <property name="dataSource" ref="sigmaDataSource"/>
+      <property name="orderNO" value="6"/>
+      <property name="sql">
+      	 <value>
+      	 	<![CDATA[
+      	 		insert into tbs_date_total_count (user_count,pass_count,created_dt) values 
+      	 		(${allUserCountRs.allCount}, ${totalPassRs.totalPassCount}, (select now()))
+      	 	]]>
+      	 </value>
+      </property>
+   </bean>
+</beans>

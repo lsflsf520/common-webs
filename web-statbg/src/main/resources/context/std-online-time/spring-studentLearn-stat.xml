@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+   	http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+   	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+   	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+   	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+   	
+   	<import resource="../spring-dataSource.xml"/>
+   	
+   	  <bean id="startTime" class="com.yisi.stiku.statbg.param.DateParam">
+     <property name="time" value="0"/>
+     <property name="timeUnit" value="DAYS"/>
+   </bean>
+    <bean id="3yearago" class="com.yisi.stiku.statbg.param.DateParam">
+     <property name="time" value="-1095"/>
+     <property name="timeUnit" value="DAYS"/>
+   </bean>
+   
+   <bean id="fourDel" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="0" />
+     <property name="outputKey" value="rsDelRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          delete from tb_problem_statistical where stat_date = ${startTime}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id=" neSelect" class="com.yisi.stiku.statbg.sql.SelectListLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="1" />
+     <property name="outputKey" value="queryStudentListOne" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT thp.student_id,COUNT(thp.id) FROM tb_homework_problem thp
+              WHERE  thp.is_grasp>0 and thp.updated_dt>${3yearago}
+               GROUP BY thp.student_id
+
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   
+   <bean id="fourInsert" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="2" />
+     <property name="outputKey" value="rsInsertMapRs" />
+     <property name="sql">
+       <value>
+         
+	       <![CDATA[
+	          insert into tb_problem_statistical(student_id,problem_count, stat_date)
+	           values(${queryStudentListOne.0}, ${queryStudentListOne.1},${startTime})
+	       ]]>
+	      
+       </value>
+     </property>
+   </bean>
+   <bean id="thirdDel" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="3" />
+     <property name="outputKey" value="rsDelRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          delete from tb_student_learn_details where stat_date = ${startTime}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="secondSelect" class="com.yisi.stiku.statbg.sql.SelectListLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="4" />
+     <property name="outputKey" value="queryStudentListOne" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select s.school_id, s.grade_year,s.student_section,SUM(p.problem_count),COUNT(DISTINCT s.id),sum(p.problem_count)/COUNT(DISTINCT s.id) 
+           from tb_student s,tb_problem_statistical p where s.id=p.student_id
+                  GROUP BY s.school_id,s.grade_year,s.student_section
+
+
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="thirdInsert" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="5" />
+     <property name="outputKey" value="rsInsertMapRs" />
+     <property name="sql">
+       <value>
+         
+	       <![CDATA[
+	          insert into tb_student_learn_details(school_id,grade_year,
+	          student_section, problem_num,student_num,avg_problem_num, stat_date)
+	           values(${queryStudentListOne.0}, ${queryStudentListOne.1}, ${queryStudentListOne.2},${queryStudentListOne.3},
+	           ${queryStudentListOne.4},${queryStudentListOne.5},${startTime})
+	       ]]>
+	      
+       </value>
+     </property>
+   </bean>
+   
+
+    
+    <bean id="thirdSelect" class="com.yisi.stiku.statbg.sql.SelectListLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="6" />
+     <property name="outputKey" value="loginListRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	     select s.school_id,sum(TIMESTAMPDIFF(SECOND,tl.logon_time,tl.logout_time))/count(s.id),COUNT(tl.user_id)/count(DISTINCT s.id)  
+	     from tb_student s,tb_login_log tl 
+      where tl.logon_time is not null and tl.logout_time is not null and tl.user_id=s.id
+    GROUP BY s.school_id,s.grade_year,s.student_section ORDER BY s.school_id,s.grade_year,s.student_section;
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="fifthUpdate" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="7" />
+     <property name="outputKey" value="rsUpdateMapRs" />
+     <property name="sql">
+       <value>
+         
+	       <![CDATA[
+	          update tb_student_learn_details set avg_login_time = ${loginListRs.1},avg_login_num = ${loginListRs.2} where school_id = ${loginListRs.0} and stat_date = ${startTime}
+	       ]]>
+	      
+       </value>
+     </property>
+   </bean>
+   
+</beans>
+   	 	

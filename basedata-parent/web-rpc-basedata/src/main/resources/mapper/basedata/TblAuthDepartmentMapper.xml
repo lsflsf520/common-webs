@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TblAuthDepartmentDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TblAuthDepartment" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="contact_tel" property="contactTel" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, acl_code, acl_type, created_by, created_dt, updated_by, updated_dt, version, 
+    code, contact_tel, description, title, user_id, parent_id
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="BaseColumnList" />
+    from tbl_auth_department
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.String" >
+    delete from tbl_auth_department
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TblAuthDepartment" >
+    insert into tbl_auth_department (id, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, code, 
+      contact_tel, description, title, 
+      user_id, parent_id)
+    values (#{id,jdbcType=VARCHAR}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{contactTel,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{parentId,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TblAuthDepartment" >
+    update tbl_auth_department
+    <set >
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        contact_tel = #{contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TblAuthDepartment" >
+    insert into tbl_auth_department (id, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, code, 
+      contact_tel, description, title, 
+      user_id, parent_id)
+    values (#{id,jdbcType=VARCHAR}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{contactTel,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{parentId,jdbcType=VARCHAR})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		TBL_AUTH_DEPARTMENT
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultType="com.yisi.stiku.basedata.entity.TblAuthDepartment" >
+    select
+		<include refid="BaseColumnList"/>
+	from TBL_AUTH_DEPARTMENT
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultType="com.yisi.stiku.basedata.entity.TblAuthDepartment" >
+    select
+		<include refid="BaseColumnList"/>
+	from TBL_AUTH_DEPARTMENT
+  </select>
+  <select id="findByEntity" resultType="com.yisi.stiku.basedata.entity.TblAuthDepartment" >
+    select
+		<include refid="BaseColumnList"/>
+	from TBL_AUTH_DEPARTMENT
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.code != null" >
+				and code = #{entity.code,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.contactTel != null" >
+				and contact_tel = #{entity.contactTel,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.description != null" >
+				and description = #{entity.description,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.title != null" >
+				and title = #{entity.title,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.userId != null" >
+				and user_id = #{entity.userId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.parentId != null" >
+				and parent_id = #{entity.parentId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

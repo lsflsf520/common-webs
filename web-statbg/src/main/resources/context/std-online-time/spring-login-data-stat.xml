@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+   	http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+   	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+   	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+   	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+   	<import resource="../spring-dataSource.xml"/>
+   	
+   <bean id="startDate" class="com.yisi.stiku.statbg.param.DateParam">
+     <property name="time" value="-1"/>
+   </bean>
+   <bean id="endDate" class="com.yisi.stiku.statbg.param.DateParam"/>
+   
+   <bean id="firstDel" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="0" />
+     <property name="outputKey" value="rsDelRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          delete from std_day_logon_data where stat_date = ${startDate}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="secondSelect" class="com.yisi.stiku.statbg.sql.SelectListLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="1" />
+     <property name="outputKey" value="logonDataRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT count(1) logon_cnt, count(distinct user_id) logon_user_cnt, 
+	                 sum(if(isnull(logout_time), 0, unix_timestamp(logout_time) - unix_timestamp(logon_time))) land_length
+	          from tb_login_log
+	          where logon_time >= ${startDate} and logon_time < ${endDate}
+	             and user_type in (5, 8)
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="thirdInsert" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="2" />
+     <property name="outputKey" value="rsInsertMapRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          insert into std_day_logon_data(id, stat_date, logon_cnt, logon_user_cnt, land_length) 
+	                  values(0,${startDate}, ${logonDataRs.0}, ${logonDataRs.1}, if(isnull(${logonDataRs.2}), 0, ${logonDataRs.2}))
+	       ]]>
+       </value>
+     </property>
+   </bean>
+  
+</beans>
+   	

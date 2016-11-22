@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TblConnectUserDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TblConnectUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="access_token" property="accessToken" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, open_id, avatar, nick, source, access_token, user_id, state
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="BaseColumnList" />
+    from tbl_connect_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Integer" >
+    delete from tbl_connect_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TblConnectUser" >
+    insert into tbl_connect_user (id, open_id, avatar, 
+      nick, source, access_token, 
+      user_id, state)
+    values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{nick,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{state,jdbcType=TINYINT})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TblConnectUser" >
+    update tbl_connect_user
+    <set >
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null" >
+        access_token = #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TblConnectUser" >
+    insert into tbl_connect_user (id, open_id, avatar, 
+      nick, source, access_token, 
+      user_id, state)
+    values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{nick,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{state,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tbl_connect_user
+		(id,open_id,avatar,nick,source,access_token,user_id,state)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=INTEGER},#{item.openId,jdbcType=VARCHAR},#{item.avatar,jdbcType=VARCHAR},#{item.nick,jdbcType=VARCHAR},#{item.source,jdbcType=VARCHAR},#{item.accessToken,jdbcType=VARCHAR},#{item.userId,jdbcType=BIGINT},#{item.state,jdbcType=TINYINT})
+	</foreach>
+  </insert>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tbl_connect_user
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tbl_connect_user
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tbl_connect_user
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=INTEGER}
+			</if>
+			<if test="entity.openId != null" >
+				and open_id = #{entity.openId,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.avatar != null" >
+				and avatar = #{entity.avatar,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.nick != null" >
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.source != null" >
+				and source = #{entity.source,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.accessToken != null" >
+				and access_token = #{entity.accessToken,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.userId != null" >
+				and user_id = #{entity.userId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.state != null" >
+				and state = #{entity.state,jdbcType=TINYINT}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tbl_connect_user
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  
+  <delete id="delete" parameterType="java.util.Map">
+    delete from 
+      tbl_connect_user 
+    where user_id = #{userId,jdbcType=BIGINT} 
+       and 
+          source = #{source,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

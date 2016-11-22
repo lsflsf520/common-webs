@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TblAuthPrivilegeDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TblAuthPrivilege" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="disabled" property="disabled" jdbcType="BIT" />
+    <result column="order_rank" property="orderRank" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithRoleCode" type="com.yisi.stiku.basedata.entity.TblAuthPrivilege" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="disabled" property="disabled" jdbcType="BIT" />
+    <result column="order_rank" property="orderRank" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, acl_code, acl_type, created_by, created_dt, updated_by, updated_dt, version, 
+    category, code, description, disabled, order_rank, title, type, url
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="BaseColumnList" />
+    from tbl_auth_privilege
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.String" >
+    delete from tbl_auth_privilege
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TblAuthPrivilege" >
+    insert into tbl_auth_privilege (id, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, category, 
+      code, description, disabled, 
+      order_rank, title, type, 
+      url)
+    values (#{id,jdbcType=VARCHAR}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{disabled,jdbcType=BIT}, 
+      #{orderRank,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TblAuthPrivilege" >
+    update tbl_auth_privilege
+    <set >
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="disabled != null" >
+        disabled = #{disabled,jdbcType=BIT},
+      </if>
+      <if test="orderRank != null" >
+        order_rank = #{orderRank,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TblAuthPrivilege" >
+    insert into tbl_auth_privilege (id, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, category, 
+      code, description, disabled, 
+      order_rank, title, type, 
+      url)
+    values (#{id,jdbcType=VARCHAR}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{disabled,jdbcType=BIT}, 
+      #{orderRank,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		TBL_AUTH_PRIVILEGE
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TBL_AUTH_PRIVILEGE
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TBL_AUTH_PRIVILEGE
+	   <if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TBL_AUTH_PRIVILEGE
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.category != null" >
+				and category = #{entity.category,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.code != null" >
+				and code = #{entity.code,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.description != null" >
+				and description = #{entity.description,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.disabled != null" >
+				and disabled = #{entity.disabled,jdbcType=BIT}
+			</if>
+			<if test="entity.orderRank != null" >
+				and order_rank = #{entity.orderRank,jdbcType=INTEGER}
+			</if>
+			<if test="entity.title != null" >
+				and title = #{entity.title,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.type != null" >
+				and type = #{entity.type,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.url != null" >
+				and url = #{entity.url,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  
+  <select id="findEnabledExcludeRole" resultMap="ResultMapWithRoleCode">
+     select 
+       p.id, p.created_dt, p.updated_dt, p.version, 
+       p.category, p.code, p.description, p.disabled, p.order_rank, p.title, p.type, p.url,r.code as role_code
+	 from 
+	   TBL_AUTH_PRIVILEGE p inner join tbl_AUTH_ROLE_R2_PRIVILEGE r2 on p.id = r2.PRIVILEGE_ID inner join tbl_auth_role r on r2.ROLE_ID = r.id 
+	 where 
+	    p.disabled=false and r.code != #{roleName, jdbcType=VARCHAR} order by p.order_rank desc
+  </select>
+  <select id="findPrivilegesByUserId" resultMap="BaseResultMap">
+     select 
+       distinct p.id, p.created_dt, p.updated_dt, p.version, 
+       p.category, p.code, p.description, p.disabled, p.order_rank, p.title, p.type, p.url
+      from tbl_auth_privilege p inner join tbl_auth_role_r2_privilege r2p on p.id = r2p.PRIVILEGE_ID 
+             inner join tbl_auth_role r on r2p.role_id = r.id
+             inner join tbl_auth_user_r2_role u2r on u2r.role_id = r.id
+	  where u2r.user_id = #{userId,jdbcType=BIGINT} and r.disabled=false and p.disabled=false order by p.category asc
+  </select>
+</mapper>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TblAuthUserDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TblAuthUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="sign_name" property="signName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="last_logon_ip" property="lastLogonIp" jdbcType="VARCHAR" />
+    <result column="last_logon_time" property="lastLogonTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_uptime" property="lastUptime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, real_name, nick, sign_name, email, mobile, password, last_logon_ip, last_logon_time, 
+    create_time, last_uptime, type, state, version
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tbl_auth_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tbl_auth_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TblAuthUser" >
+    insert into tbl_auth_user (id, real_name, nick, 
+      sign_name, email, mobile, 
+      password, last_logon_ip, last_logon_time, 
+      create_time, last_uptime, type, 
+      state, version)
+    values (#{id,jdbcType=BIGINT}, #{realName,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, 
+      #{signName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{lastLogonIp,jdbcType=VARCHAR}, #{lastLogonTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastUptime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, 
+      #{state,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TblAuthUser" >
+    update tbl_auth_user
+    <set >
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="signName != null" >
+        sign_name = #{signName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLogonIp != null" >
+        last_logon_ip = #{lastLogonIp,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLogonTime != null" >
+        last_logon_time = #{lastLogonTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUptime != null" >
+        last_uptime = #{lastUptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TblAuthUser" >
+    insert into tbl_auth_user (id, real_name, nick, 
+      sign_name, email, mobile, 
+      password, last_logon_ip, last_logon_time, 
+      create_time, last_uptime, type, 
+      state, version)
+    values (#{id,jdbcType=BIGINT}, #{realName,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, 
+      #{signName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{lastLogonIp,jdbcType=VARCHAR}, #{lastLogonTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastUptime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, 
+      #{state,jdbcType=TINYINT}, #{version,jdbcType=INTEGER})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例 -->
+			<if test="entity.type != null">
+				and type = #{entity.type,jdbcType=INTEGER}
+			</if>
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		TBL_AUTH_USER
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TBL_AUTH_USER
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TBL_AUTH_USER
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TBL_AUTH_USER
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.realName != null" >
+				and real_name = #{entity.realName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.nick != null" >
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.signName != null" >
+				and sign_name = #{entity.signName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.email != null" >
+				and email = #{entity.email,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.mobile != null" >
+				and mobile = #{entity.mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.password != null" >
+				and password = #{entity.password,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.lastLogonIp != null" >
+				and last_logon_ip = #{entity.lastLogonIp,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.lastLogonTime != null" >
+				and last_logon_time = #{entity.lastLogonTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.createTime != null" >
+				and create_time = #{entity.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.lastUptime != null" >
+				and last_uptime = #{entity.lastUptime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.type != null" >
+				and type = #{entity.type,jdbcType=INTEGER}
+			</if>
+			<if test="entity.state != null" >
+				and state = #{entity.state,jdbcType=TINYINT}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  
+  <delete id="clearRoleByUserId" parameterType="java.lang.Long">
+     delete from tbl_auth_user_r2_role where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="updateByPKForAdmin" parameterType="com.yisi.stiku.basedata.entity.TblAuthUser" >
+    update tbl_auth_user
+    <set >
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="signName != null" >
+        sign_name = #{signName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUptime != null" >
+        last_uptime = #{lastUptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      email = #{email,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="exists" resultMap="BaseResultMap" parameterType="com.yisi.stiku.basedata.entity.TblAuthUser">
+    select 
+      <include refid="BaseColumnList"/>
+    from tbl_auth_user
+    <where>
+		<trim suffixOverrides="or" >
+			<if test="signName != null" >
+				sign_name = #{signName,jdbcType=VARCHAR}
+			</if>
+			<if test="email != null" >
+				or (email = #{email,jdbcType=VARCHAR} and state = 0)
+			</if>
+			<if test="mobile != null" >
+				or (mobile = #{mobile,jdbcType=VARCHAR} and state = 0)
+			</if>
+			and state = 0
+		</trim>
+		limit 1
+	</where>
+  </select>
+  
+  <select id="existEmailOrMobileForUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+      <include refid="BaseColumnList"/>
+    from tbl_auth_user u, (select cu.email as exist_email, cu.mobile as exist_mobile from tbl_auth_user cu where cu.id = #{userId,jdbcType=BIGINT}) r
+    <![CDATA[
+     where ((u.email is not null and u.email <> '' and u.email = r.exist_email) or (u.mobile is not null and u.mobile <> '' and u.mobile = r.exist_mobile)) and state = 0
+    ]]>
+  </select>
+  
+  <select id="findUsers" resultMap="BaseResultMap" >
+    select 
+      <include refid="BaseColumnList"/>
+    from tbl_auth_user
+    where
+      state = 0
+     and 
+      id in (
+       <foreach collection="array" item="userId" separator="," index="index">
+         #{userId, jdbcType=BIGINT}
+       </foreach>
+      )
+  </select>
+  
+  <select id="findMaxIdByPrefix" parameterType="java.lang.String" resultType="java.lang.String"  >
+  select max(sign_name) from tbl_auth_user where sign_name like CONCAT('%',#{prefixText,jdbcType=VARCHAR},'%' ) and CHAR_LENGTH(sign_name) = CHAR_LENGTH( CONCAT('%',#{prefixText,jdbcType=VARCHAR},'%' )) + 1
+  </select>
+</mapper>

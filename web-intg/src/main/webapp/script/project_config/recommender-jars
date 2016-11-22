@@ -1,0 +1,3 @@
+repo=stiku-recommender
+pom=recommender/pom.xml
+cmd=deploy

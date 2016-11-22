@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbExtendPropertyFinalDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbExtendPropertyFinal" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="property_id" property="propertyId" jdbcType="BIGINT" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="manager_id" property="managerId" jdbcType="BIGINT" />
+    <result column="source_id" property="sourceId" jdbcType="BIGINT" />
+    <result column="tb_source_name" property="tbSourceName" jdbcType="VARCHAR" />
+    <result column="is_approved" property="isApproved" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, property_id, value, manager_id, source_id, tb_source_name, is_approved
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_extend_property_final
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_extend_property_final
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbExtendPropertyFinal" >
+    insert into tb_extend_property_final (id, property_id, value, 
+      manager_id, source_id, tb_source_name, 
+      is_approved)
+    values (#{id,jdbcType=BIGINT}, #{propertyId,jdbcType=BIGINT}, #{value,jdbcType=VARCHAR}, 
+      #{managerId,jdbcType=BIGINT}, #{sourceId,jdbcType=BIGINT}, #{tbSourceName,jdbcType=VARCHAR}, 
+      #{isApproved,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbExtendPropertyFinal" >
+    update tb_extend_property_final
+    <set >
+      <if test="propertyId != null" >
+        property_id = #{propertyId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="managerId != null" >
+        manager_id = #{managerId,jdbcType=BIGINT},
+      </if>
+      <if test="sourceId != null" >
+        source_id = #{sourceId,jdbcType=BIGINT},
+      </if>
+      <if test="tbSourceName != null" >
+        tb_source_name = #{tbSourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="isApproved != null" >
+        is_approved = #{isApproved,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbExtendPropertyFinal" >
+    insert into tb_extend_property_final (id, property_id, value, 
+      manager_id, source_id, tb_source_name, 
+      is_approved)
+    values (#{id,jdbcType=BIGINT}, #{propertyId,jdbcType=BIGINT}, #{value,jdbcType=VARCHAR}, 
+      #{managerId,jdbcType=BIGINT}, #{sourceId,jdbcType=BIGINT}, #{tbSourceName,jdbcType=VARCHAR}, 
+      #{isApproved,jdbcType=INTEGER})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tb_extend_property_final
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultType="com.yisi.stiku.basedata.entity.TbExtendPropertyFinal" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_extend_property_final
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultType="com.yisi.stiku.basedata.entity.TbExtendPropertyFinal" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_extend_property_final
+  </select>
+  <select id="findByEntity" resultType="com.yisi.stiku.basedata.entity.TbExtendPropertyFinal" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_extend_property_final
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.propertyId != null" >
+				and property_id = #{entity.propertyId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.value != null" >
+				and value = #{entity.value,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.managerId != null" >
+				and manager_id = #{entity.managerId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.sourceId != null" >
+				and source_id = #{entity.sourceId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.tbSourceName != null" >
+				and tb_source_name = #{entity.tbSourceName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.isApproved != null" >
+				and is_approved = #{entity.isApproved,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

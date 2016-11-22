@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbSchoolExamPaperDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbSchoolExamPaper" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="school_id" property="schoolId" jdbcType="BIGINT" />
+    <result column="paper_id" property="paperId" jdbcType="BIGINT" />
+    <result column="area_type" property="areaType" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="BIGINT" />
+    <result column="manager_id" property="managerId" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="use_type" property="useType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ExtResultMap" type="com.yisi.stiku.basedata.entity.SchoolExamPaperVO">  
+      <id column="id" property="id" jdbcType="BIGINT" />
+      <result column="paper_id" property="paperId" jdbcType="BIGINT" />
+      <result column="paperName" jdbcType="VARCHAR" property="paperName" />
+      <result column="paper_type" jdbcType="INTEGER" property="paperType" />
+      <result column="grade" jdbcType="INTEGER" property="grade"/>
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, school_id, paper_id, area_type, area_id, manager_id, update_time, acl_code, acl_type, 
+    created_by, created_dt, updated_by, updated_dt, version, use_type
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_school_exam_paper
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_school_exam_paper
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbSchoolExamPaper" >
+    insert into tb_school_exam_paper (id, school_id, paper_id, 
+      area_type, area_id, manager_id, 
+      update_time, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, use_type
+      )
+    values (#{id,jdbcType=BIGINT}, #{schoolId,jdbcType=BIGINT}, #{paperId,jdbcType=BIGINT}, 
+      #{areaType,jdbcType=INTEGER}, #{areaId,jdbcType=BIGINT}, #{managerId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{useType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbSchoolExamPaper" >
+    update tb_school_exam_paper
+    <set >
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="paperId != null" >
+        paper_id = #{paperId,jdbcType=BIGINT},
+      </if>
+      <if test="areaType != null" >
+        area_type = #{areaType,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="managerId != null" >
+        manager_id = #{managerId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="useType != null" >
+        use_type = #{useType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbSchoolExamPaper" >
+    insert into tb_school_exam_paper (id, school_id, paper_id, 
+      area_type, area_id, manager_id, 
+      update_time, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, use_type
+      )
+    values (#{id,jdbcType=BIGINT}, #{schoolId,jdbcType=BIGINT}, #{paperId,jdbcType=BIGINT}, 
+      #{areaType,jdbcType=INTEGER}, #{areaId,jdbcType=BIGINT}, #{managerId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{useType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tb_school_exam_paper
+		(id,school_id,paper_id,area_type,area_id,manager_id,update_time,acl_code,acl_type,created_by,created_dt,updated_by,updated_dt,version,use_type)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=BIGINT},#{item.school_id,jdbcType=BIGINT},#{item.paper_id,jdbcType=BIGINT},#{item.area_type,jdbcType=INTEGER},#{item.area_id,jdbcType=BIGINT},#{item.manager_id,jdbcType=BIGINT},#{item.update_time,jdbcType=TIMESTAMP},#{item.acl_code,jdbcType=VARCHAR},#{item.acl_type,jdbcType=VARCHAR},#{item.created_by,jdbcType=VARCHAR},#{item.created_dt,jdbcType=TIMESTAMP},#{item.updated_by,jdbcType=VARCHAR},#{item.updated_dt,jdbcType=TIMESTAMP},#{item.version,jdbcType=INTEGER},#{item.use_type,jdbcType=VARCHAR})
+	</foreach>
+  </insert>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tb_school_exam_paper
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_school_exam_paper
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_school_exam_paper
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.schoolId != null" >
+				and school_id = #{entity.schoolId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.paperId != null" >
+				and paper_id = #{entity.paperId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.areaType != null" >
+				and area_type = #{entity.areaType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.areaId != null" >
+				and area_id = #{entity.areaId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.managerId != null" >
+				and manager_id = #{entity.managerId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.updateTime != null" >
+				and update_time = #{entity.updateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.useType != null" >
+				and use_type = #{entity.useType,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_school_exam_paper
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="finfindByCreateDtAndSchoolID" resultMap="BaseResultMap">
+    	select 
+    		<include refid="BaseColumnList"/>
+    	from tb_school_exam_paper
+    	where school_id=#{schoolId,jdbcType=INTEGER} and use_type=#{useType,jdbcType=INTEGER} and created_dt>#{createdDt,jdbcType=TIMESTAMP}
+   </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+   </sql>
+   <select id="findListBySchooIdAreaId" resultMap="BaseResultMap">
+   		select * from tb_school_exam_paper where school_id = ${schoolId}  or (area_id =  ${areaId} and school_id is null ) order by id desc
+   </select>
+   <select id="findBySchoolIdAndAreaId" resultMap="ExtResultMap">
+  select
+	a.id,a.paper_id,c.name as paperName,c.paper_type,c.grade
+		from
+			tb_school_exam_paper a, tb_exam_paper c
+		where
+			a.paper_id = c.id
+			and a.school_id = ${schoolId}
+			and c.grade  = ${grade}
+		order by
+	a.id desc
+	<if test="startIndex !=null and pagesize != null">
+			limit ${startIndex}, ${pagesize}
+	</if>
+  </select> 
+  
+   <select id="findBySchoolIdAndGrade" resultMap="ExtResultMap">
+	SELECT
+		a.id,a.paper_id,c.name AS paperName,c.paper_type,c.grade
+	FROM
+		tb_school_exam_paper a,tb_exam_paper c
+	WHERE
+		a.paper_id = c.id and a.paper_id in(
+		SELECT
+			paper_id
+		FROM
+			tb_school_exam_paper
+		WHERE
+			school_id = ${schoolId}
+		OR(
+			area_id = ${areaId}
+			AND school_id IS NULL
+		)
+	)
+	AND(c.grade = ${grade} OR c.grade IS NULL) GROUP BY a.paper_id
+	order by
+	a.id desc
+	<if test="startIndex !=null and pagesize != null">
+			limit ${startIndex}, ${pagesize}
+	</if>
+  </select>
+  
+   <select id="findAllBySchoolIdAndAreaId" resultMap="ExtResultMap">
+ 	SELECT
+		a.id,a.paper_id,c.name AS paperName,c.paper_type,c.grade
+	FROM
+		tb_school_exam_paper a,tb_exam_paper c
+	WHERE
+		a.paper_id = c.id and a.paper_id in(
+		SELECT
+			paper_id
+		FROM
+			tb_school_exam_paper
+		WHERE
+			school_id = ${schoolId}
+		OR(
+			area_id = ${areaId}
+			AND school_id IS NULL
+		)
+	)
+	GROUP BY a.paper_id order by a.id desc
+	<if test="startIndex !=null and pagesize != null">
+			limit ${startIndex}, ${pagesize}
+	</if>
+  </select>  
+</mapper>

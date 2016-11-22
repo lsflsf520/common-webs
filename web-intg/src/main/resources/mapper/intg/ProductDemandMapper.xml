@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.intg.dao.ProductDemandDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.intg.entity.ProductDemand" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="attachs" property="attachs" jdbcType="VARCHAR" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="module" property="module" jdbcType="VARCHAR" />
+    <result column="dev_leader" property="devLeader" jdbcType="VARCHAR" />
+    <result column="test_leader" property="testLeader" jdbcType="VARCHAR" />
+    <result column="expected_time" property="expectedTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, name, creator_id, creator, description, attachs, project, module, dev_leader, 
+    test_leader, expected_time, status, create_time
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="BaseColumnList" />
+    from product_demand
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Integer" >
+    delete from product_demand
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.intg.entity.ProductDemand" >
+    insert into product_demand (id, name, creator_id, 
+      creator, description, attachs, 
+      project, module, dev_leader, 
+      test_leader, expected_time, status, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{creatorId,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{attachs,jdbcType=VARCHAR}, 
+      #{project,jdbcType=VARCHAR}, #{module,jdbcType=VARCHAR}, #{devLeader,jdbcType=VARCHAR}, 
+      #{testLeader,jdbcType=VARCHAR}, #{expectedTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.intg.entity.ProductDemand" >
+    update product_demand
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="attachs != null" >
+        attachs = #{attachs,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null" >
+        module = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="devLeader != null" >
+        dev_leader = #{devLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="testLeader != null" >
+        test_leader = #{testLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedTime != null" >
+        expected_time = #{expectedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.intg.entity.ProductDemand" >
+    insert into product_demand (id, name, creator_id, 
+      creator, description, attachs, 
+      project, module, dev_leader, 
+      test_leader, expected_time, status, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{creatorId,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{attachs,jdbcType=VARCHAR}, 
+      #{project,jdbcType=VARCHAR}, #{module,jdbcType=VARCHAR}, #{devLeader,jdbcType=VARCHAR}, 
+      #{testLeader,jdbcType=VARCHAR}, #{expectedTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into product_demand
+		(id,name,creator_id,creator,description,attachs,project,module,dev_leader,test_leader,expected_time,status,create_time)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=INTEGER},#{item.name,jdbcType=VARCHAR},#{item.creatorId,jdbcType=INTEGER},#{item.creator,jdbcType=VARCHAR},#{item.description,jdbcType=VARCHAR},#{item.attachs,jdbcType=VARCHAR},#{item.project,jdbcType=VARCHAR},#{item.module,jdbcType=VARCHAR},#{item.devLeader,jdbcType=VARCHAR},#{item.testLeader,jdbcType=VARCHAR},#{item.expectedTime,jdbcType=TIMESTAMP},#{item.status,jdbcType=TINYINT},#{item.createTime,jdbcType=TIMESTAMP})
+	</foreach>
+  </insert>
+  <select id="findByPK_inMaster" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from product_demand	where id = #{pk, jdbcType=INTEGER}
+  </select>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		count(1)
+	from
+		product_demand
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from product_demand
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from product_demand
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=INTEGER}
+			</if>
+			<if test="entity.name != null" >
+				and name = #{entity.name,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.creatorId != null" >
+				and creator_id = #{entity.creatorId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.creator != null" >
+				and creator = #{entity.creator,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.description != null" >
+				and description = #{entity.description,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.attachs != null" >
+				and attachs = #{entity.attachs,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.project != null" >
+				and project = #{entity.project,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.module != null" >
+				and module = #{entity.module,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.devLeader != null" >
+				and dev_leader = #{entity.devLeader,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.testLeader != null" >
+				and test_leader = #{entity.testLeader,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.expectedTime != null" >
+				and expected_time = #{entity.expectedTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.status != null" >
+				and status = #{entity.status,jdbcType=TINYINT}
+			</if>
+			<if test="entity.createTime != null" >
+				and create_time = #{entity.createTime,jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from product_demand
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  
+  <select id="listAvailProductDemand" resultMap="BaseResultMap">
+    select
+		<include refid="BaseColumnList"/>
+	from product_demand
+	where <![CDATA[ status >= 0 ]]>
+	  <if test="projectName != null">
+		 and project = #{projectName, jdbcType=VARCHAR}
+	  </if>
+	  <if test="moduleName != null">
+		 and module = #{moduleName, jdbcType=VARCHAR}
+	  </if>
+    order by create_time desc
+  </select>
+  
+  <select id="listNotRelateDemand" resultMap="BaseResultMap">
+    select 
+      p.id, p.name, p.create_time 
+    from 
+      product_demand p left join dev_demand d on p.id = d.product_demand_id 
+    where 
+      <![CDATA[ (d.product_demand_id is null or d.status < 0)
+         and p.status >= 0
+	  ]]>
+	order by create_time desc
+  </select>
+  
+  <update id="updateProductStatus" >
+    update product_demand set status = #{status, jdbcType=TINYINT}
+    where id in (select product_demand_id from dev_demand where id = #{parentId, jdbcType=INTEGER})
+  </update>
+</mapper>

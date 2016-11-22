@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<JobDefinitions>
+	<definitions>
+		<entry>
+			<key>RPCJob</key>
+			<value>
+				<className>com.yisi.stiku.quartz.job.RPCJob</className>
+				<description>RPC任务</description>
+				<name>RPCJob</name>
+				<parameters>
+					<parameter>
+						<description>RPC接口无入参</description>
+						<inputMask>text</inputMask>
+						<name>className</name>
+						<required>true</required>
+					</parameter>
+					<parameter>
+						<description>方法名</description>
+						<inputMask>text</inputMask>
+						<name>methodName</name>
+						<required>true</required>
+					</parameter>
+					<parameter>
+						<description>是否异步(默认为false)</description>
+						<inputMask>checkbox</inputMask>
+						<name>isAsyn</name>
+						<required>false</required>
+					</parameter>
+				</parameters>
+			</value>
+		</entry>
+		
+			<entry>
+			<key>RPCJobParm</key>
+			<value>
+				<className>com.yisi.stiku.quartz.job.RPCJobParam</className>
+				<description>RPC入参任务</description>
+				<name>RPCJobParm</name>
+				<parameters>
+					<parameter>
+						<description>RPC接口有入参</description>
+						<inputMask>text</inputMask>
+						<name>className</name>
+						<required>true</required>
+					</parameter>
+					<parameter>
+						<description>方法名</description>
+						<inputMask>text</inputMask>
+						<name>methodName</name>
+						<required>true</required>
+					</parameter>
+					
+					<parameter>
+						<description>入参</description>
+						<inputMask>text</inputMask>
+						<name>inputParm</name>
+						<required>true</required>
+					</parameter>
+					
+					<parameter>
+						<description>是否异步(默认为false)</description>
+						<inputMask>checkbox</inputMask>
+						<name>isAsyn</name>
+						<required>false</required>
+					</parameter>
+					
+				</parameters>
+			</value>
+		</entry>
+
+
+	</definitions>
+</JobDefinitions>

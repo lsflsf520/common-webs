@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TblUserDataPrivDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TblUserDataPriv" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="province_id" property="provinceId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="county_id" property="countyId" jdbcType="INTEGER" />
+    <result column="school_id" property="schoolId" jdbcType="INTEGER" />
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="county_name" property="countyName" jdbcType="VARCHAR" />
+    <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="TeachedrLinkClsMap" type="com.yisi.stiku.basedata.entity.TbTeacherLinkCls" >
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="class_id" property="clsId" jdbcType="VARCHAR" />
+    <result column="name" property="clsName" jdbcType="BIGINT" />
+     <result column="grade_year" property="gradeYear" jdbcType="INTEGER" />
+     <result column="type" property="type" jdbcType="INTEGER" />
+   
+  </resultMap>
+  
+    
+  <sql id="BaseColumnList" >
+    id, user_id, province_id, city_id, county_id, school_id, class_id, user_type, province_name, 
+    city_name, county_name, school_name, user_name
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="BaseColumnList" />
+    from tbl_user_data_priv
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Integer" >
+    delete from tbl_user_data_priv
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TblUserDataPriv" >
+    insert into tbl_user_data_priv (id, user_id, province_id, 
+      city_id, county_id, school_id, 
+      class_id, user_type, province_name, 
+      city_name, county_name, school_name, 
+      user_name)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{provinceId,jdbcType=INTEGER}, 
+      #{cityId,jdbcType=INTEGER}, #{countyId,jdbcType=INTEGER}, #{schoolId,jdbcType=INTEGER}, 
+      #{classId,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{countyName,jdbcType=VARCHAR}, #{schoolName,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TblUserDataPriv" >
+    update tbl_user_data_priv
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="countyId != null" >
+        county_id = #{countyId,jdbcType=INTEGER},
+      </if>
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="provinceName != null" >
+        province_name = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="countyName != null" >
+        county_name = #{countyName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null" >
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TblUserDataPriv" >
+    insert into tbl_user_data_priv (id, user_id, province_id, 
+      city_id, county_id, school_id, 
+      class_id, user_type, province_name, 
+      city_name, county_name, school_name, 
+      user_name)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{provinceId,jdbcType=INTEGER}, 
+      #{cityId,jdbcType=INTEGER}, #{countyId,jdbcType=INTEGER}, #{schoolId,jdbcType=INTEGER}, 
+      #{classId,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{countyName,jdbcType=VARCHAR}, #{schoolName,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tbl_user_data_priv
+		(id,user_id,province_id,city_id,county_id,school_id,class_id,user_type,province_name,city_name,county_name,school_name,user_name)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=INTEGER},#{item.userId,jdbcType=BIGINT},#{item.provinceId,jdbcType=INTEGER},#{item.cityId,jdbcType=INTEGER},#{item.countyId,jdbcType=INTEGER},#{item.schoolId,jdbcType=INTEGER},#{item.classId,jdbcType=INTEGER},#{item.userType,jdbcType=INTEGER},#{item.provinceName,jdbcType=VARCHAR},#{item.cityName,jdbcType=VARCHAR},#{item.countyName,jdbcType=VARCHAR},#{item.schoolName,jdbcType=VARCHAR},#{item.userName,jdbcType=VARCHAR})
+	</foreach>
+  </insert>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tbl_user_data_priv
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tbl_user_data_priv
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tbl_user_data_priv
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=INTEGER}
+			</if>
+			<if test="entity.userId != null" >
+				and user_id = #{entity.userId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.provinceId != null" >
+				and province_id = #{entity.provinceId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.cityId != null" >
+				and city_id = #{entity.cityId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.countyId != null" >
+				and county_id = #{entity.countyId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.schoolId != null" >
+				and school_id = #{entity.schoolId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.classId != null" >
+				and class_id = #{entity.classId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.userType != null" >
+				and user_type = #{entity.userType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.provinceName != null" >
+				and province_name = #{entity.provinceName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.cityName != null" >
+				and city_name = #{entity.cityName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.countyName != null" >
+				and county_name = #{entity.countyName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.schoolName != null" >
+				and school_name = #{entity.schoolName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.userName != null" >
+				and user_name = #{entity.userName,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tbl_user_data_priv
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例-->
+			<if test="entity.provinceId != null">
+				and province_id = #{entity.provinceId,jdbcType=INTEGER}
+			</if>
+			<if test="entity.cityId != null">
+				and city_id = #{entity.cityId,jdbcType=INTEGER}
+			</if>
+		    <if test="entity.schoolName != null">
+				and school_name like #{entity.schoolName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.userType != null">
+				and user_type = #{entity.userType,jdbcType=INTEGER}
+			</if>
+        </if>
+        
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  
+  <resultMap id="userResultMap" type="java.lang.Long" >
+    <result column="user_id" jdbcType="BIGINT" />
+  </resultMap>
+  
+   
+  
+  
+  
+  
+  <select id="findAllUserIdByCoach" parameterType="java.lang.Long" resultMap="userResultMap">
+    select 
+      user_id
+    from 
+      tbl_user_data_priv
+    where 
+      user_type = 3 
+     and
+      school_id in (
+       select school_id from tbl_user_data_priv where user_id = #{userId,jdbcType=BIGINT}
+      )
+  </select>
+  
+  
+    <select id="findAllUserIdByCoachSchool" parameterType="java.util.Map" resultMap="userResultMap">
+    select 
+      user_id
+    from 
+      tbl_user_data_priv
+    where 
+      user_type = 3 
+     and
+      school_id = (
+       select school_id from tbl_user_data_priv where user_id = #{userId,jdbcType=BIGINT} and school_id= #{schoolId,jdbcType=BIGINT}
+      )
+  </select>
+  
+    <select id="findTeachersLinkClasses" parameterType="java.util.Map" resultMap="TeachedrLinkClsMap">
+    select teacher.user_id ,teacls.class_id, cls.name,cls.grade_year,cls.type 
+  from tbt_teacher teacher,tbt_teacher_class teacls, tb_class cls 
+   where teacls.class_id=cls.id  and teacher.id=teacls.teacher_id 
+    <if test="userIds.length > 0">
+    and teacher.user_id 
+    in (
+     <foreach collection="userIds" item="uid" separator="," index="index">
+         #{uid,jdbcType=BIGINT}
+     </foreach>
+     )
+   </if>
+   and teacls.school_id=  #{schoolId,jdbcType=BIGINT}
+  
+  </select>
+  
+   <select id="findLinkClasses" parameterType="java.util.Map" resultType="Long">
+    select distinct cls.class_id
+  from tbt_teacher_class cls
+   where cls.school_id= #{schoolid,jdbcType=BIGINT}
+  </select>
+  
+  
+   <select id="filterTeacherBySchool" parameterType="java.util.Map" resultMap="userResultMap">
+    select 
+      user_id
+    from 
+      tbl_user_data_priv
+    where 
+      user_type = 3
+     and
+      school_id = #{schoolId,jdbcType=BIGINT}
+     and
+      user_id in (
+        <foreach collection="userIds" item="uid" separator="," index="index">
+          #{uid,jdbcType=BIGINT}
+        </foreach>
+      )
+  </select>
+  
+  <select id="filterUserByType" parameterType="java.util.Map" resultMap="userResultMap">
+    select 
+      user_id
+    from 
+      tbl_user_data_priv
+    where 
+      user_type = #{userType,jdbcType=INTEGER}
+     and
+      user_id in (
+        <foreach collection="userIds" item="uid" separator="," index="index">
+          #{uid,jdbcType=BIGINT}
+        </foreach>
+      )
+     and
+      school_id in (
+       select school_id from tbl_user_data_priv where user_id = #{userId,jdbcType=BIGINT}
+      )
+  </select>
+  
+  <delete id="deleteByUserId" parameterType="java.util.Map">
+    delete from tbl_user_data_priv where user_id = #{userId, jdbcType=TINYINT}
+  </delete>
+</mapper>

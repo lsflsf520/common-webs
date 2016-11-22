@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.priv.dao.UserR2RoleDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.priv.entity.UserR2Role" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, user_id, role_id
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="BaseColumnList" />
+    from user_r2_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Integer" >
+    delete from user_r2_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.priv.entity.UserR2Role" >
+    insert into user_r2_role (id, user_id, role_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.priv.entity.UserR2Role" >
+    update user_r2_role
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.priv.entity.UserR2Role" >
+    insert into user_r2_role (id, user_id, role_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into user_r2_role
+		(id,user_id,role_id)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=INTEGER},#{item.userId,jdbcType=INTEGER},#{item.roleId,jdbcType=INTEGER})
+	</foreach>
+  </insert>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		user_r2_role
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from user_r2_role
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from user_r2_role
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=INTEGER}
+			</if>
+			<if test="entity.userId != null" >
+				and user_id = #{entity.userId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.roleId != null" >
+				and role_id = #{entity.roleId,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from user_r2_role
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  
+  <delete id="deleteByUserId" parameterType="java.lang.Long" >
+    delete from user_r2_role
+    where user_id = #{userId, jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByRoleId" parameterType="java.lang.Integer" >
+    delete from user_r2_role
+    where role_id = #{roleId, jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByUserAndRole" parameterType="java.util.Map">
+    delete from user_r2_role where user_id = #{userId,jdbcType=BIGINT} and role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  
+  <select id="exist" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(1) from user_r2_role where user_id = #{userId,jdbcType=BIGINT} and role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  
+  
+</mapper>

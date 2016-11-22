@@ -1,0 +1,6 @@
+servers=192.168.30.93,192.168.30.94
+repo=stiku-platform
+pom=passport/web-passport/pom.xml
+parent_pom=passport/pom.xml
+cmd=package
+sleep=15

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbtTeacherClassDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbtTeacherClass" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="class_id" property="classId" jdbcType="BIGINT" />
+    <result column="teacher_id" property="teacherId" jdbcType="BIGINT" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="school_id" property="schoolId" jdbcType="BIGINT" />
+    <result column="teacher_type" property="teacherType" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yisi.stiku.basedata.entity.TbtTeacherClass" extends="BaseResultMap" >
+    <result column="teacher" property="teacher" jdbcType="BINARY" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, acl_code, acl_type, created_by, created_dt, updated_by, updated_dt, version, 
+    class_id, teacher_id, teacher_name, school_id, teacher_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    teacher
+  </sql>
+  <select id="findByPK" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbt_teacher_class
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tbt_teacher_class
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbtTeacherClass" >
+    insert into tbt_teacher_class (id, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, class_id, 
+      teacher_id, teacher_name, school_id, 
+      teacher_type, teacher)
+    values (#{id,jdbcType=BIGINT}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{classId,jdbcType=BIGINT}, 
+      #{teacherId,jdbcType=BIGINT}, #{teacherName,jdbcType=VARCHAR}, #{schoolId,jdbcType=BIGINT}, 
+      #{teacherType,jdbcType=INTEGER}, #{teacher,jdbcType=BINARY})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbtTeacherClass" >
+    update tbt_teacher_class
+    <set >
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=BIGINT},
+      </if>
+      <if test="teacherId != null" >
+        teacher_id = #{teacherId,jdbcType=BIGINT},
+      </if>
+      <if test="teacherName != null" >
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="teacherType != null" >
+        teacher_type = #{teacherType,jdbcType=INTEGER},
+      </if>
+      <if test="teacher != null" >
+        teacher = #{teacher,jdbcType=BINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yisi.stiku.basedata.entity.TbtTeacherClass" >
+    update tbt_teacher_class
+    set acl_code = #{aclCode,jdbcType=VARCHAR},
+      acl_type = #{aclType,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      class_id = #{classId,jdbcType=BIGINT},
+      teacher_id = #{teacherId,jdbcType=BIGINT},
+      teacher_name = #{teacherName,jdbcType=VARCHAR},
+      school_id = #{schoolId,jdbcType=BIGINT},
+      teacher_type = #{teacherType,jdbcType=INTEGER},
+      teacher = #{teacher,jdbcType=BINARY}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbtTeacherClass" >
+    insert into tbt_teacher_class (id, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, class_id, 
+      teacher_id, teacher_name, school_id, 
+      teacher_type, teacher)
+    values (#{id,jdbcType=BIGINT}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{classId,jdbcType=BIGINT}, 
+      #{teacherId,jdbcType=BIGINT}, #{teacherName,jdbcType=VARCHAR}, #{schoolId,jdbcType=BIGINT}, 
+      #{teacherType,jdbcType=INTEGER}, #{teacher,jdbcType=BINARY})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tbt_teacher_class
+		(id,acl_code,acl_type,created_by,created_dt,updated_by,updated_dt,version,class_id,teacher_id,teacher_name,school_id,teacher_type,teacher)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=BIGINT},#{item.aclCode,jdbcType=VARCHAR},#{item.aclType,jdbcType=VARCHAR},#{item.createdBy,jdbcType=VARCHAR},#{item.createdDt,jdbcType=TIMESTAMP},#{item.updatedBy,jdbcType=VARCHAR},#{item.updatedDt,jdbcType=TIMESTAMP},#{item.version,jdbcType=INTEGER},#{item.classId,jdbcType=BIGINT},#{item.teacherId,jdbcType=BIGINT},#{item.teacherName,jdbcType=VARCHAR},#{item.schoolId,jdbcType=BIGINT},#{item.teacherType,jdbcType=INTEGER},#{item.teacher,jdbcType=BINARY})
+	</foreach>
+  </insert>
+  <select id="findByPK_inMaster" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from tbt_teacher_class	where id = #{pk, jdbcType=BIGINT}
+  </select>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		count(1)
+	from
+		tbt_teacher_class
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from tbt_teacher_class
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from tbt_teacher_class
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.classId != null" >
+				and class_id = #{entity.classId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.teacherId != null" >
+				and teacher_id = #{entity.teacherId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.teacherName != null" >
+				and teacher_name = #{entity.teacherName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.schoolId != null" >
+				and school_id = #{entity.schoolId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.teacherType != null" >
+				and teacher_type = #{entity.teacherType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.teacher != null" >
+				and teacher = #{entity.teacher,jdbcType=BINARY}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from tbt_teacher_class
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  <select id="deleteByTeacherIdAndClassIds">
+		delete from tbt_teacher_class
+		where
+		teacher_id = #{teacherId,jdbcType=BIGINT} and class_id in
+		<foreach item="item" index="index" collection="classIds"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	 <select id="deleteByTeacherId">
+		delete from tbt_teacher_class
+		where
+		teacher_id = #{teacherId,jdbcType=BIGINT}
+	</select>
+	
+   <select id="findTeacherIdByUserId" resultType="Long" >
+  select id  from tbt_teacher where tbt_teacher.user_id=#{userId.teacher,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

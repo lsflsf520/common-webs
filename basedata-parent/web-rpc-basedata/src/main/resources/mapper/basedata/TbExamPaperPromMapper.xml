@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbExamPaperPromDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbExamPaperProm" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="problem_id" property="problemId" jdbcType="BIGINT" />
+    <result column="problem_prep_id" property="problemPrepId" jdbcType="BIGINT" />
+    <result column="problem_no" property="problemNo" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="exam_paper_id" property="examPaperId" jdbcType="BIGINT" />
+    <result column="isleaf" property="isleaf" jdbcType="SMALLINT" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="main_problem_no" property="mainProblemNo" jdbcType="INTEGER" />
+    <result column="sub_problem_no" property="subProblemNo" jdbcType="INTEGER" />
+    <result column="group_no" property="groupNo" jdbcType="INTEGER" />
+    <result column="group_sub_no" property="groupSubNo" jdbcType="INTEGER" />
+    <result column="group_count" property="groupCount" jdbcType="INTEGER" />
+    <result column="group_sub_count" property="groupSubCount" jdbcType="INTEGER" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="is_leaf" property="isLeaf" jdbcType="BIT" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, problem_id, problem_prep_id, problem_no, parent_id, type, exam_paper_id, isleaf, 
+    score, main_problem_no, sub_problem_no, group_no, group_sub_no, group_count, group_sub_count, 
+    acl_code, acl_type, created_by, created_dt, updated_by, updated_dt, version, is_leaf
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_exam_paper_prom
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_exam_paper_prom
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbExamPaperProm" >
+    insert into tb_exam_paper_prom (id, problem_id, problem_prep_id, 
+      problem_no, parent_id, type, 
+      exam_paper_id, isleaf, score, 
+      main_problem_no, sub_problem_no, group_no, 
+      group_sub_no, group_count, group_sub_count, 
+      acl_code, acl_type, created_by, 
+      created_dt, updated_by, updated_dt, 
+      version, is_leaf)
+    values (#{id,jdbcType=BIGINT}, #{problemId,jdbcType=BIGINT}, #{problemPrepId,jdbcType=BIGINT}, 
+      #{problemNo,jdbcType=INTEGER}, #{parentId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{examPaperId,jdbcType=BIGINT}, #{isleaf,jdbcType=SMALLINT}, #{score,jdbcType=INTEGER}, 
+      #{mainProblemNo,jdbcType=INTEGER}, #{subProblemNo,jdbcType=INTEGER}, #{groupNo,jdbcType=INTEGER}, 
+      #{groupSubNo,jdbcType=INTEGER}, #{groupCount,jdbcType=INTEGER}, #{groupSubCount,jdbcType=INTEGER}, 
+      #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{isLeaf,jdbcType=BIT})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbExamPaperProm" >
+    update tb_exam_paper_prom
+    <set >
+      <if test="problemId != null" >
+        problem_id = #{problemId,jdbcType=BIGINT},
+      </if>
+      <if test="problemPrepId != null" >
+        problem_prep_id = #{problemPrepId,jdbcType=BIGINT},
+      </if>
+      <if test="problemNo != null" >
+        problem_no = #{problemNo,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="examPaperId != null" >
+        exam_paper_id = #{examPaperId,jdbcType=BIGINT},
+      </if>
+      <if test="isleaf != null" >
+        isleaf = #{isleaf,jdbcType=SMALLINT},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="mainProblemNo != null" >
+        main_problem_no = #{mainProblemNo,jdbcType=INTEGER},
+      </if>
+      <if test="subProblemNo != null" >
+        sub_problem_no = #{subProblemNo,jdbcType=INTEGER},
+      </if>
+      <if test="groupNo != null" >
+        group_no = #{groupNo,jdbcType=INTEGER},
+      </if>
+      <if test="groupSubNo != null" >
+        group_sub_no = #{groupSubNo,jdbcType=INTEGER},
+      </if>
+      <if test="groupCount != null" >
+        group_count = #{groupCount,jdbcType=INTEGER},
+      </if>
+      <if test="groupSubCount != null" >
+        group_sub_count = #{groupSubCount,jdbcType=INTEGER},
+      </if>
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isLeaf != null" >
+        is_leaf = #{isLeaf,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbExamPaperProm" >
+    insert into tb_exam_paper_prom (id, problem_id, problem_prep_id, 
+      problem_no, parent_id, type, 
+      exam_paper_id, isleaf, score, 
+      main_problem_no, sub_problem_no, group_no, 
+      group_sub_no, group_count, group_sub_count, 
+      acl_code, acl_type, created_by, 
+      created_dt, updated_by, updated_dt, 
+      version, is_leaf)
+    values (#{id,jdbcType=BIGINT}, #{problemId,jdbcType=BIGINT}, #{problemPrepId,jdbcType=BIGINT}, 
+      #{problemNo,jdbcType=INTEGER}, #{parentId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{examPaperId,jdbcType=BIGINT}, #{isleaf,jdbcType=SMALLINT}, #{score,jdbcType=INTEGER}, 
+      #{mainProblemNo,jdbcType=INTEGER}, #{subProblemNo,jdbcType=INTEGER}, #{groupNo,jdbcType=INTEGER}, 
+      #{groupSubNo,jdbcType=INTEGER}, #{groupCount,jdbcType=INTEGER}, #{groupSubCount,jdbcType=INTEGER}, 
+      #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedDt,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{isLeaf,jdbcType=BIT})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tb_exam_paper_prom
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_exam_paper_prom
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_exam_paper_prom
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_exam_paper_prom
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.problemId != null" >
+				and problem_id = #{entity.problemId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.problemPrepId != null" >
+				and problem_prep_id = #{entity.problemPrepId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.problemNo != null" >
+				and problem_no = #{entity.problemNo,jdbcType=INTEGER}
+			</if>
+			<if test="entity.parentId != null" >
+				and parent_id = #{entity.parentId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.type != null" >
+				and type = #{entity.type,jdbcType=INTEGER}
+			</if>
+			<if test="entity.examPaperId != null" >
+				and exam_paper_id = #{entity.examPaperId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.isleaf != null" >
+				and isleaf = #{entity.isleaf,jdbcType=SMALLINT}
+			</if>
+			<if test="entity.score != null" >
+				and score = #{entity.score,jdbcType=INTEGER}
+			</if>
+			<if test="entity.mainProblemNo != null" >
+				and main_problem_no = #{entity.mainProblemNo,jdbcType=INTEGER}
+			</if>
+			<if test="entity.subProblemNo != null" >
+				and sub_problem_no = #{entity.subProblemNo,jdbcType=INTEGER}
+			</if>
+			<if test="entity.groupNo != null" >
+				and group_no = #{entity.groupNo,jdbcType=INTEGER}
+			</if>
+			<if test="entity.groupSubNo != null" >
+				and group_sub_no = #{entity.groupSubNo,jdbcType=INTEGER}
+			</if>
+			<if test="entity.groupCount != null" >
+				and group_count = #{entity.groupCount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.groupSubCount != null" >
+				and group_sub_count = #{entity.groupSubCount,jdbcType=INTEGER}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.isLeaf != null" >
+				and is_leaf = #{entity.isLeaf,jdbcType=BIT}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

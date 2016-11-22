@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbCardDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbCard" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="activation_time" property="activationTime" jdbcType="TIMESTAMP" />
+    <result column="activation_flag" property="activationFlag" jdbcType="INTEGER" />
+    <result column="open_subject" property="openSubject" jdbcType="BIGINT" />
+    <result column="student_id" property="studentId" jdbcType="BIGINT" />
+    <result column="logout_flag" property="logoutFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, password, activation_time, activation_flag, open_subject, student_id, logout_flag
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_card
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.String" >
+    delete from tb_card
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbCard" >
+    insert into tb_card (id, password, activation_time, 
+      activation_flag, open_subject, student_id, 
+      logout_flag)
+    values (#{id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{activationTime,jdbcType=TIMESTAMP}, 
+      #{activationFlag,jdbcType=INTEGER}, #{openSubject,jdbcType=BIGINT}, #{studentId,jdbcType=BIGINT}, 
+      #{logoutFlag,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbCard" >
+    update tb_card
+    <set >
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="activationTime != null" >
+        activation_time = #{activationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activationFlag != null" >
+        activation_flag = #{activationFlag,jdbcType=INTEGER},
+      </if>
+      <if test="openSubject != null" >
+        open_subject = #{openSubject,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null" >
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="logoutFlag != null" >
+        logout_flag = #{logoutFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbCard" >
+    insert into tb_card (id, password, activation_time, 
+      activation_flag, open_subject, student_id, 
+      logout_flag)
+    values (#{id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{activationTime,jdbcType=TIMESTAMP}, 
+      #{activationFlag,jdbcType=INTEGER}, #{openSubject,jdbcType=BIGINT}, #{studentId,jdbcType=BIGINT}, 
+      #{logoutFlag,jdbcType=INTEGER})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		TB_CARD
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_CARD
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_CARD
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from TB_CARD
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.password != null" >
+				and password = #{entity.password,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.activationTime != null" >
+				and activation_time = #{entity.activationTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.activationFlag != null" >
+				and activation_flag = #{entity.activationFlag,jdbcType=INTEGER}
+			</if>
+			<if test="entity.openSubject != null" >
+				and open_subject = #{entity.openSubject,jdbcType=BIGINT}
+			</if>
+			<if test="entity.studentId != null" >
+				and student_id = #{entity.studentId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.logoutFlag != null" >
+				and logout_flag = #{entity.logoutFlag,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

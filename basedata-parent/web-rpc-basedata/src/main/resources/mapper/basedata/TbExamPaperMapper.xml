@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbExamPaperDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbExamPaper" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="paper_type" property="paperType" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="month" property="month" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="subject_id" property="subjectId" jdbcType="BIGINT" />
+    <result column="area_id" property="areaId" jdbcType="BIGINT" />
+    <result column="division_type" property="divisionType" jdbcType="INTEGER" />
+    <result column="school_id" property="schoolId" jdbcType="BIGINT" />
+    <result column="paper_note" property="paperNote" jdbcType="VARCHAR" />
+    <result column="stu_num" property="stuNum" jdbcType="BIGINT" />
+    <result column="problem_count" property="problemCount" jdbcType="BIGINT" />
+    <result column="is_taged" property="isTaged" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="chapter_id" property="chapterId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="chapter_ids" property="chapterIds" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, name, paper_type, year, month, grade, subject_id, area_id, division_type, school_id, 
+    paper_note, stu_num, problem_count, is_taged, creator, create_time, modifier, modify_time, 
+    school_name, code, chapter_id, status, acl_code, acl_type, created_by, created_dt, 
+    updated_by, updated_dt, version, chapter_ids
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_exam_paper
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_exam_paper
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbExamPaper" >
+    insert into tb_exam_paper (id, name, paper_type, 
+      year, month, grade, 
+      subject_id, area_id, division_type, 
+      school_id, paper_note, stu_num, 
+      problem_count, is_taged, creator, 
+      create_time, modifier, modify_time, 
+      school_name, code, chapter_id, 
+      status, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, chapter_ids
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{paperType,jdbcType=INTEGER}, 
+      #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, 
+      #{subjectId,jdbcType=BIGINT}, #{areaId,jdbcType=BIGINT}, #{divisionType,jdbcType=INTEGER}, 
+      #{schoolId,jdbcType=BIGINT}, #{paperNote,jdbcType=VARCHAR}, #{stuNum,jdbcType=BIGINT}, 
+      #{problemCount,jdbcType=BIGINT}, #{isTaged,jdbcType=INTEGER}, #{creator,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{schoolName,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{chapterId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{chapterIds,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbExamPaper" >
+    update tb_exam_paper
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="paperType != null" >
+        paper_type = #{paperType,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="subjectId != null" >
+        subject_id = #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="divisionType != null" >
+        division_type = #{divisionType,jdbcType=INTEGER},
+      </if>
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="paperNote != null" >
+        paper_note = #{paperNote,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNum != null" >
+        stu_num = #{stuNum,jdbcType=BIGINT},
+      </if>
+      <if test="problemCount != null" >
+        problem_count = #{problemCount,jdbcType=BIGINT},
+      </if>
+      <if test="isTaged != null" >
+        is_taged = #{isTaged,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="schoolName != null" >
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterId != null" >
+        chapter_id = #{chapterId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="chapterIds != null" >
+        chapter_ids = #{chapterIds,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbExamPaper" >
+    insert into tb_exam_paper (id, name, paper_type, 
+      year, month, grade, 
+      subject_id, area_id, division_type, 
+      school_id, paper_note, stu_num, 
+      problem_count, is_taged, creator, 
+      create_time, modifier, modify_time, 
+      school_name, code, chapter_id, 
+      status, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, chapter_ids
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{paperType,jdbcType=INTEGER}, 
+      #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, 
+      #{subjectId,jdbcType=BIGINT}, #{areaId,jdbcType=BIGINT}, #{divisionType,jdbcType=INTEGER}, 
+      #{schoolId,jdbcType=BIGINT}, #{paperNote,jdbcType=VARCHAR}, #{stuNum,jdbcType=BIGINT}, 
+      #{problemCount,jdbcType=BIGINT}, #{isTaged,jdbcType=INTEGER}, #{creator,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{schoolName,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{chapterId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{chapterIds,jdbcType=VARCHAR}
+      )
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tb_exam_paper
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_exam_paper
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_exam_paper
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_exam_paper
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.name != null" >
+				and name = #{entity.name,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.paperType != null" >
+				and paper_type = #{entity.paperType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.year != null" >
+				and year = #{entity.year,jdbcType=INTEGER}
+			</if>
+			<if test="entity.month != null" >
+				and month = #{entity.month,jdbcType=INTEGER}
+			</if>
+			<if test="entity.grade != null" >
+				and grade = #{entity.grade,jdbcType=INTEGER}
+			</if>
+			<if test="entity.subjectId != null" >
+				and subject_id = #{entity.subjectId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.areaId != null" >
+				and area_id = #{entity.areaId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.divisionType != null" >
+				and division_type = #{entity.divisionType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.schoolId != null" >
+				and school_id = #{entity.schoolId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.paperNote != null" >
+				and paper_note = #{entity.paperNote,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.stuNum != null" >
+				and stu_num = #{entity.stuNum,jdbcType=BIGINT}
+			</if>
+			<if test="entity.problemCount != null" >
+				and problem_count = #{entity.problemCount,jdbcType=BIGINT}
+			</if>
+			<if test="entity.isTaged != null" >
+				and is_taged = #{entity.isTaged,jdbcType=INTEGER}
+			</if>
+			<if test="entity.creator != null" >
+				and creator = #{entity.creator,jdbcType=BIGINT}
+			</if>
+			<if test="entity.createTime != null" >
+				and create_time = #{entity.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.modifier != null" >
+				and modifier = #{entity.modifier,jdbcType=BIGINT}
+			</if>
+			<if test="entity.modifyTime != null" >
+				and modify_time = #{entity.modifyTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.schoolName != null" >
+				and school_name = #{entity.schoolName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.code != null" >
+				and code = #{entity.code,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.chapterId != null" >
+				and chapter_id = #{entity.chapterId,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.status != null" >
+				and status = #{entity.status,jdbcType=INTEGER}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.chapterIds != null" >
+				and chapter_ids = #{entity.chapterIds,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+    
+  <select id="findList" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_exam_paper
+	<if test="whereSql != null">
+	<where>
+		 	 ${whereSql}
+	</where>	
+	</if>
+	<if test="orderBySql != null">
+			${orderBySql}
+	</if>
+  </select>
+   
+</mapper>

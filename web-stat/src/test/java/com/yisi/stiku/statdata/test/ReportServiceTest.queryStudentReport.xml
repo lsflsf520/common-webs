@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<student_fenban_data id="1" student_id="52349"
+		class_id="2095" weektest_id="1" grasp_score="10" class_rank="1"
+		class_student_cnt="22" class_real_test_cnt="1" follow_cnt="1"
+		over_cnt="0" create_time="2016-04-22 14:28:18.0" />
+	<student_fenban_data id="2" student_id="39583"
+		class_id="2095" weektest_id="1" grasp_score="0" class_rank="2"
+		class_student_cnt="22" class_real_test_cnt="1" follow_cnt="0"
+		over_cnt="1" create_time="2016-04-22 14:28:18.0" />
+		<student_fenban_data id="3" student_id="52349"
+		class_id="2095" weektest_id="1" grasp_score="10" class_rank="1"
+		class_student_cnt="22" class_real_test_cnt="1" follow_cnt="1"
+		over_cnt="0" create_time="2016-04-22 14:28:18.0" />
+</dataset>

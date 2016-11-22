@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.statdata.dao.GradeFenbanDataDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.statdata.entity.GradeFenbanData" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="paper_id" property="paperId" jdbcType="BIGINT" />
+    <result column="weektest_id" property="weektestId" jdbcType="BIGINT" />
+    <result column="weektest_name" property="weektestName" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="county_id" property="countyId" jdbcType="BIGINT" />
+    <result column="school_id" property="schoolId" jdbcType="BIGINT" />
+    <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+    <result column="grade_year" property="gradeYear" jdbcType="INTEGER" />
+    <result column="s_type" property="sType" jdbcType="INTEGER" />
+    <result column="real_test_cnt" property="realTestCnt" jdbcType="INTEGER" />
+    <result column="student_cnt" property="studentCnt" jdbcType="INTEGER" />
+    <result column="excellent_cnt" property="excellentCnt" jdbcType="INTEGER" />
+    <result column="pass_cnt" property="passCnt" jdbcType="INTEGER" />
+    <result column="unpass_cnt" property="unpassCnt" jdbcType="INTEGER" />
+    <result column="province_rank" property="provinceRank" jdbcType="INTEGER" />
+    <result column="avg_score" property="avgScore" jdbcType="INTEGER" />
+    <result column="max_score" property="maxScore" jdbcType="INTEGER" />
+    <result column="min_score" property="minScore" jdbcType="INTEGER" />
+    <result column="score_type" property="scoreType" jdbcType="INTEGER" />
+    <result column="excellent_percent" property="excellentPercent" jdbcType="INTEGER" />
+    <result column="pass_percent" property="passPercent" jdbcType="INTEGER" />
+    <result column="unpass_percent" property="unpassPercent" jdbcType="INTEGER" />
+    <result column="excellent_inc_point" property="excellentIncPoint" jdbcType="INTEGER" />
+    <result column="pass_inc_point" property="passIncPoint" jdbcType="INTEGER" />
+    <result column="unpass_inc_point" property="unpassIncPoint" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="task_pub_time" property="taskPubTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, paper_id, weektest_id, weektest_name, province_id, city_id, county_id, school_id, 
+    school_name, grade_year, s_type, real_test_cnt, student_cnt, excellent_cnt, pass_cnt, 
+    unpass_cnt, province_rank, avg_score, max_score, min_score, score_type, excellent_percent, 
+    pass_percent, unpass_percent, excellent_inc_point, pass_inc_point, unpass_inc_point, 
+    create_time, task_pub_time
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="BaseColumnList" />
+    from grade_fenban_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Integer" >
+    delete from grade_fenban_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.statdata.entity.GradeFenbanData" >
+    insert into grade_fenban_data (id, paper_id, weektest_id, 
+      weektest_name, province_id, city_id, 
+      county_id, school_id, school_name, 
+      grade_year, s_type, real_test_cnt, 
+      student_cnt, excellent_cnt, pass_cnt, 
+      unpass_cnt, province_rank, avg_score, 
+      max_score, min_score, score_type, 
+      excellent_percent, pass_percent, unpass_percent, 
+      excellent_inc_point, pass_inc_point, unpass_inc_point, 
+      create_time, task_pub_time)
+    values (#{id,jdbcType=INTEGER}, #{paperId,jdbcType=BIGINT}, #{weektestId,jdbcType=BIGINT}, 
+      #{weektestName,jdbcType=VARCHAR}, #{provinceId,jdbcType=BIGINT}, #{cityId,jdbcType=BIGINT}, 
+      #{countyId,jdbcType=BIGINT}, #{schoolId,jdbcType=BIGINT}, #{schoolName,jdbcType=VARCHAR}, 
+      #{gradeYear,jdbcType=INTEGER}, #{sType,jdbcType=INTEGER}, #{realTestCnt,jdbcType=INTEGER}, 
+      #{studentCnt,jdbcType=INTEGER}, #{excellentCnt,jdbcType=INTEGER}, #{passCnt,jdbcType=INTEGER}, 
+      #{unpassCnt,jdbcType=INTEGER}, #{provinceRank,jdbcType=INTEGER}, #{avgScore,jdbcType=INTEGER}, 
+      #{maxScore,jdbcType=INTEGER}, #{minScore,jdbcType=INTEGER}, #{scoreType,jdbcType=INTEGER}, 
+      #{excellentPercent,jdbcType=INTEGER}, #{passPercent,jdbcType=INTEGER}, #{unpassPercent,jdbcType=INTEGER}, 
+      #{excellentIncPoint,jdbcType=INTEGER}, #{passIncPoint,jdbcType=INTEGER}, #{unpassIncPoint,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{taskPubTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.statdata.entity.GradeFenbanData" >
+    update grade_fenban_data
+    <set >
+      <if test="paperId != null" >
+        paper_id = #{paperId,jdbcType=BIGINT},
+      </if>
+      <if test="weektestId != null" >
+        weektest_id = #{weektestId,jdbcType=BIGINT},
+      </if>
+      <if test="weektestName != null" >
+        weektest_name = #{weektestName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="countyId != null" >
+        county_id = #{countyId,jdbcType=BIGINT},
+      </if>
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="schoolName != null" >
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeYear != null" >
+        grade_year = #{gradeYear,jdbcType=INTEGER},
+      </if>
+      <if test="sType != null" >
+        s_type = #{sType,jdbcType=INTEGER},
+      </if>
+      <if test="realTestCnt != null" >
+        real_test_cnt = #{realTestCnt,jdbcType=INTEGER},
+      </if>
+      <if test="studentCnt != null" >
+        student_cnt = #{studentCnt,jdbcType=INTEGER},
+      </if>
+      <if test="excellentCnt != null" >
+        excellent_cnt = #{excellentCnt,jdbcType=INTEGER},
+      </if>
+      <if test="passCnt != null" >
+        pass_cnt = #{passCnt,jdbcType=INTEGER},
+      </if>
+      <if test="unpassCnt != null" >
+        unpass_cnt = #{unpassCnt,jdbcType=INTEGER},
+      </if>
+      <if test="provinceRank != null" >
+        province_rank = #{provinceRank,jdbcType=INTEGER},
+      </if>
+      <if test="avgScore != null" >
+        avg_score = #{avgScore,jdbcType=INTEGER},
+      </if>
+      <if test="maxScore != null" >
+        max_score = #{maxScore,jdbcType=INTEGER},
+      </if>
+      <if test="minScore != null" >
+        min_score = #{minScore,jdbcType=INTEGER},
+      </if>
+      <if test="scoreType != null" >
+        score_type = #{scoreType,jdbcType=INTEGER},
+      </if>
+      <if test="excellentPercent != null" >
+        excellent_percent = #{excellentPercent,jdbcType=INTEGER},
+      </if>
+      <if test="passPercent != null" >
+        pass_percent = #{passPercent,jdbcType=INTEGER},
+      </if>
+      <if test="unpassPercent != null" >
+        unpass_percent = #{unpassPercent,jdbcType=INTEGER},
+      </if>
+      <if test="excellentIncPoint != null" >
+        excellent_inc_point = #{excellentIncPoint,jdbcType=INTEGER},
+      </if>
+      <if test="passIncPoint != null" >
+        pass_inc_point = #{passIncPoint,jdbcType=INTEGER},
+      </if>
+      <if test="unpassIncPoint != null" >
+        unpass_inc_point = #{unpassIncPoint,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskPubTime != null" >
+        task_pub_time = #{taskPubTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.statdata.entity.GradeFenbanData" >
+    insert into grade_fenban_data (id, paper_id, weektest_id, 
+      weektest_name, province_id, city_id, 
+      county_id, school_id, school_name, 
+      grade_year, s_type, real_test_cnt, 
+      student_cnt, excellent_cnt, pass_cnt, 
+      unpass_cnt, province_rank, avg_score, 
+      max_score, min_score, score_type, 
+      excellent_percent, pass_percent, unpass_percent, 
+      excellent_inc_point, pass_inc_point, unpass_inc_point, 
+      create_time, task_pub_time)
+    values (#{id,jdbcType=INTEGER}, #{paperId,jdbcType=BIGINT}, #{weektestId,jdbcType=BIGINT}, 
+      #{weektestName,jdbcType=VARCHAR}, #{provinceId,jdbcType=BIGINT}, #{cityId,jdbcType=BIGINT}, 
+      #{countyId,jdbcType=BIGINT}, #{schoolId,jdbcType=BIGINT}, #{schoolName,jdbcType=VARCHAR}, 
+      #{gradeYear,jdbcType=INTEGER}, #{sType,jdbcType=INTEGER}, #{realTestCnt,jdbcType=INTEGER}, 
+      #{studentCnt,jdbcType=INTEGER}, #{excellentCnt,jdbcType=INTEGER}, #{passCnt,jdbcType=INTEGER}, 
+      #{unpassCnt,jdbcType=INTEGER}, #{provinceRank,jdbcType=INTEGER}, #{avgScore,jdbcType=INTEGER}, 
+      #{maxScore,jdbcType=INTEGER}, #{minScore,jdbcType=INTEGER}, #{scoreType,jdbcType=INTEGER}, 
+      #{excellentPercent,jdbcType=INTEGER}, #{passPercent,jdbcType=INTEGER}, #{unpassPercent,jdbcType=INTEGER}, 
+      #{excellentIncPoint,jdbcType=INTEGER}, #{passIncPoint,jdbcType=INTEGER}, #{unpassIncPoint,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{taskPubTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into grade_fenban_data
+		(id,paper_id,weektest_id,weektest_name,province_id,city_id,county_id,school_id,school_name,grade_year,s_type,real_test_cnt,student_cnt,excellent_cnt,pass_cnt,unpass_cnt,province_rank,avg_score,max_score,min_score,score_type,excellent_percent,pass_percent,unpass_percent,excellent_inc_point,pass_inc_point,unpass_inc_point,create_time,task_pub_time)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=INTEGER},#{item.paperId,jdbcType=BIGINT},#{item.weektestId,jdbcType=BIGINT},#{item.weektestName,jdbcType=VARCHAR},#{item.provinceId,jdbcType=BIGINT},#{item.cityId,jdbcType=BIGINT},#{item.countyId,jdbcType=BIGINT},#{item.schoolId,jdbcType=BIGINT},#{item.schoolName,jdbcType=VARCHAR},#{item.gradeYear,jdbcType=INTEGER},#{item.sType,jdbcType=INTEGER},#{item.realTestCnt,jdbcType=INTEGER},#{item.studentCnt,jdbcType=INTEGER},#{item.excellentCnt,jdbcType=INTEGER},#{item.passCnt,jdbcType=INTEGER},#{item.unpassCnt,jdbcType=INTEGER},#{item.provinceRank,jdbcType=INTEGER},#{item.avgScore,jdbcType=INTEGER},#{item.maxScore,jdbcType=INTEGER},#{item.minScore,jdbcType=INTEGER},#{item.scoreType,jdbcType=INTEGER},#{item.excellentPercent,jdbcType=INTEGER},#{item.passPercent,jdbcType=INTEGER},#{item.unpassPercent,jdbcType=INTEGER},#{item.excellentIncPoint,jdbcType=INTEGER},#{item.passIncPoint,jdbcType=INTEGER},#{item.unpassIncPoint,jdbcType=INTEGER},#{item.createTime,jdbcType=TIMESTAMP},#{item.taskPubTime,jdbcType=TIMESTAMP})
+	</foreach>
+  </insert>
+  <select id="findByPK_inMaster" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from grade_fenban_data	where id = #{pk, jdbcType=INTEGER}
+  </select>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		count(1)
+	from
+		grade_fenban_data
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from grade_fenban_data
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from grade_fenban_data
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=INTEGER}
+			</if>
+			<if test="entity.paperId != null" >
+				and paper_id = #{entity.paperId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.weektestId != null" >
+				and weektest_id = #{entity.weektestId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.weektestName != null" >
+				and weektest_name = #{entity.weektestName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.provinceId != null" >
+				and province_id = #{entity.provinceId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.cityId != null" >
+				and city_id = #{entity.cityId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.countyId != null" >
+				and county_id = #{entity.countyId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.schoolId != null" >
+				and school_id = #{entity.schoolId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.schoolName != null" >
+				and school_name = #{entity.schoolName,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.gradeYear != null" >
+				and grade_year = #{entity.gradeYear,jdbcType=INTEGER}
+			</if>
+			<if test="entity.sType != null" >
+				and s_type = #{entity.sType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.realTestCnt != null" >
+				and real_test_cnt = #{entity.realTestCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.studentCnt != null" >
+				and student_cnt = #{entity.studentCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.excellentCnt != null" >
+				and excellent_cnt = #{entity.excellentCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.passCnt != null" >
+				and pass_cnt = #{entity.passCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.unpassCnt != null" >
+				and unpass_cnt = #{entity.unpassCnt,jdbcType=INTEGER}
+			</if>
+			<if test="entity.provinceRank != null" >
+				and province_rank = #{entity.provinceRank,jdbcType=INTEGER}
+			</if>
+			<if test="entity.avgScore != null" >
+				and avg_score = #{entity.avgScore,jdbcType=INTEGER}
+			</if>
+			<if test="entity.maxScore != null" >
+				and max_score = #{entity.maxScore,jdbcType=INTEGER}
+			</if>
+			<if test="entity.minScore != null" >
+				and min_score = #{entity.minScore,jdbcType=INTEGER}
+			</if>
+			<if test="entity.scoreType != null" >
+				and score_type = #{entity.scoreType,jdbcType=INTEGER}
+			</if>
+			<if test="entity.excellentPercent != null" >
+				and excellent_percent = #{entity.excellentPercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.passPercent != null" >
+				and pass_percent = #{entity.passPercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.unpassPercent != null" >
+				and unpass_percent = #{entity.unpassPercent,jdbcType=INTEGER}
+			</if>
+			<if test="entity.excellentIncPoint != null" >
+				and excellent_inc_point = #{entity.excellentIncPoint,jdbcType=INTEGER}
+			</if>
+			<if test="entity.passIncPoint != null" >
+				and pass_inc_point = #{entity.passIncPoint,jdbcType=INTEGER}
+			</if>
+			<if test="entity.unpassIncPoint != null" >
+				and unpass_inc_point = #{entity.unpassIncPoint,jdbcType=INTEGER}
+			</if>
+			<if test="entity.createTime != null" >
+				and create_time = #{entity.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.taskPubTime != null" >
+				and task_pub_time = #{entity.taskPubTime,jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from grade_fenban_data
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+</mapper>

@@ -1,0 +1,1187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+   	http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+   	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+   	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+   	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+   	<import resource="../spring-dataSource.xml"/>
+   	
+   <!-- -configFile context/problemdata/spring-weektest-stat.xml -weektestId 1234 -classId 7655  -->
+   
+   <!-- public data query start -->
+   <bean id="selectClassInfo" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="1" />
+     <property name="outputKey" value="classInfoRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select c.name className, c.grade_year gradeYear, c.school_id schoolId, type sType from tb_class c where c.id = ${classId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectTaskInfo" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="2" />
+     <property name="outputKey" value="taskInfoRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select w.exampaper_id paperId, w.exampaper_name paperName, w.exampaper_score scoreType, c.begin_time beginTime, w.book_point_sort_id bookPointSortId, w.exampaper_index exampaperIndex 
+	          from tbt_weektest_work w, tbt_weektest_work_class c where w.id = c.tbt_weektest_work_id and w.id = ${weektestId} and c.class_id = ${classId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectZjType" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="2" />
+     <property name="outputKey" value="zjTypeRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select type from tb_week_test where teacher_week_test_id = ${weektestId} limit 1
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectSchoolInfo" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="3" />
+     <property name="outputKey" value="schoolInfoRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select province_id provinceId, city_id cityId, county_id countyId, id schoolId, name schoolName from tb_school where id = ${classInfoRs.schoolId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectTeacherInfo" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="4" />
+     <property name="outputKey" value="teacherInfoRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT t.user_id userId, u.real_name userName
+	            from tbt_teacher_class c, tbt_teacher t, tbl_auth_user u
+	          where c.teacher_id = t.id and u.id = t.user_id and class_id = ${classId} 
+		       ]]>
+       </value>
+     </property>
+   </bean>
+   <!-- public data query end -->
+   
+    <!-- class_fenban_data start -->
+   <bean id="selectStudentCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="5" />
+     <property name="outputKey" value="studentNumRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT count(1) totalCnt from tb_student s, tbl_auth_user u where s.id = u.id and s.class_id = ${classId} and u.state = 0
+		   ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectTotalTestRs" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="6" />
+     <property name="outputKey" value="totalTestRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT count(1) realTestCnt, round(avg(grasp_score) * 10) avgScore, round(max(grasp_score) * 10) maxScore, round(min(grasp_score) * 10) minScore
+	          from tb_week_test
+	          where teacher_week_test_id = ${weektestId} 
+	            and class_id = ${classId} 
+	            and status > 0
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectExcellentRs" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="7" />
+     <property name="outputKey" value="excellentRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT count(1) realTestCnt
+	          from tb_week_test
+	          where teacher_week_test_id = ${weektestId} 
+	            and class_id = ${classId} 
+	            and grasp_score >= score * 0.8
+	            and status > 0
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectPassRs" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="8" />
+     <property name="outputKey" value="passRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT count(1) realTestCnt
+	          from tb_week_test
+	          where teacher_week_test_id = ${weektestId} 
+	            and class_id = ${classId} 
+	            and grasp_score >= score * 0.6
+	            and grasp_score < score * 0.8
+	            and status > 0
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectUnPassRs" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="9" />
+     <property name="outputKey" value="unPassRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT count(1) realTestCnt
+	          from tb_week_test
+	          where teacher_week_test_id = ${weektestId} 
+	            and class_id = ${classId} 
+	            and grasp_score < score * 0.6
+	            and status > 0
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="classFenbanDataDel" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="10" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          delete from class_fenban_data where weektest_id = ${weektestId} and class_id = ${classId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectLastClassData" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="11" />
+     <property name="outputKey" value="lastClassDataRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT weektest_id weektestId, avg_score avgScore ,excellent_cnt excellentCnt, pass_cnt passCnt, unpass_cnt unpassCnt, excellent_percent excellentPercent, pass_percent passPercent, unpass_percent unpassPercent, absence_percent absencePercent, rank 
+	          from class_fenban_data
+	          where class_id = ${classId} and task_pub_time < ${taskInfoRs.beginTime} and zj_type = ${zjTypeRs.type}
+	          order by task_pub_time desc, weektest_id desc
+	          limit 1
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectClassPercentData" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="12" />
+     <property name="outputKey" value="classPercentDataRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT round(${excellentRs.realTestCnt}/${totalTestRs.realTestCnt}*1000) excellentPercent,
+	                 round(${passRs.realTestCnt}/${totalTestRs.realTestCnt}*1000) passPercent,
+	                 round(${unPassRs.realTestCnt}/${totalTestRs.realTestCnt}*1000) unpassPercent,
+	                 round((${studentNumRs.totalCnt} - ${totalTestRs.realTestCnt})/${studentNumRs.totalCnt}*1000) absencePercent
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="classFenbanDataInsert" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="13" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          insert into class_fenban_data(id,weektest_id,weektest_name,school_id,school_name,grade_year,class_id,class_name,teacher_uid,teacher_name,real_test_cnt,student_cnt,
+	                                              excellent_cnt,pass_cnt,unpass_cnt,avg_score,max_score,min_score,score_type, book_point_sort_id, exampaper_index,s_type,excellent_percent,pass_percent,unpass_percent,
+	                                              absence_percent,inc_score,excellent_inc_point,pass_inc_point,unpass_inc_point,absence_inc_point,excellent_inc_cnt, pass_inc_cnt, unpass_inc_cnt, task_pub_time, zj_type
+                                           ) 
+	                  values(0,${weektestId}, ${taskInfoRs.paperName}, ${schoolInfoRs.schoolId}, ${schoolInfoRs.schoolName}, ${classInfoRs.gradeYear},${classId}, ${classInfoRs.className},
+	                        ${teacherInfoRs.userId}, ${teacherInfoRs.userName},
+	                        IF(ISNULL(${totalTestRs.realTestCnt}),0,${totalTestRs.realTestCnt}),
+	                        IF(ISNULL(${studentNumRs.totalCnt}),0,${studentNumRs.totalCnt}),
+	                        IF(ISNULL(${excellentRs.realTestCnt}),0,${excellentRs.realTestCnt}),
+	                        IF(ISNULL(${passRs.realTestCnt}),0,${passRs.realTestCnt}),
+	                        IF(ISNULL(${unPassRs.realTestCnt}),0,${unPassRs.realTestCnt}),
+	                        IF(ISNULL(${totalTestRs.avgScore}),0,${totalTestRs.avgScore}),
+	                        IF(ISNULL(${totalTestRs.maxScore}),0,${totalTestRs.maxScore}),
+	                        IF(ISNULL(${totalTestRs.minScore}),0,${totalTestRs.minScore}),
+	                        ${taskInfoRs.scoreType},
+	                        ${taskInfoRs.bookPointSortId},
+	                        ${taskInfoRs.exampaperIndex},
+	                        ${classInfoRs.sType},
+	                        IF(ISNULL(${classPercentDataRs.excellentPercent}),0,${classPercentDataRs.excellentPercent}),
+	                        IF(ISNULL(${classPercentDataRs.passPercent}),0,${classPercentDataRs.passPercent}),
+	                        IF(ISNULL(${classPercentDataRs.unpassPercent}),0,${classPercentDataRs.unpassPercent}),
+	                        IF(ISNULL(${classPercentDataRs.absencePercent}),0,${classPercentDataRs.absencePercent}),
+	                        IF(ISNULL(${lastClassDataRs.avgScore}), null, ${totalTestRs.avgScore} - ${lastClassDataRs.avgScore}),
+	                        IF(ISNULL(${lastClassDataRs.excellentPercent}), null, ceil((${classPercentDataRs.excellentPercent} - ${lastClassDataRs.excellentPercent}) / 10)),
+	                        IF(ISNULL(${lastClassDataRs.passPercent}), null, ceil((${classPercentDataRs.passPercent} - ${lastClassDataRs.passPercent}) / 10)),
+	                        IF(ISNULL(${lastClassDataRs.unpassPercent}), null, ceil((${classPercentDataRs.unpassPercent} - ${lastClassDataRs.unpassPercent}) / 10)),
+	                        IF(ISNULL(${lastClassDataRs.absencePercent}), null, ceil((${classPercentDataRs.absencePercent} - ${lastClassDataRs.absencePercent}) / 10)),
+	                        IF(ISNULL(${lastClassDataRs.excellentCnt}), null, ${excellentRs.realTestCnt} - ${lastClassDataRs.excellentCnt}),
+	                        IF(ISNULL(${lastClassDataRs.passCnt}), null, ${passRs.realTestCnt} - ${lastClassDataRs.passCnt}),
+	                        IF(ISNULL(${lastClassDataRs.unpassCnt}), null, ${unPassRs.realTestCnt} - ${lastClassDataRs.unpassCnt}),
+	                        ${taskInfoRs.beginTime},
+	                        ${zjTypeRs.type}
+	                        )
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectClassRankData" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="14" />
+     <property name="outputKey" value="classRankDataRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT c.class_id classId, c.weektest_id weektestId, 
+                     (select count(cd.avg_score) + 1 
+	                   from class_fenban_data cd
+			          where cd.avg_score > c.avg_score and cd.weektest_id = ${weektestId}
+			         ) as rank
+	          from class_fenban_data c
+	          where c.weektest_id = ${weektestId} 
+	          order by c.avg_score desc 
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="updateClassRank" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="15" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          update class_fenban_data set rank = ${classRankDataRs.rank}, 
+	                  inc_rank = IF(ISNULL(${lastClassDataRs.rank}), null, ${classRankDataRs.rank} - ${lastClassDataRs.rank})
+	          where class_id = ${classRankDataRs.classId} and weektest_id = ${classRankDataRs.weektestId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   <!-- class_fenban_data end -->
+   
+   <!-- grade_fenban_data start -->
+   <bean id="selectGradeFenbanData" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="50" />
+     <property name="outputKey" value="gradeDataRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT sum(real_test_cnt) realTestCnt, sum(student_cnt) studentCnt, sum(excellent_cnt) excellentCnt, sum(pass_cnt) passCnt, sum(unpass_cnt) unpassCnt, max(max_score) maxScore, 
+	                 min(min_score) minScore
+	          from class_fenban_data
+	          where weektest_id = ${weektestId} 
+	            and school_id = ${schoolInfoRs.schoolId}
+	            and grade_year = ${classInfoRs.gradeYear}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectGradeAvgScore" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="51" />
+     <property name="outputKey" value="gradeAvgRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT round(avg(grasp_score) * 10) avgScore
+	          from tb_week_test
+	          where teacher_week_test_id = ${weektestId} 
+	            and school_id = ${schoolInfoRs.schoolId} 
+	            and grade_year = ${classInfoRs.gradeYear}
+	            and status > 0
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="gradeFenbanDataDel" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="52" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          delete from grade_fenban_data where weektest_id = ${weektestId} and school_id = ${schoolInfoRs.schoolId} and grade_year = ${classInfoRs.gradeYear}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectLastGradeData" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="53" />
+     <property name="outputKey" value="lastGradeDataRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT weektest_id weektestId, avg_score avgScore , excellent_percent excellentPercent, pass_percent passPercent, unpass_percent unpassPercent
+	          from grade_fenban_data
+	          where school_id = ${schoolInfoRs.schoolId} and grade_year = ${classInfoRs.gradeYear} and task_pub_time < ${taskInfoRs.beginTime} and zj_type = ${zjTypeRs.type}
+	          order by task_pub_time desc , weektest_id desc
+	          limit 1
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectGradePercentData" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="54" />
+     <property name="outputKey" value="gradePercentDataRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT round(${gradeDataRs.excellentCnt}/${gradeDataRs.realTestCnt}*1000) excellentPercent,
+	                 round(${gradeDataRs.passCnt}/${gradeDataRs.realTestCnt}*1000) passPercent,
+	                 round(${gradeDataRs.unpassCnt}/${gradeDataRs.realTestCnt}*1000) unpassPercent
+	       ]]>
+       </value>
+     </property>
+   </bean>
+  
+   <bean id="gradeFenbanDataInsert" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="55" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          insert into grade_fenban_data(id,paper_id,weektest_id,weektest_name,province_id,city_id, county_id,school_id,school_name,grade_year,s_type,real_test_cnt,student_cnt,
+	                                              excellent_cnt,pass_cnt,unpass_cnt,avg_score,max_score,min_score,score_type,excellent_percent,pass_percent,unpass_percent,excellent_inc_point,pass_inc_point,unpass_inc_point,task_pub_time, zj_type
+                                           ) 
+	                  values(0, ${taskInfoRs.paperId}, ${weektestId}, ${taskInfoRs.paperName}, ${schoolInfoRs.provinceId}, ${schoolInfoRs.cityId}, ${schoolInfoRs.countyId}, ${schoolInfoRs.schoolId}, 
+	                        ${schoolInfoRs.schoolName}, ${classInfoRs.gradeYear},${classInfoRs.sType},
+	                        IF(ISNULL(${gradeDataRs.realTestCnt}),0,${gradeDataRs.realTestCnt}), 
+	                        IF(ISNULL(${gradeDataRs.studentCnt}),0,${gradeDataRs.studentCnt}), 
+	                        IF(ISNULL(${gradeDataRs.excellentCnt}),0,${gradeDataRs.excellentCnt}),
+	                        IF(ISNULL(${gradeDataRs.passCnt}),0,${gradeDataRs.passCnt}),
+	                        IF(ISNULL(${gradeDataRs.unpassCnt}),0,${gradeDataRs.unpassCnt}),
+	                        IF(ISNULL(${gradeAvgRs.avgScore}),0,${gradeAvgRs.avgScore}),
+	                        IF(ISNULL(${gradeDataRs.maxScore}),0,${gradeDataRs.maxScore}),
+	                        IF(ISNULL(${gradeDataRs.minScore}),0,${gradeDataRs.minScore}),
+	                        IF(ISNULL(${taskInfoRs.scoreType}),100,${taskInfoRs.scoreType}),
+	                        IF(ISNULL(${gradePercentDataRs.excellentPercent}),0,${gradePercentDataRs.excellentPercent}),
+	                        IF(ISNULL(${gradePercentDataRs.passPercent}),0,${gradePercentDataRs.passPercent}),
+	                        IF(ISNULL(${gradePercentDataRs.unpassPercent}),0,${gradePercentDataRs.unpassPercent}),
+	                        IF(ISNULL(${lastGradeDataRs.excellentPercent}), null, ceil((${gradePercentDataRs.excellentPercent} - ${lastGradeDataRs.excellentPercent}) / 10)),
+	                        IF(ISNULL(${lastGradeDataRs.passPercent}), null, ceil((${gradePercentDataRs.passPercent} - ${lastGradeDataRs.passPercent}) / 10)),
+	                        IF(ISNULL(${lastGradeDataRs.unpassPercent}), null, ceil((${gradePercentDataRs.unpassPercent} - ${lastGradeDataRs.unpassPercent}) / 10)),
+	                        ${taskInfoRs.beginTime},
+	                        ${zjTypeRs.type}
+	                        )
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectGradeRankData" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="56" />
+     <property name="outputKey" value="gradeRankDataRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          SELECT g.paper_id paperId, g.school_id schoolId, g.grade_year gradeYear, 
+                     (select count(gd.avg_score) + 1 
+	                   from grade_fenban_data gd
+			          where gd.avg_score > g.avg_score 
+			             and gd.paper_id = ${taskInfoRs.paperId} and gd.province_id = ${schoolInfoRs.provinceId} and gd.grade_year = ${classInfoRs.gradeYear}
+			         ) as provinceRank
+	          from grade_fenban_data g
+	          where g.paper_id = ${taskInfoRs.paperId} and g.province_id = ${schoolInfoRs.provinceId} and g.grade_year = ${classInfoRs.gradeYear}
+	          order by g.avg_score desc 
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="updateGradeRank" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="57" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          update grade_fenban_data set province_rank = ${gradeRankDataRs.provinceRank}
+	           where paper_id = ${gradeRankDataRs.paperId} and school_id = ${gradeRankDataRs.schoolId} and grade_year = ${gradeRankDataRs.gradeYear}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   <!-- grade_fenban_data end -->
+   
+   
+   <!-- class_fenban_problem_data start -->
+   <bean id="selectCPAvgScorePercent" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="100" />
+     <property name="outputKey" value="cpAvgScorePercentRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, p.problem_id problemId, p.problem_type problemType, round(sum(p.grasp_score)/sum(p.score)*1000) avgScorePercent
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId}
+	                 and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectCPRightCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="101" />
+     <property name="outputKey" value="cpRightCntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, count(1) rightCnt 
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.is_grasp = 1
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectCPWrongCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="102" />
+     <property name="outputKey" value="cpWrongCntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	            select 
+				  tot.indexNo indexNo, tot.problemId problemId,  tot.problemType problemType, sum(tot.wrongCnt) wrongCnt
+				from
+				(
+				select p.index_no indexNo, p.problem_id problemId,  p.problem_type problemType,  count(1) wrongCnt 
+					          from tb_week_test_problem p, tb_week_test t
+					          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.is_grasp = 0
+					             and (p.first_index = -1 or p.student_choose = 1)
+					          group by p.index_no 
+				UNION
+				select p.index_no indexNo, p.problem_id problemId,  p.problem_type problemType, count(1) wrongCnt 
+					   from tb_week_test_problem p, tb_week_test t,
+				          (select pp.first_index, tt.student_id, count(1) cnt
+					   from tb_week_test_problem pp, tb_week_test tt
+					 where pp.week_test_id = tt.id and tt.status > 0 and tt.class_id = ${classId} and tt.teacher_week_test_id = ${weektestId} and pp.first_index != -1 and pp.student_choose = 0
+				     group by pp.first_index, tt.student_id ) c
+					 where p.week_test_id = t.id and p.first_index = c.first_index and p.student_id = c.student_id and c.cnt > p.all_count - p.choose_count  and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.first_index != -1 and p.student_choose = 0
+				     group by p.index_no
+				) tot
+				group by tot.indexNo order by tot.indexNo asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <!-- 查询各题未作答的学生人数 -->
+   <bean id="selectCPNOAnswerCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="102" />
+     <property name="outputKey" value="cpNOAnswerCntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	            select 
+				  tot.indexNo indexNo, tot.problemId problemId,  tot.problemType problemType, sum(tot.noAnswerCnt) noAnswerCnt
+				from
+				(
+				select p.index_no indexNo, p.problem_id problemId,  p.problem_type problemType,  count(1) noAnswerCnt 
+					          from tb_week_test_problem p, tb_week_test t
+					          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.is_grasp = -1
+					             and (p.first_index = -1 or p.student_choose = 1)
+					          group by p.index_no 
+				UNION
+				select p.index_no indexNo, p.problem_id problemId,  p.problem_type problemType,  count(1) noAnswerCnt 
+					   from tb_week_test_problem p, tb_week_test t,
+				          (select pp.first_index, tt.student_id, count(1) cnt
+					   from tb_week_test_problem pp, tb_week_test tt
+					 where pp.week_test_id = tt.id and tt.status > 0 and tt.class_id = ${classId} and tt.teacher_week_test_id = ${weektestId} and pp.first_index != -1 and pp.student_choose = 0
+				     group by pp.first_index, tt.student_id ) c
+					 where p.week_test_id = t.id and p.first_index = c.first_index and p.student_id = c.student_id and c.cnt > p.all_count - p.choose_count  and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.first_index != -1 and p.student_choose = 0
+				     group by p.index_no
+				) tot
+				group by tot.indexNo order by tot.indexNo asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectCPACnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="102" />
+     <property name="outputKey" value="cpACntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, count(1) aCnt 
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.is_grasp != -1 and p.select_answer = 'A' and p.problem_type = 0
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectCPBCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="102" />
+     <property name="outputKey" value="cpBCntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, count(1) bCnt 
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.is_grasp != -1 and p.select_answer = 'B' and p.problem_type = 0
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectCPCCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="102" />
+     <property name="outputKey" value="cpCCntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, count(1) cCnt 
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.is_grasp != -1 and p.select_answer = 'C' and p.problem_type = 0
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectDPCCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="102" />
+     <property name="outputKey" value="cpDCntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, count(1) dCnt 
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.is_grasp != -1 and p.select_answer = 'D' and p.problem_type = 0
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <!-- 选择题不会做的数据 -->
+   <bean id="selectEPCCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="102" />
+     <property name="outputKey" value="cpECntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, count(1) eCnt 
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.is_grasp != -1 and p.select_answer = 'E' and p.problem_type = 0
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <!-- 填空题和解答题不会做的数据 -->
+   <bean id="selectJiedaECnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="102" />
+     <property name="outputKey" value="cpJiedaECntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, count(1) eCnt 
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.is_grasp != -1 and p.select_answer = '-1' and p.problem_type != 0
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <!-- 解答题未得满分的数据 -->
+   <bean id="selectNoFullScoreCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="102" />
+     <property name="outputKey" value="cpNoFullScoreCntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, count(1) noFullScoreCnt 
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} and t.teacher_week_test_id = ${weektestId} and p.grasp_score > 0 and p.grasp_score < p.score and p.problem_type = 2
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectCPExcellentScore" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="103" />
+     <property name="outputKey" value="cpExcellentScoreRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, round(sum(p.grasp_score)/sum(p.score)*1000) excAvgScorePercent
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} 
+	                and t.teacher_week_test_id = ${weektestId} and t.grasp_score >= t.score * 0.8
+	                and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+    <bean id="selectCPPassScore" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="104" />
+     <property name="outputKey" value="cpPassScoreRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, round(sum(p.grasp_score)/sum(p.score)*1000) passAvgScorePercent
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} 
+	                and t.teacher_week_test_id = ${weektestId} and t.grasp_score >= t.score * 0.6 and t.grasp_score < t.score * 0.8
+	                and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectCPUnPassScore" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="105" />
+     <property name="outputKey" value="cpUnPassScoreRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, round(sum(p.grasp_score)/sum(p.score)*1000) unpassAvgScorePercent
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.class_id = ${classId} 
+	                and t.teacher_week_test_id = ${weektestId} and t.grasp_score < t.score * 0.6
+	                and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="classFenbanProblemDataDel" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="106" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          delete from class_fenban_problem_data where weektest_id = ${weektestId} and class_id = ${classId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="cpJoinMap" class="com.yisi.stiku.statbg.transverter.MapDataJoinTransverter">
+     <property name="orderNO" value="107" />
+     <property name="outputKey" value="cpJoinMapRs" />
+     <property name="targetKeyMap" >
+       <map>
+         <entry key="cpAvgScorePercentRs" value="indexNo" />
+         <entry key="cpExcellentScoreRs" value="indexNo" />
+         <entry key="cpPassScoreRs" value="indexNo" />
+         <entry key="cpUnPassScoreRs" value="indexNo" />
+         <entry key="cpRightCntRs" value="indexNo" />
+         <entry key="cpWrongCntRs" value="indexNo" />
+         <entry key="cpNOAnswerCntRs" value="indexNo" />
+         <entry key="cpACntRs" value="indexNo" />
+         <entry key="cpBCntRs" value="indexNo" />
+         <entry key="cpCCntRs" value="indexNo" />
+         <entry key="cpDCntRs" value="indexNo" />
+         <entry key="cpECntRs" value="indexNo" />
+         <entry key="cpJiedaECntRs" value="indexNo" />
+         <entry key="cpNoFullScoreCntRs" value="indexNo" />
+       </map>
+     </property>
+   </bean>
+   
+   <bean id="classFenbanProblemDataInsert" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="108" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          insert into class_fenban_problem_data(id,weektest_id,weektest_name,school_id,school_name,grade_year,class_id,class_name,index_no, problem_id,avg_score_percent,excellent_score_percent,pass_score_percent,unpass_score_percent,
+	                                              unpass_diff_score_percent,pass_diff_score_percent,excellent_diff_score_percent,right_cnt, wrong_cnt, 
+	                                              no_full_score_cnt, no_answer_cnt, a_cnt, b_cnt, c_cnt, d_cnt, e_cnt, problem_type,
+	                                              task_pub_time
+                                           ) 
+	                  values(0, ${weektestId}, ${taskInfoRs.paperName}, ${schoolInfoRs.schoolId}, ${schoolInfoRs.schoolName}, ${classInfoRs.gradeYear},${classId},${classInfoRs.className},
+	                        ${cpJoinMapRs.indexNo}, ${cpJoinMapRs.problemId}, 
+	                        IF(ISNULL(${cpJoinMapRs.avgScorePercent}),0,${cpJoinMapRs.avgScorePercent}),
+	                        IF(ISNULL(${cpJoinMapRs.excAvgScorePercent}),0,${cpJoinMapRs.excAvgScorePercent}), 
+	                        IF(ISNULL(${cpJoinMapRs.passAvgScorePercent}),0,${cpJoinMapRs.passAvgScorePercent}), 
+	                        IF(ISNULL(${cpJoinMapRs.unpassAvgScorePercent}),0,${cpJoinMapRs.unpassAvgScorePercent}),
+	                        IF(ISNULL(${cpJoinMapRs.unpassAvgScorePercent}), 0 , ${cpJoinMapRs.unpassAvgScorePercent}) - IF(ISNULL(${cpJoinMapRs.passAvgScorePercent}),0,${cpJoinMapRs.passAvgScorePercent}),
+	                        IF(ISNULL(${cpJoinMapRs.passAvgScorePercent}), 0 , ${cpJoinMapRs.passAvgScorePercent}) - IF(ISNULL(${cpJoinMapRs.excAvgScorePercent}),0, ${cpJoinMapRs.excAvgScorePercent}),
+	                        IF(ISNULL(${cpJoinMapRs.excAvgScorePercent}), 0 , ${cpJoinMapRs.excAvgScorePercent}) - 1000,
+	                        IF(ISNULL(${cpJoinMapRs.rightCnt}),0,${cpJoinMapRs.rightCnt}),
+	                        IF(ISNULL(${cpJoinMapRs.wrongCnt}),0,${cpJoinMapRs.wrongCnt}),
+	                        IF(ISNULL(${cpJoinMapRs.noFullScoreCnt}),0,${cpJoinMapRs.noFullScoreCnt}),
+	                        IF(ISNULL(${cpJoinMapRs.noAnswerCnt}),0,${cpJoinMapRs.noAnswerCnt}),
+	                        IF(ISNULL(${cpJoinMapRs.aCnt}),0,${cpJoinMapRs.aCnt}),
+	                        IF(ISNULL(${cpJoinMapRs.bCnt}),0,${cpJoinMapRs.bCnt}),
+	                        IF(ISNULL(${cpJoinMapRs.cCnt}),0,${cpJoinMapRs.cCnt}),
+	                        IF(ISNULL(${cpJoinMapRs.dCnt}),0,${cpJoinMapRs.dCnt}),
+	                        IF(ISNULL(${cpJoinMapRs.eCnt}),0,${cpJoinMapRs.eCnt}),
+	                        ${cpJoinMapRs.problemType},
+	                        ${taskInfoRs.beginTime}
+	                        )
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectHighFreq" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="111" />
+     <property name="outputKey" value="highFreqRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select 
+	            SUBSTRING_INDEX(ids, ',', 1) first, SUBSTRING_INDEX(ids, ',', -1) second 
+	          from 
+                (select SUBSTRING_INDEX(group_concat(distinct p.problem_id order by `index_no` desc ), ',', 2) ids
+                    from tb_week_test t, tb_week_test_problem p
+                     where p.week_test_id = t.id and t.student_id in (select max(student_id) from tb_week_test where status > 0 and class_id = ${classId} and teacher_week_test_id = ${weektestId}) and t.status > 0 and t.class_id = ${classId} 
+	                       and t.teacher_week_test_id = ${weektestId} group by problem_type) t
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="classHighFreqUpdate" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="112" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          update class_fenban_problem_data set is_high_freq = 1
+	           where weektest_id = ${weektestId} and problem_id in (${highFreqRs.first}, ${highFreqRs.second})
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   <!-- class_fenban_problem_data end -->
+   
+   <!-- grade_fenban_problem_data start -->
+   <bean id="selectGPAvgScorePercent" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="150" />
+     <property name="outputKey" value="gpAvgScorePercentRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, p.problem_id problemId, round(sum(p.grasp_score)/sum(p.score)*1000) avgScorePercent
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.school_id = ${schoolInfoRs.schoolId} and t.grade_year = ${classInfoRs.gradeYear} and t.teacher_week_test_id = ${weektestId}
+	               and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectGPRightCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="151" />
+     <property name="outputKey" value="gpRightCntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, count(1) rightCnt 
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.school_id = ${schoolInfoRs.schoolId} and t.grade_year = ${classInfoRs.gradeYear} and t.teacher_week_test_id = ${weektestId} and p.is_grasp = 1
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectGPWrongCnt" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="152" />
+     <property name="outputKey" value="gpWrongCntRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select 
+				  tot.indexNo indexNo, tot.problemId problemId, sum(tot.wrongCnt) wrongCnt
+				from
+				(
+				select p.index_no indexNo, p.problem_id problemId,  count(1) wrongCnt 
+					          from tb_week_test_problem p, tb_week_test t
+					          where p.week_test_id = t.id and t.status > 0 and t.school_id = ${schoolInfoRs.schoolId} and t.grade_year = ${classInfoRs.gradeYear} and t.teacher_week_test_id = ${weektestId} and p.is_grasp = 0
+					             and (p.first_index = -1 or p.student_choose = 1)
+					          group by p.index_no 
+				UNION
+				select p.index_no indexNo, p.problem_id problemId,  count(1) wrongCnt 
+					   from tb_week_test_problem p, tb_week_test t,
+				          (select pp.first_index, tt.student_id, count(1) cnt
+					   from tb_week_test_problem pp, tb_week_test tt
+					 where pp.week_test_id = tt.id and tt.status > 0 and tt.school_id = ${schoolInfoRs.schoolId} and tt.grade_year = ${classInfoRs.gradeYear} and tt.teacher_week_test_id = ${weektestId} and pp.first_index != -1 and pp.student_choose = 0
+				     group by pp.first_index, tt.student_id ) c
+					 where p.week_test_id = t.id and p.first_index = c.first_index and p.student_id = c.student_id and c.cnt > p.all_count - p.choose_count  and t.status > 0 and t.school_id = ${schoolInfoRs.schoolId} and t.grade_year = ${classInfoRs.gradeYear} and t.teacher_week_test_id = ${weektestId} and p.first_index != -1 and p.student_choose = 0
+				     group by p.index_no
+				) tot
+				group by tot.indexNo order by tot.indexNo asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectGPExcellentScore" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="153" />
+     <property name="outputKey" value="gpExcellentScoreRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, round(sum(p.grasp_score)/sum(p.score)*1000) excAvgScorePercent
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.school_id = ${schoolInfoRs.schoolId} and t.grade_year = ${classInfoRs.gradeYear} and t.teacher_week_test_id = ${weektestId} and t.grasp_score >= t.score * 0.8
+	             and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+    <bean id="selectGPPassScore" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="154" />
+     <property name="outputKey" value="gpPassScoreRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, round(sum(p.grasp_score)/sum(p.score)*1000) passAvgScorePercent
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.school_id = ${schoolInfoRs.schoolId} and t.grade_year = ${classInfoRs.gradeYear} and t.teacher_week_test_id = ${weektestId} and t.grasp_score >= t.score * 0.6 and t.grasp_score < t.score * 0.8
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectGPUnPassScore" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="155" />
+     <property name="outputKey" value="gpUnPassScoreRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select p.index_no indexNo, round(sum(p.grasp_score)/sum(p.score)*1000) unpassAvgScorePercent
+	          from tb_week_test_problem p, tb_week_test t
+	          where p.week_test_id = t.id and t.status > 0 and t.school_id = ${schoolInfoRs.schoolId} and t.grade_year = ${classInfoRs.gradeYear} and t.teacher_week_test_id = ${weektestId} and t.grasp_score < t.score * 0.6
+	              and (first_index = -1 or student_choose = 1)
+	          group by p.index_no order by p.index_no asc
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="gradeFenbanProblemDataDel" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="156" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          delete from grade_fenban_problem_data where school_id = ${schoolInfoRs.schoolId} and grade_year = ${classInfoRs.gradeYear} and weektest_id = ${weektestId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="gpJoinMap" class="com.yisi.stiku.statbg.transverter.MapDataJoinTransverter">
+     <property name="orderNO" value="157" />
+     <property name="outputKey" value="gpJoinMapRs" />
+     <property name="targetKeyMap">
+       <map>
+         <entry key="gpAvgScorePercentRs" value="indexNo" />
+         <entry key="gpExcellentScoreRs" value="indexNo" />
+         <entry key="gpPassScoreRs" value="indexNo" />
+         <entry key="gpUnPassScoreRs" value="indexNo" />
+         <entry key="gpRightCntRs" value="indexNo" />
+         <entry key="gpWrongCntRs" value="indexNo" />
+       </map>
+     </property>
+   </bean>
+   
+   <bean id="gradeFenbanProblemDataInsert" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="158" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          insert into grade_fenban_problem_data(id,weektest_id,weektest_name,school_id,school_name,grade_year,index_no, problem_id,
+	                                              avg_score_percent,excellent_score_percent,pass_score_percent,unpass_score_percent,
+	                                              unpass_diff_score_percent,pass_diff_score_percent,excellent_diff_score_percent,right_cnt,wrong_cnt,task_pub_time
+                                           ) 
+	                  values(0, ${weektestId}, ${taskInfoRs.paperName}, ${schoolInfoRs.schoolId}, ${schoolInfoRs.schoolName}, ${classInfoRs.gradeYear},
+	                        ${gpJoinMapRs.indexNo}, ${gpJoinMapRs.problemId}, 
+	                        IF(ISNULL(${gpJoinMapRs.avgScorePercent}),0,${gpJoinMapRs.avgScorePercent}),
+	                        IF(ISNULL(${gpJoinMapRs.excAvgScorePercent}),0,${gpJoinMapRs.excAvgScorePercent}), 
+	                        IF(ISNULL(${gpJoinMapRs.passAvgScorePercent}),0,${gpJoinMapRs.passAvgScorePercent}), 
+	                        IF(ISNULL(${gpJoinMapRs.unpassAvgScorePercent}),0,${gpJoinMapRs.unpassAvgScorePercent}),
+	                        IF(ISNULL(${gpJoinMapRs.unpassAvgScorePercent}), 0 , ${gpJoinMapRs.unpassAvgScorePercent}) - IF(ISNULL(${gpJoinMapRs.passAvgScorePercent}),0,${gpJoinMapRs.passAvgScorePercent}),
+	                        IF(ISNULL(${gpJoinMapRs.passAvgScorePercent}), 0 , ${gpJoinMapRs.passAvgScorePercent}) - IF(ISNULL(${gpJoinMapRs.excAvgScorePercent}),0, ${gpJoinMapRs.excAvgScorePercent}),
+	                        IF(ISNULL(${gpJoinMapRs.excAvgScorePercent}), 0 , ${gpJoinMapRs.excAvgScorePercent}) - 1000,
+	                        IF(ISNULL(${gpRightCntRs.rightCnt}),0,${gpRightCntRs.rightCnt}),
+	                        IF(ISNULL(${gpWrongCntRs.wrongCnt}),0,${gpWrongCntRs.wrongCnt}),
+	                        ${taskInfoRs.beginTime}
+	                        )
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="gradeHighFreqUpdate" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="161" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          update grade_fenban_problem_data set is_high_freq = 1
+	           where weektest_id = ${weektestId} and problem_id in (${highFreqRs.first}, ${highFreqRs.second})
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   <!-- grade_fenban_problem_data end -->
+   
+   <!-- other data start -->
+   <bean id="classFenbanProblemDataUpdate" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="200" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          update class_fenban_problem_data c inner join grade_fenban_problem_data g 
+	            on c.weektest_id = g.weektest_id and c.school_id = g.school_id and c.grade_year = g.grade_year and c.index_no = g.index_no and c.weektest_id = ${weektestId}
+	            set c.avg_diff_score_percent = c.avg_score_percent - g.avg_score_percent
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectProblemIds" class="com.yisi.stiku.statbg.sql.SelectMultiValueMapLineSqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="201" />
+     <property name="outputKey" value="problemIdRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select problem_id problemId
+	          from grade_fenban_problem_data
+	          where school_id = ${schoolInfoRs.schoolId} and grade_year = ${classInfoRs.gradeYear} and weektest_id = ${weektestId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectProblemInfo" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="202" />
+     <property name="outputKey" value="problemInfoRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select id, points_name points
+	          from tb_problem_detail
+	          where id in (${problemIdRs.problemId})
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="classProblemPointsUpdate" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="203" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          update class_fenban_problem_data set points = ${problemInfoRs.points} where problem_id = ${problemInfoRs.id}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="gradeProblemPointsUpdate" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="204" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          update grade_fenban_problem_data set points = ${problemInfoRs.points} where problem_id = ${problemInfoRs.id}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   <!-- other data end -->
+   
+   <!-- student data start -->
+   <bean id="selectStudentData" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="stikuDataSource" />
+     <property name="orderNO" value="251" />
+     <property name="outputKey" value="studentDataRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	       select student_id studentId, student_name studentName, (grasp_score * 10) graspScore, 
+	            (select count(wt.grasp_score) + 1 
+	               from tb_week_test wt
+			       where wt.grasp_score > t.grasp_score and wt.teacher_week_test_id = ${weektestId} and wt.class_id = ${classId} and wt.status > 0
+			     ) as rank ,
+                (select count(1) 
+	               from tb_week_test wt
+			       where wt.grasp_score > t.grasp_score and wt.teacher_week_test_id = ${weektestId} and wt.class_id = ${classId} and wt.status > 0
+			     ) as overCnt,
+                (select count(1) 
+	               from tb_week_test wt
+			       where wt.grasp_score < t.grasp_score and wt.teacher_week_test_id = ${weektestId} and wt.class_id = ${classId} and wt.status > 0
+			     ) as followCnt
+		   from tb_week_test t 
+		   where t.teacher_week_test_id = ${weektestId} and t.class_id = ${classId} and t.status > 0
+		   order by t.grasp_score desc 
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="deleteStudentData" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="252" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          delete from student_fenban_data where class_id = ${classId} and weektest_id = ${weektestId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="selectStudentLastRank" class="com.yisi.stiku.statbg.sql.SelectMapLineSqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="253" />
+     <property name="outputKey" value="studentLastRankRs" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          select s.student_id studentId, s.class_rank classRank
+				from 
+				  student_fenban_data s,
+				(
+				SELECT student_id studentId, max(task_pub_time) taskPubTime
+					          from student_fenban_data
+					          where class_id = ${classId} and task_pub_time < ${taskInfoRs.beginTime} and zj_type = ${zjTypeRs.type}
+				            GROUP BY student_id
+					) a
+				where s.student_id = a.studentId and s.task_pub_time = a.taskPubTime 
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="insertStudentData" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="254" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          insert into student_fenban_data(id,student_id,student_name,class_id,weektest_id, book_point_sort_id, exampaper_index, grasp_score, class_rank,class_student_cnt,class_real_test_cnt,follow_cnt, over_cnt,task_pub_time, zj_type) 
+	                  values(0, ${studentDataRs.studentId}, ${studentDataRs.studentName}, ${classId}, ${weektestId},
+	                        ${taskInfoRs.bookPointSortId},
+                            ${taskInfoRs.exampaperIndex},
+	                        IF(ISNULL(${studentDataRs.graspScore}),0,${studentDataRs.graspScore}), 
+	                        IF(ISNULL(${studentDataRs.rank}),0,${studentDataRs.rank}),
+	                        IF(ISNULL(${studentNumRs.totalCnt}),0,${studentNumRs.totalCnt}),
+	                        IF(ISNULL(${totalTestRs.realTestCnt}),0,${totalTestRs.realTestCnt}),
+	                        IF(ISNULL(${studentDataRs.followCnt}),0,${studentDataRs.followCnt}),
+	                        IF(ISNULL(${studentDataRs.overCnt}),0,${studentDataRs.overCnt}),
+	                        ${taskInfoRs.beginTime},
+	                        ${zjTypeRs.type}
+	                        )
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   
+   <bean id="updateStudentLastRank" class="com.yisi.stiku.statbg.sql.ModifySqlStat">
+     <property name="dataSource" ref="resultDataSource" />
+     <property name="orderNO" value="255" />
+     <property name="sql">
+       <value>
+	       <![CDATA[
+	          update student_fenban_data set last_class_rank = ${studentLastRankRs.classRank} where class_id = ${classId} and weektest_id = ${weektestId} and student_id = ${studentLastRankRs.studentId}
+	       ]]>
+       </value>
+     </property>
+   </bean>
+   <!-- student data end -->
+   
+</beans>
+   	

@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yisi.stiku</groupId>
+    <artifactId>service-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>service-uploadYun</artifactId>
+  <version>${service_parent.version}</version>
+  <name>service-uploadYun</name>
+  <description>上传至阿里云服务</description>
+  
+	<dependencies>
+		<dependency>
+            <groupId>com.yisi.stiku</groupId>
+            <artifactId>common-uploadYun</artifactId>
+        </dependency>  
+	</dependencies>  
+  
+</project>

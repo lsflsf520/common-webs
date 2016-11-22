@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TblSysMenuDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TblSysMenu" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="children_size" property="childrenSize" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="disabled" property="disabled" jdbcType="BIT" />
+    <result column="inherit_level" property="inheritLevel" jdbcType="INTEGER" />
+    <result column="init_open" property="initOpen" jdbcType="BIT" />
+    <result column="order_rank" property="orderRank" jdbcType="INTEGER" />
+    <result column="style" property="style" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, acl_code, acl_type, created_by, created_dt, updated_by, updated_dt, version, 
+    children_size, code, description, disabled, inherit_level, init_open, order_rank, 
+    style, title, type, url, parent_id
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="BaseColumnList" />
+    from tbl_sys_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.String" >
+    delete from tbl_sys_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TblSysMenu" >
+    insert into tbl_sys_menu (id, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, children_size, 
+      code, description, disabled, 
+      inherit_level, init_open, order_rank, 
+      style, title, type, 
+      url, parent_id)
+    values (#{id,jdbcType=VARCHAR}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{childrenSize,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{disabled,jdbcType=BIT}, 
+      #{inheritLevel,jdbcType=INTEGER}, #{initOpen,jdbcType=BIT}, #{orderRank,jdbcType=INTEGER}, 
+      #{style,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TblSysMenu" >
+    update tbl_sys_menu
+    <set >
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="childrenSize != null" >
+        children_size = #{childrenSize,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="disabled != null" >
+        disabled = #{disabled,jdbcType=BIT},
+      </if>
+      <if test="inheritLevel != null" >
+        inherit_level = #{inheritLevel,jdbcType=INTEGER},
+      </if>
+      <if test="initOpen != null" >
+        init_open = #{initOpen,jdbcType=BIT},
+      </if>
+      <if test="orderRank != null" >
+        order_rank = #{orderRank,jdbcType=INTEGER},
+      </if>
+      <if test="style != null" >
+        style = #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TblSysMenu" >
+    insert into tbl_sys_menu (id, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version, children_size, 
+      code, description, disabled, 
+      inherit_level, init_open, order_rank, 
+      style, title, type, 
+      url, parent_id)
+    values (#{id,jdbcType=VARCHAR}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{childrenSize,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{disabled,jdbcType=BIT}, 
+      #{inheritLevel,jdbcType=INTEGER}, #{initOpen,jdbcType=BIT}, #{orderRank,jdbcType=INTEGER}, 
+      #{style,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR})
+  </insert>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tbl_SYS_MENU
+	<include refid="pageCondition" />
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tbl_SYS_MENU
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tbl_SYS_MENU
+	<if test="orderBySql != null">
+		${orderBySql}
+	</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tbl_SYS_MENU
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+			<if test="entity.childrenSize != null" >
+				and children_size = #{entity.childrenSize,jdbcType=INTEGER}
+			</if>
+			<if test="entity.code != null" >
+				and code = #{entity.code,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.description != null" >
+				and description = #{entity.description,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.disabled != null" >
+				and disabled = #{entity.disabled,jdbcType=BIT}
+			</if>
+			<if test="entity.inheritLevel != null" >
+				and inherit_level = #{entity.inheritLevel,jdbcType=INTEGER}
+			</if>
+			<if test="entity.initOpen != null" >
+				and init_open = #{entity.initOpen,jdbcType=BIT}
+			</if>
+			<if test="entity.orderRank != null" >
+				and order_rank = #{entity.orderRank,jdbcType=INTEGER}
+			</if>
+			<if test="entity.style != null" >
+				and style = #{entity.style,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.title != null" >
+				and title = #{entity.title,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.type != null" >
+				and type = #{entity.type,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.url != null" >
+				and url = #{entity.url,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.parentId != null" >
+				and parent_id = #{entity.parentId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+</mapper>

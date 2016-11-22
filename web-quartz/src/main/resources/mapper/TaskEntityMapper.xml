@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.quartz.dao.TaskDao">
+	<resultMap id="BaseResultMap" type="com.yisi.stiku.quartz.dao.entity.TaskEntity" >
+	   <id column="id" property="id" />
+		<association property="taskPK" resultMap="taskPKResult"></association>
+		<association property="info" resultMap="taskInfoResult"></association>
+		<association property="result" resultMap="taskResult"></association>
+	</resultMap>
+
+	<resultMap type="com.yisi.stiku.quartz.dao.entity.TaskPK" id="taskPKResult">
+		<result column="SCHED_NAME" property="schedName" />
+		<association property="jobkey" resultMap="jobkeyResult"></association>
+	</resultMap>
+
+	<resultMap type="com.yisi.stiku.quartz.dao.entity.TaskInfo"
+		id="taskInfoResult">
+		<result column="BEGIN_TIME" property="beginTime" javaType="java.sql.Date"
+			jdbcType="DATE" />
+		<result column="STOP_TIME" property="endTime" />
+		<result column="IP_ADDRESS" property="ipaddress" />
+		<result column="MAC_ADDRESS" property="macAddress" />
+	</resultMap>
+
+
+	<resultMap type="org.quartz.JobKey" id="jobkeyResult">
+		<result column="JOB_NAME" property="name" />
+		<result column="JOB_GROUP" property="group" />
+	</resultMap>
+
+	<resultMap type="com.yisi.stiku.quartz.dao.entity.TaskResult"
+		id="taskResult">
+		<result property="state" column="RESULT" jdbcType="INTEGER"
+			javaType="com.yisi.stiku.quartz.dao.entity.TaskState" typeHandler="com.yisi.stiku.quartz.dao.EnumHandler" />
+		<result column="MESSAGE" property="resultMessage" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+	
+   <insert  id="insert" parameterType="com.yisi.stiku.quartz.dao.entity.TaskEntity">
+    insert into QRTZ_TASKS (id,SCHED_NAME, JOB_NAME, JOB_GROUP,BEGIN_TIME,STOP_TIME,IP_ADDRESS,MAC_ADDRESS,RESULT,MESSAGE
+      )
+    values (#{id,jdbcType=INTEGER},#{taskPK.schedName,jdbcType=VARCHAR}, #{taskPK.jobkey.name,jdbcType=VARCHAR}, #{taskPK.jobkey.group,jdbcType=VARCHAR},
+       #{info.beginTime,jdbcType=DATE}, #{info.endTime,jdbcType=DATE}, #{info.ipaddress,jdbcType=VARCHAR}, 
+        #{info.macAddress,jdbcType=VARCHAR}, #{result.state,typeHandler=com.yisi.stiku.quartz.dao.EnumHandler}, #{result.resultMessage,jdbcType=VARCHAR}      
+      )
+  </insert>
+</mapper>

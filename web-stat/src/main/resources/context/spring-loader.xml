@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:cache="http://www.springframework.org/schema/cache" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:repository="http://www.springframework.org/schema/data/repository"
+    xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+    default-lazy-init="false">
+
+    <description>chart loader相关配置</description>
+
+    <bean id="barchart" class="com.yisi.stiku.stat.loader.BarDataLoader">
+      <property name="dsKey" value="sqlSessionTemplate"/> <!-- 可选，默认为sqlSessionTemplate -->
+      <property name="statement" value="default.findStdData" />
+      <property name="divId" value="chartDiv" />
+      <property name="url" value="/chart/barchart/bar.do" />
+      <property name="title" value="测试图表" />
+      <property name="subTitle" value="学生数据" />
+      <property name="axisXColumn" value="grade_year" />
+      <property name="pageNum" value="5" />
+      <property name="legendData">
+        <list>
+          <value>problem_num</value>
+          <value>student_num</value>
+          <value>avg_problem_num</value>
+        </list>
+      </property>
+      <property name="colTitleList">
+        <list>
+          <value>grade_year</value>
+          <value>problem_num</value>
+          <value>student_num</value>
+          <value>avg_problem_num</value>
+          <value>student_section</value>
+          <value>avg_login_num</value>
+        </list>
+      </property>
+      <property name="condKeys">
+        <list>
+          <value>dateGroup</value>
+          <value>sqlSchool</value>
+          <value>keyword</value>
+        </list>
+      </property>
+      <property name="dataDictMap">
+        <map>
+          <entry key="grade_year" value="入学年份"/>
+          <entry key="problem_num" value="问题数"/>
+          <entry key="student_num" value="学生数"/>
+          <entry key="avg_problem_num" value="平均问题数"/>
+        </map>
+      </property>
+    </bean>
+    
+    <bean id="linechart" class="com.yisi.stiku.stat.loader.LineDataLoader">
+      <property name="statement" value="default.findStdData" />
+      <property name="divId" value="chartDiv" />
+      <property name="url" value="/chart/linechart/line.do" />
+      <property name="title" value="测试图表" />
+      <property name="titleX" value="入学年份" />
+      <property name="titleY" value="数据" />
+      <property name="subTitle" value="学生数据" />
+      <property name="axisXColumn" value="grade_year" />
+      <property name="legendData">
+        <list>
+          <value>problem_num</value>
+          <value>student_num</value>
+          <value>avg_problem_num</value>
+        </list>
+      </property>
+      <property name="colTitleList">
+        <list>
+          <value>grade_year</value>
+          <value>problem_num</value>
+          <value>student_num</value>
+          <value>avg_problem_num</value>
+        </list>
+      </property>
+      <property name="condKeys">
+        <list>
+          <value>dateGroup</value>
+          <value>school</value>
+          <value>keyword</value>
+        </list>
+      </property>
+      <property name="dataDictMap">
+        <map>
+          <entry key="problem_num" value="问题数"/>
+          <entry key="student_num" value="学生数"/>
+          <entry key="avg_problem_num" value="平均问题数"/>
+        </map>
+      </property>
+    </bean>
+    
+    <bean id="piechart" class="com.yisi.stiku.stat.loader.PieDataLoader">
+      <property name="statement" value="default.findStdTotalData" />
+      <property name="divId" value="chartDiv" />
+      <property name="url" value="/chart/piechart/pie.do" />
+      <property name="title" value="测试图表" />
+      <property name="subTitle" value="学生数据" />
+      <property name="seryName" value="看看数据" />
+      <property name="legendData">
+        <list>
+          <value>problem_num</value>
+          <value>student_num</value>
+          <value>avg_problem_num</value>
+        </list>
+      </property>
+      <property name="colTitleList">
+        <list>
+          <value>problem_num</value>
+          <value>student_num</value>
+          <value>avg_problem_num</value>
+        </list>
+      </property>
+      <property name="condKeys">
+        <list>
+          <value>dateGroup</value>
+          <value>school</value>
+          <value>keyword</value>
+        </list>
+      </property>
+      <property name="dataDictMap">
+        <map>
+          <entry key="problem_num" value="问题数"/>
+          <entry key="student_num" value="学生数"/>
+          <entry key="avg_problem_num" value="平均问题数"/>
+        </map>
+      </property>
+      <property name="fmtMap">
+        <map>
+          <entry key="problem_num" value-ref="twoPointFormatter" />
+          <entry key="student_num" value-ref="twoPointFormatter" />
+          <entry key="avg_problem_num" value-ref="twoPointFormatter" />
+        </map>
+      </property>
+    </bean>
+    
+    <bean id="logindata" class="com.yisi.stiku.stat.loader.BarDataLoader">
+      <property name="dsKey" value="sqlSessionTemplate"/> <!-- 可选，默认为sqlSessionTemplate -->
+      <property name="statement" value="default.stdLogonData" />
+      <property name="divId" value="chartDiv" />
+      <property name="url" value="/chart/logindata/bar.do" />
+      <property name="title" value="学生登陆信息" />
+      <property name="subTitle" value="每天登陆数据" />
+      <property name="axisXColumn" value="stat_date" />
+      <property name="pageNum" value="30" />
+      <property name="legendData">
+        <list>
+          <value>logon_cnt</value>
+          <value>logon_user_cnt</value>
+          <value>land_length</value>
+          <value>avg_land_length</value>
+        </list>
+      </property>
+      <property name="colTitleList">
+        <list>
+          <value>stat_date</value>
+          <value>logon_cnt</value>
+          <value>logon_user_cnt</value>
+          <value>land_length</value>
+          <value>avg_land_length</value>
+        </list>
+      </property>
+      <property name="condKeys">
+        <list>
+          <value>dateGroup</value>
+        </list>
+      </property>
+      <property name="dataDictMap">
+        <map>
+          <entry key="stat_date" value="日 期"/>
+          <entry key="logon_cnt" value="总登陆次数"/>
+          <entry key="logon_user_cnt" value="登陆用户数"/>
+          <entry key="land_length" value="总登陆时长(分)"/>
+          <entry key="avg_land_length" value="平均登陆时长(分)"/>
+        </map>
+      </property>
+      <property name="fmtMap">
+        <map>
+          <entry key="land_length" value-ref="sec2MinFormatter" />
+          <entry key="avg_land_length" value-ref="sec2MinFormatter" />
+        </map>
+      </property>
+    </bean>
+    
+    <bean id="loginhourdata" class="com.yisi.stiku.stat.loader.BarDataLoader">
+      <property name="dsKey" value="sqlSessionTemplate"/> <!-- 可选，默认为sqlSessionTemplate -->
+      <property name="statement" value="default.stdLogonHourData" />
+      <property name="divId" value="chartDiv" />
+      <property name="url" value="/chart/loginhourdata/bar.do" />
+      <property name="title" value="学生登陆信息" />
+      <property name="subTitle" value="每天登陆数据" />
+      <property name="axisXColumn" value="stat_time" />
+      <property name="pageNum" value="30" />
+      <property name="legendData">
+        <list>
+          <value>logon_cnt</value>
+          <value>logon_user_cnt</value>
+          <value>land_length</value>
+          <value>avg_land_length</value>
+        </list>
+      </property>
+      <property name="colTitleList">
+        <list>
+          <value>stat_time</value>
+          <value>logon_cnt</value>
+          <value>logon_user_cnt</value>
+          <value>land_length</value>
+          <value>avg_land_length</value>
+        </list>
+      </property>
+      <property name="condKeys">
+        <list>
+          <value>dayDateGroup</value>
+        </list>
+      </property>
+      <property name="dataDictMap">
+        <map>
+          <entry key="stat_time" value="时 间"/>
+          <entry key="logon_cnt" value="总登陆次数"/>
+          <entry key="logon_user_cnt" value="登陆用户数"/>
+          <entry key="land_length" value="总登陆时长(分)"/>
+          <entry key="avg_land_length" value="平均登陆时长(分)"/>
+        </map>
+      </property>
+      <property name="fmtMap">
+        <map>
+          <entry key="land_length" value-ref="sec2MinFormatter" />
+          <entry key="avg_land_length" value-ref="sec2MinFormatter" />
+        </map>
+      </property>
+    </bean>
+    
+    <bean id="xnLogdata" class="com.yisi.stiku.stat.loader.BarDataLoader">
+      <property name="dsKey" value="sqlSessionTemplate"/> <!-- 可选，默认为sqlSessionTemplate -->
+      <property name="statement" value="default.xnLogData" />
+      <property name="divId" value="chartDiv" />
+      <property name="url" value="/chart/xnLogdata/bar.do" />
+      <property name="title" value="每天服务访问情况" />
+      <property name="axisXColumn" value="method" />
+      <property name="pageNum" value="30" />
+      <property name="legendData">
+        <list>
+          <value>total_cnt</value>
+          <value>avg_time</value>
+        </list>
+      </property>
+      <property name="colTitleList">
+        <list>
+          <value>method</value>
+          <value>total_cnt</value>
+          <value>avg_time</value>
+          <value>max_time</value>
+          <value>min_time</value>
+        </list>
+      </property>
+      <property name="condKeys">
+        <list>
+          <value>yesterday</value>
+          <value>projectName</value>
+          <value>methodType</value>
+        </list>
+      </property>
+      <property name="dataDictMap">
+        <map>
+          <entry key="method" value="访问的方法"/>
+          <entry key="m_type" value="方法类型"/>
+          <entry key="total_cnt" value="总访问次数"/>
+          <entry key="avg_time" value="平均响应时间"/>
+          <entry key="max_time" value="最慢响应时间"/>
+          <entry key="min_time" value="最快响应时间"/>
+        </map>
+      </property>
+      <property name="fmtMap">
+        <map>
+          <entry key="method" value-ref="uri2NameConvertor" />
+        </map>
+      </property>
+    </bean>
+    
+    <bean id="pageTimeLogdata" class="com.yisi.stiku.stat.loader.BarDataLoader">
+      <property name="dsKey" value="sqlSessionTemplate"/> <!-- 可选，默认为sqlSessionTemplate -->
+      <property name="statement" value="default.pageTimeLogData" />
+      <property name="divId" value="chartDiv" />
+      <property name="url" value="/chart/pageTimeLogdata/bar.do" />
+      <property name="title" value="每天页面停留时长情况" />
+      <property name="axisXColumn" value="location" />
+      <property name="pageNum" value="30" />
+      <property name="legendData">
+        <list>
+          <value>avg_stay_time</value>
+          <value>max_stay_time</value>
+          <value>min_stay_time</value>
+        </list>
+      </property>
+      <property name="colTitleList">
+        <list>
+          <value>location</value>
+          <value>title</value>
+          <value>avg_stay_time</value>
+          <value>max_stay_time</value>
+          <value>min_stay_time</value>
+        </list>
+      </property>
+      <property name="condKeys">
+        <list>
+          <value>yesterday</value>
+          <value>projectName</value>
+        </list>
+      </property>
+      <property name="dataDictMap">
+        <map>
+          <entry key="location" value="页面地址"/>
+          <entry key="title" value="页面名称"/>
+          <entry key="avg_stay_time" value="平均停留时间"/>
+          <entry key="max_stay_time" value="最长停留时间"/>
+          <entry key="min_stay_time" value="最短停留时间"/>
+        </map>
+      </property>
+      <property name="fmtMap">
+        <map>
+          <entry key="location" value-ref="uri2NameConvertor" />
+        </map>
+      </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbProblemContentDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbProblemContent" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="SMALLINT" />
+    <result column="problem_content" property="problemContent" jdbcType="VARCHAR" />
+    <result column="problem_content_mathml" property="problemContentMathml" jdbcType="VARCHAR" />
+    <result column="problem_content_ooxml" property="problemContentOoxml" jdbcType="VARCHAR" />
+    <result column="answer_content" property="answerContent" jdbcType="VARCHAR" />
+    <result column="answer_content_mathml" property="answerContentMathml" jdbcType="VARCHAR" />
+    <result column="answer_content_ooxml" property="answerContentOoxml" jdbcType="VARCHAR" />
+    <result column="a_content" property="aContent" jdbcType="VARCHAR" />
+    <result column="a_content_mathml" property="aContentMathml" jdbcType="VARCHAR" />
+    <result column="a_content_ooxml" property="aContentOoxml" jdbcType="VARCHAR" />
+    <result column="b_content" property="bContent" jdbcType="VARCHAR" />
+    <result column="b_content_mathml" property="bContentMathml" jdbcType="VARCHAR" />
+    <result column="b_content_ooxml" property="bContentOoxml" jdbcType="VARCHAR" />
+    <result column="c_content" property="cContent" jdbcType="VARCHAR" />
+    <result column="c_content_mathml" property="cContentMathml" jdbcType="VARCHAR" />
+    <result column="c_content_ooxml" property="cContentOoxml" jdbcType="VARCHAR" />
+    <result column="d_content" property="dContent" jdbcType="VARCHAR" />
+    <result column="d_content_mathml" property="dContentMathml" jdbcType="VARCHAR" />
+    <result column="d_content_ooxml" property="dContentOoxml" jdbcType="VARCHAR" />
+    <result column="sequence" property="sequence" jdbcType="BIGINT" />
+    <result column="acl_code" property="aclCode" jdbcType="VARCHAR" />
+    <result column="acl_type" property="aclType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_dt" property="updatedDt" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    id, type, problem_content, problem_content_mathml, problem_content_ooxml, answer_content, 
+    answer_content_mathml, answer_content_ooxml, a_content, a_content_mathml, a_content_ooxml, 
+    b_content, b_content_mathml, b_content_ooxml, c_content, c_content_mathml, c_content_ooxml, 
+    d_content, d_content_mathml, d_content_ooxml, sequence, acl_code, acl_type, created_by, 
+    created_dt, updated_by, updated_dt, version
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_problem_content
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from tb_problem_content
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbProblemContent" >
+    insert into tb_problem_content (id, type, problem_content, 
+      problem_content_mathml, problem_content_ooxml, 
+      answer_content, answer_content_mathml, answer_content_ooxml, 
+      a_content, a_content_mathml, a_content_ooxml, 
+      b_content, b_content_mathml, b_content_ooxml, 
+      c_content, c_content_mathml, c_content_ooxml, 
+      d_content, d_content_mathml, d_content_ooxml, 
+      sequence, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=SMALLINT}, #{problemContent,jdbcType=VARCHAR}, 
+      #{problemContentMathml,jdbcType=VARCHAR}, #{problemContentOoxml,jdbcType=VARCHAR}, 
+      #{answerContent,jdbcType=VARCHAR}, #{answerContentMathml,jdbcType=VARCHAR}, #{answerContentOoxml,jdbcType=VARCHAR}, 
+      #{aContent,jdbcType=VARCHAR}, #{aContentMathml,jdbcType=VARCHAR}, #{aContentOoxml,jdbcType=VARCHAR}, 
+      #{bContent,jdbcType=VARCHAR}, #{bContentMathml,jdbcType=VARCHAR}, #{bContentOoxml,jdbcType=VARCHAR}, 
+      #{cContent,jdbcType=VARCHAR}, #{cContentMathml,jdbcType=VARCHAR}, #{cContentOoxml,jdbcType=VARCHAR}, 
+      #{dContent,jdbcType=VARCHAR}, #{dContentMathml,jdbcType=VARCHAR}, #{dContentOoxml,jdbcType=VARCHAR}, 
+      #{sequence,jdbcType=BIGINT}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbProblemContent" >
+    update tb_problem_content
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="problemContent != null" >
+        problem_content = #{problemContent,jdbcType=VARCHAR},
+      </if>
+      <if test="problemContentMathml != null" >
+        problem_content_mathml = #{problemContentMathml,jdbcType=VARCHAR},
+      </if>
+      <if test="problemContentOoxml != null" >
+        problem_content_ooxml = #{problemContentOoxml,jdbcType=VARCHAR},
+      </if>
+      <if test="answerContent != null" >
+        answer_content = #{answerContent,jdbcType=VARCHAR},
+      </if>
+      <if test="answerContentMathml != null" >
+        answer_content_mathml = #{answerContentMathml,jdbcType=VARCHAR},
+      </if>
+      <if test="answerContentOoxml != null" >
+        answer_content_ooxml = #{answerContentOoxml,jdbcType=VARCHAR},
+      </if>
+      <if test="aContent != null" >
+        a_content = #{aContent,jdbcType=VARCHAR},
+      </if>
+      <if test="aContentMathml != null" >
+        a_content_mathml = #{aContentMathml,jdbcType=VARCHAR},
+      </if>
+      <if test="aContentOoxml != null" >
+        a_content_ooxml = #{aContentOoxml,jdbcType=VARCHAR},
+      </if>
+      <if test="bContent != null" >
+        b_content = #{bContent,jdbcType=VARCHAR},
+      </if>
+      <if test="bContentMathml != null" >
+        b_content_mathml = #{bContentMathml,jdbcType=VARCHAR},
+      </if>
+      <if test="bContentOoxml != null" >
+        b_content_ooxml = #{bContentOoxml,jdbcType=VARCHAR},
+      </if>
+      <if test="cContent != null" >
+        c_content = #{cContent,jdbcType=VARCHAR},
+      </if>
+      <if test="cContentMathml != null" >
+        c_content_mathml = #{cContentMathml,jdbcType=VARCHAR},
+      </if>
+      <if test="cContentOoxml != null" >
+        c_content_ooxml = #{cContentOoxml,jdbcType=VARCHAR},
+      </if>
+      <if test="dContent != null" >
+        d_content = #{dContent,jdbcType=VARCHAR},
+      </if>
+      <if test="dContentMathml != null" >
+        d_content_mathml = #{dContentMathml,jdbcType=VARCHAR},
+      </if>
+      <if test="dContentOoxml != null" >
+        d_content_ooxml = #{dContentOoxml,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=BIGINT},
+      </if>
+      <if test="aclCode != null" >
+        acl_code = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclType != null" >
+        acl_type = #{aclType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDt != null" >
+        created_dt = #{createdDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDt != null" >
+        updated_dt = #{updatedDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="id" parameterType="com.yisi.stiku.basedata.entity.TbProblemContent" >
+    insert into tb_problem_content (id, type, problem_content, 
+      problem_content_mathml, problem_content_ooxml, 
+      answer_content, answer_content_mathml, answer_content_ooxml, 
+      a_content, a_content_mathml, a_content_ooxml, 
+      b_content, b_content_mathml, b_content_ooxml, 
+      c_content, c_content_mathml, c_content_ooxml, 
+      d_content, d_content_mathml, d_content_ooxml, 
+      sequence, acl_code, acl_type, 
+      created_by, created_dt, updated_by, 
+      updated_dt, version)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=SMALLINT}, #{problemContent,jdbcType=VARCHAR}, 
+      #{problemContentMathml,jdbcType=VARCHAR}, #{problemContentOoxml,jdbcType=VARCHAR}, 
+      #{answerContent,jdbcType=VARCHAR}, #{answerContentMathml,jdbcType=VARCHAR}, #{answerContentOoxml,jdbcType=VARCHAR}, 
+      #{aContent,jdbcType=VARCHAR}, #{aContentMathml,jdbcType=VARCHAR}, #{aContentOoxml,jdbcType=VARCHAR}, 
+      #{bContent,jdbcType=VARCHAR}, #{bContentMathml,jdbcType=VARCHAR}, #{bContentOoxml,jdbcType=VARCHAR}, 
+      #{cContent,jdbcType=VARCHAR}, #{cContentMathml,jdbcType=VARCHAR}, #{cContentOoxml,jdbcType=VARCHAR}, 
+      #{dContent,jdbcType=VARCHAR}, #{dContentMathml,jdbcType=VARCHAR}, #{dContentOoxml,jdbcType=VARCHAR}, 
+      #{sequence,jdbcType=BIGINT}, #{aclCode,jdbcType=VARCHAR}, #{aclType,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tb_problem_content
+		(id,type,problem_content,problem_content_mathml,problem_content_ooxml,answer_content,answer_content_mathml,answer_content_ooxml,a_content,a_content_mathml,a_content_ooxml,b_content,b_content_mathml,b_content_ooxml,c_content,c_content_mathml,c_content_ooxml,d_content,d_content_mathml,d_content_ooxml,sequence,acl_code,acl_type,created_by,created_dt,updated_by,updated_dt,version)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.id,jdbcType=BIGINT},#{item.type,jdbcType=SMALLINT},#{item.problemContent,jdbcType=VARCHAR},#{item.problemContentMathml,jdbcType=VARCHAR},#{item.problemContentOoxml,jdbcType=VARCHAR},#{item.answerContent,jdbcType=VARCHAR},#{item.answerContentMathml,jdbcType=VARCHAR},#{item.answerContentOoxml,jdbcType=VARCHAR},#{item.aContent,jdbcType=VARCHAR},#{item.aContentMathml,jdbcType=VARCHAR},#{item.aContentOoxml,jdbcType=VARCHAR},#{item.bContent,jdbcType=VARCHAR},#{item.bContentMathml,jdbcType=VARCHAR},#{item.bContentOoxml,jdbcType=VARCHAR},#{item.cContent,jdbcType=VARCHAR},#{item.cContentMathml,jdbcType=VARCHAR},#{item.cContentOoxml,jdbcType=VARCHAR},#{item.dContent,jdbcType=VARCHAR},#{item.dContentMathml,jdbcType=VARCHAR},#{item.dContentOoxml,jdbcType=VARCHAR},#{item.sequence,jdbcType=BIGINT},#{item.aclCode,jdbcType=VARCHAR},#{item.aclType,jdbcType=VARCHAR},#{item.createdBy,jdbcType=VARCHAR},#{item.createdDt,jdbcType=TIMESTAMP},#{item.updatedBy,jdbcType=VARCHAR},#{item.updatedDt,jdbcType=TIMESTAMP},#{item.version,jdbcType=INTEGER})
+	</foreach>
+  </insert>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		count(1)
+	from
+		tb_problem_content
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem_content
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem_content
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.id != null" >
+				and id = #{entity.id,jdbcType=BIGINT}
+			</if>
+			<if test="entity.type != null" >
+				and type = #{entity.type,jdbcType=SMALLINT}
+			</if>
+			<if test="entity.problemContent != null" >
+				and problem_content = #{entity.problemContent,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.problemContentMathml != null" >
+				and problem_content_mathml = #{entity.problemContentMathml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.problemContentOoxml != null" >
+				and problem_content_ooxml = #{entity.problemContentOoxml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.answerContent != null" >
+				and answer_content = #{entity.answerContent,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.answerContentMathml != null" >
+				and answer_content_mathml = #{entity.answerContentMathml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.answerContentOoxml != null" >
+				and answer_content_ooxml = #{entity.answerContentOoxml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aContent != null" >
+				and a_content = #{entity.aContent,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aContentMathml != null" >
+				and a_content_mathml = #{entity.aContentMathml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aContentOoxml != null" >
+				and a_content_ooxml = #{entity.aContentOoxml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.bContent != null" >
+				and b_content = #{entity.bContent,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.bContentMathml != null" >
+				and b_content_mathml = #{entity.bContentMathml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.bContentOoxml != null" >
+				and b_content_ooxml = #{entity.bContentOoxml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.cContent != null" >
+				and c_content = #{entity.cContent,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.cContentMathml != null" >
+				and c_content_mathml = #{entity.cContentMathml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.cContentOoxml != null" >
+				and c_content_ooxml = #{entity.cContentOoxml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.dContent != null" >
+				and d_content = #{entity.dContent,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.dContentMathml != null" >
+				and d_content_mathml = #{entity.dContentMathml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.dContentOoxml != null" >
+				and d_content_ooxml = #{entity.dContentOoxml,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.sequence != null" >
+				and sequence = #{entity.sequence,jdbcType=BIGINT}
+			</if>
+			<if test="entity.aclCode != null" >
+				and acl_code = #{entity.aclCode,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.aclType != null" >
+				and acl_type = #{entity.aclType,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdBy != null" >
+				and created_by = #{entity.createdBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.createdDt != null" >
+				and created_dt = #{entity.createdDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.updatedBy != null" >
+				and updated_by = #{entity.updatedBy,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.updatedDt != null" >
+				and updated_dt = #{entity.updatedDt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.version != null" >
+				and version = #{entity.version,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem_content
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  
+  <select id="getProblemContentsByProblemIds" parameterType="java.util.List" resultMap="BaseResultMap">
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem_content  
+	where id in
+	 (<foreach collection="list" item="item" separator="," index="index">
+	   #{item,jdbcType=BIGINT}
+	 </foreach>
+	) order by type
+  </select>
+  
+  <select id="getProblemContentsBySeq" parameterType="java.util.List" resultMap="BaseResultMap">
+    select
+		<include refid="BaseColumnList"/>
+	from tb_problem_content  
+	where sequence in
+	 (<foreach collection="list" item="item" separator="," index="index">
+	   #{item,jdbcType=BIGINT}
+	 </foreach>
+	) order by type
+  </select>
+</mapper>

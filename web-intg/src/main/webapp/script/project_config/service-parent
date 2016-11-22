@@ -1,0 +1,3 @@
+repo=stiku-platform
+pom=service-parent/pom.xml
+cmd=deploy

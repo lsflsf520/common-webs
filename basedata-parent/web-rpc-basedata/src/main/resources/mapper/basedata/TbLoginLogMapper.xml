@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yisi.stiku.basedata.dao.TbLoginLogDao" >
+  <resultMap id="BaseResultMap" type="com.yisi.stiku.basedata.entity.TbLoginLog" >
+    <id column="token" property="token" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="logon_time" property="logonTime" jdbcType="TIMESTAMP" />
+    <result column="logout_time" property="logoutTime" jdbcType="TIMESTAMP" />
+    <result column="logon_ip" property="logonIp" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="BaseColumnList" >
+    token, user_id, logon_time, logout_time, logon_ip, user_type
+  </sql>
+  <select id="findByPK" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="BaseColumnList" />
+    from tb_login_log
+    where token = #{token,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPK" parameterType="java.lang.String" >
+    delete from tb_login_log
+    where token = #{token,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yisi.stiku.basedata.entity.TbLoginLog" >
+    insert into tb_login_log (token, user_id, logon_time, 
+      logout_time, logon_ip, user_type
+      )
+    values (#{token,jdbcType=CHAR}, #{userId,jdbcType=BIGINT}, #{logonTime,jdbcType=TIMESTAMP}, 
+      #{logoutTime,jdbcType=TIMESTAMP}, #{logonIp,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPK" parameterType="com.yisi.stiku.basedata.entity.TbLoginLog" >
+    update tb_login_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="logonTime != null" >
+        logon_time = #{logonTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logoutTime != null" >
+        logout_time = #{logoutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logonIp != null" >
+        logon_ip = #{logonIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where token = #{token,jdbcType=CHAR}
+  </update>
+  <insert id="insertReturnPK" useGeneratedKeys="true" keyProperty="token" parameterType="com.yisi.stiku.basedata.entity.TbLoginLog" >
+    insert into tb_login_log (token, user_id, logon_time, 
+      logout_time, logon_ip, user_type
+      )
+    values (#{token,jdbcType=CHAR}, #{userId,jdbcType=BIGINT}, #{logonTime,jdbcType=TIMESTAMP}, 
+      #{logoutTime,jdbcType=TIMESTAMP}, #{logonIp,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tb_login_log
+		(token,user_id,logon_time,logout_time,logon_ip,user_type)
+	values 
+	<foreach collection="list" item="item" separator="," index="index">
+		(#{item.token,jdbcType=CHAR},#{item.userId,jdbcType=BIGINT},#{item.logonTime,jdbcType=TIMESTAMP},#{item.logoutTime,jdbcType=TIMESTAMP},#{item.logonIp,jdbcType=VARCHAR},#{item.userType,jdbcType=INTEGER})
+	</foreach>
+  </insert>
+  <select id="findByPK_inMaster" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from tb_login_log	where token = #{pk, jdbcType=CHAR}
+  </select>
+  <select id="getCntByPage" resultType="java.lang.Integer" >
+    select 
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		count(1)
+	from
+		tb_login_log
+	<include refid="pageCondition" />
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from tb_login_log
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByEntity" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from tb_login_log
+	<where>
+		<trim suffixOverrides="and" >
+			<if test="entity.token != null" >
+				and token = #{entity.token,jdbcType=CHAR}
+			</if>
+			<if test="entity.userId != null" >
+				and user_id = #{entity.userId,jdbcType=BIGINT}
+			</if>
+			<if test="entity.logonTime != null" >
+				and logon_time = #{entity.logonTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.logoutTime != null" >
+				and logout_time = #{entity.logoutTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="entity.logonIp != null" >
+				and logon_ip = #{entity.logonIp,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.userType != null" >
+				and user_type = #{entity.userType,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</where>
+		<if test="orderBySql != null">
+			${orderBySql}
+		</if>
+  </select>
+  <select id="findByPage" resultMap="BaseResultMap" >
+    select
+		<if test="forceMaster">
+			<![CDATA[/*master*/]]>
+		</if>
+		<include refid="BaseColumnList"/>
+	from tb_login_log
+		<include refid="pageCondition"/>
+		<if test="pageInfo != null and pageInfo.orderBySql != null">
+			${pageInfo.orderBySql}
+		</if>
+		<if test="pageInfo !=null">
+			limit ${pageInfo.startIndex}, ${pageInfo.pagesize}
+		</if>
+  </select>
+  <sql id="pageCondition" >
+    <where >
+      <trim suffixOverrides="and" >
+        <if test="entity != null" >
+          		<!-- 写where的判断条件,下边是样例
+			<if test="entity.nick != null">
+				and nick = #{entity.nick,jdbcType=VARCHAR}
+			</if>
+			<if test="entity.company != null">
+				and company = '${entity.nick}'
+			</if>
+		-->
+        </if>
+        <if test="dynamicSql != null">
+			and ${dynamicSql}
+		</if>
+      </trim>
+    </where>
+  </sql>
+  
+  <select id="getLogonCnt" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(1) from (select user_id from tb_login_log where user_id = #{userId, jdbcType=BIGINT} limit 2) t
+  </select>
+  
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+<grade_fenban_problem_data id="1"
+		weektest_id="1" school_id="595" school_name="&#23433;&#38451;&#21439;&#20108;&#20013;"
+		grade_year="2013" problem_id="482" wrong_cnt="1" avg_score_percent="1000"
+		unpass_score_percent="1000" create_time="2016-04-22 14:28:18.0" />
+	<grade_fenban_problem_data id="2"
+		weektest_id="1" school_id="595" school_name="&#23433;&#38451;&#21439;&#20108;&#20013;"
+		grade_year="2013" problem_id="788"
+		points="&#30452;&#32447;&#30340;&#20542;&#26012;&#35282;&#21450;&#26012;&#29575;,&#26925;&#22278;&#30340;&#23450;&#20041;,&#26925;&#22278;&#30340;&#26631;&#20934;&#26041;&#31243;,&#26925;&#22278;&#30340;&#31616;&#21333;&#24615;&#36136;"
+		wrong_cnt="1" avg_score_percent="0" unpass_score_percent="0"
+		create_time="2016-04-22 14:28:18.0" />
+	<grade_fenban_problem_data id="3"
+		weektest_id="1" school_id="595" school_name="&#23433;&#38451;&#21439;&#20108;&#20013;"
+		grade_year="2013" problem_id="12709"
+		points="&#31243;&#24207;&#26694;&#22270;&#30340;&#19977;&#31181;&#22522;&#26412;&#36923;&#36753;&#32467;&#26500;"
+		wrong_cnt="1" avg_score_percent="0" unpass_score_percent="0"
+		create_time="2016-04-22 14:28:18.0" />
+	<grade_fenban_problem_data id="4"
+		weektest_id="1" school_id="595" school_name="&#23433;&#38451;&#21439;&#20108;&#20013;"
+		grade_year="2013" problem_id="40693"
+		points="&#25243;&#29289;&#32447;&#30340;&#23450;&#20041;,&#25243;&#29289;&#32447;&#30340;&#31616;&#21333;&#20960;&#20309;&#24615;&#36136;"
+		wrong_cnt="1" avg_score_percent="0" unpass_score_percent="0"
+		create_time="2016-04-22 14:28:18.0" />
+	<grade_fenban_problem_data id="5"
+		weektest_id="1" school_id="595" school_name="&#23433;&#38451;&#21439;&#20108;&#20013;"
+		grade_year="2013" problem_id="45359"
+		points="&#25243;&#29289;&#32447;&#30340;&#26631;&#20934;&#26041;&#31243;,&#25243;&#29289;&#32447;&#30340;&#31616;&#21333;&#20960;&#20309;&#24615;&#36136;"
+		wrong_cnt="1" avg_score_percent="0" unpass_score_percent="0"
+		create_time="2016-04-22 14:28:18.0" />
+	<grade_fenban_problem_data id="6"
+		weektest_id="1" school_id="595" school_name="&#23433;&#38451;&#21439;&#20108;&#20013;"
+		grade_year="2013" problem_id="53282"
+		points="&#28857;&#21040;&#30452;&#32447;&#30340;&#36317;&#31163;&#20844;&#24335;&#21450;&#24212;&#29992;,&#21452;&#26354;&#32447;&#30340;&#31616;&#21333;&#20960;&#20309;&#24615;&#36136;,&#25243;&#29289;&#32447;&#30340;&#31616;&#21333;&#20960;&#20309;&#24615;&#36136;"
+		wrong_cnt="1" avg_score_percent="0" unpass_score_percent="0"
+		create_time="2016-04-22 14:28:18.0" />
+	 
+</dataset> 
